@@ -5,19 +5,196 @@
 
 using namespace Rcpp;
 
-// rcpp_hello_world
-List rcpp_hello_world();
-RcppExport SEXP _re2_rcpp_hello_world() {
+// re2_capturing_group_names
+SEXP re2_capturing_group_names(SEXP pattern);
+RcppExport SEXP _re2_re2_capturing_group_names(SEXP patternSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpp_hello_world());
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_capturing_group_names(pattern));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_check_rewrite_string
+SEXP re2_check_rewrite_string(SEXP pattern, StringVector rewrite, Nullable<List> more_options);
+RcppExport SEXP _re2_re2_check_rewrite_string(SEXP patternSEXP, SEXP rewriteSEXP, SEXP more_optionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type rewrite(rewriteSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type more_options(more_optionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_check_rewrite_string(pattern, rewrite, more_options));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_extract
+SEXP re2_extract(StringVector x, SEXP pattern, std::string& rewrite, Nullable<List> more_options);
+RcppExport SEXP _re2_re2_extract(SEXP xSEXP, SEXP patternSEXP, SEXP rewriteSEXP, SEXP more_optionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< StringVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type rewrite(rewriteSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type more_options(more_optionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_extract(x, pattern, rewrite, more_options));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_get_options
+List re2_get_options(SEXP re2ptr);
+RcppExport SEXP _re2_re2_get_options(SEXP re2ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type re2ptr(re2ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_get_options(re2ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_global_replace
+SEXP re2_global_replace(StringVector x, SEXP pattern, std::string& rewrite, Nullable<List> more_options);
+RcppExport SEXP _re2_re2_global_replace(SEXP xSEXP, SEXP patternSEXP, SEXP rewriteSEXP, SEXP more_optionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< StringVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type rewrite(rewriteSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type more_options(more_optionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_global_replace(x, pattern, rewrite, more_options));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_match
+SEXP re2_match(StringVector x, SEXP pattern, Nullable<List> more_options);
+RcppExport SEXP _re2_re2_match(SEXP xSEXP, SEXP patternSEXP, SEXP more_optionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< StringVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type more_options(more_optionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_match(x, pattern, more_options));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_max_submatch
+SEXP re2_max_submatch(StringVector rewrite);
+RcppExport SEXP _re2_re2_max_submatch(SEXP rewriteSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< StringVector >::type rewrite(rewriteSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_max_submatch(rewrite));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_named_capturing_groups
+SEXP re2_named_capturing_groups(SEXP pattern);
+RcppExport SEXP _re2_re2_named_capturing_groups(SEXP patternSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_named_capturing_groups(pattern));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_number_of_capturing_groups
+IntegerVector re2_number_of_capturing_groups(SEXP pattern);
+RcppExport SEXP _re2_re2_number_of_capturing_groups(SEXP patternSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_number_of_capturing_groups(pattern));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_possible_match_range
+SEXP re2_possible_match_range(SEXP pattern, int maxlen, Nullable<List> more_options);
+RcppExport SEXP _re2_re2_possible_match_range(SEXP patternSEXP, SEXP maxlenSEXP, SEXP more_optionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    Rcpp::traits::input_parameter< int >::type maxlen(maxlenSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type more_options(more_optionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_possible_match_range(pattern, maxlen, more_options));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_quote_meta
+CharacterVector re2_quote_meta(CharacterVector unquoted);
+RcppExport SEXP _re2_re2_quote_meta(SEXP unquotedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type unquoted(unquotedSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_quote_meta(unquoted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_re2
+XPtr<RE2> re2_re2(std::string& pattern, Nullable<List> more_options);
+RcppExport SEXP _re2_re2_re2(SEXP patternSEXP, SEXP more_optionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string& >::type pattern(patternSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type more_options(more_optionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_re2(pattern, more_options));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_replace
+SEXP re2_replace(StringVector x, SEXP pattern, std::string& rewrite, Nullable<List> more_options);
+RcppExport SEXP _re2_re2_replace(SEXP xSEXP, SEXP patternSEXP, SEXP rewriteSEXP, SEXP more_optionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< StringVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type rewrite(rewriteSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type more_options(more_optionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_replace(x, pattern, rewrite, more_options));
+    return rcpp_result_gen;
+END_RCPP
+}
+// re2_rewrite
+SEXP re2_rewrite(SEXP pattern, StringVector rewrite, StringVector vec, int veclen, Nullable<List> more_options);
+RcppExport SEXP _re2_re2_rewrite(SEXP patternSEXP, SEXP rewriteSEXP, SEXP vecSEXP, SEXP veclenSEXP, SEXP more_optionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type rewrite(rewriteSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< int >::type veclen(veclenSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type more_options(more_optionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_rewrite(pattern, rewrite, vec, veclen, more_options));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_re2_rcpp_hello_world", (DL_FUNC) &_re2_rcpp_hello_world, 0},
+    {"_re2_re2_capturing_group_names", (DL_FUNC) &_re2_re2_capturing_group_names, 1},
+    {"_re2_re2_check_rewrite_string", (DL_FUNC) &_re2_re2_check_rewrite_string, 3},
+    {"_re2_re2_extract", (DL_FUNC) &_re2_re2_extract, 4},
+    {"_re2_re2_get_options", (DL_FUNC) &_re2_re2_get_options, 1},
+    {"_re2_re2_global_replace", (DL_FUNC) &_re2_re2_global_replace, 4},
+    {"_re2_re2_match", (DL_FUNC) &_re2_re2_match, 3},
+    {"_re2_re2_max_submatch", (DL_FUNC) &_re2_re2_max_submatch, 1},
+    {"_re2_re2_named_capturing_groups", (DL_FUNC) &_re2_re2_named_capturing_groups, 1},
+    {"_re2_re2_number_of_capturing_groups", (DL_FUNC) &_re2_re2_number_of_capturing_groups, 1},
+    {"_re2_re2_possible_match_range", (DL_FUNC) &_re2_re2_possible_match_range, 3},
+    {"_re2_re2_quote_meta", (DL_FUNC) &_re2_re2_quote_meta, 1},
+    {"_re2_re2_re2", (DL_FUNC) &_re2_re2_re2, 2},
+    {"_re2_re2_replace", (DL_FUNC) &_re2_re2_replace, 4},
+    {"_re2_re2_rewrite", (DL_FUNC) &_re2_re2_rewrite, 5},
     {NULL, NULL, 0}
 };
 

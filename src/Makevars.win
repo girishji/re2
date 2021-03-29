@@ -1,0 +1,48 @@
+CXX_STD = CXX11
+
+PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h -DNOMINMAX -DSTRICT -DUNICODE -D_UNICODE
+#PKG_CPPFLAGS = -pthread
+
+OFILES = \
+        re2google/util/rune.o\
+        re2google/util/strutil.o\
+        re2google/re2/bitstate.o\
+        re2google/re2/compile.o\
+        re2google/re2/dfa.o\
+        re2google/re2/filtered_re2.o\
+        re2google/re2/mimics_pcre.o\
+        re2google/re2/nfa.o\
+        re2google/re2/onepass.o\
+        re2google/re2/parse.o\
+        re2google/re2/perl_groups.o\
+        re2google/re2/prefilter.o\
+        re2google/re2/prefilter_tree.o\
+        re2google/re2/prog.o\
+        re2google/re2/re2.o\
+        re2google/re2/regexp.o\
+        re2google/re2/set.o\
+        re2google/re2/simplify.o\
+        re2google/re2/stringpiece.o\
+        re2google/re2/tostring.o\
+        re2google/re2/unicode_casefold.o\
+        re2google/re2/unicode_groups.o\
+
+OBJECTS = $(OFILES) \
+	RcppExports.o \
+	re2_re2proxy.o \
+	re2_re2container.o \
+	re2_quote_meta.o \
+	re2_re2.o \
+	re2_number_of_capturing_groups.o \
+	re2_get_options.o \
+	re2_replace.o \
+	re2_global_replace.o \
+	re2_named_capturing_groups.o \
+	re2_capturing_group_names.o \
+	re2_match.o \
+	re2_extract.o \
+	re2_possible_match_range.o \
+	re2_check_rewrite_string.o \
+	re2_max_submatch.o \
+	re2_rewrite.o \
+

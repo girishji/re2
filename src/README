@@ -1,0 +1,8 @@
+Install R package:
+
+To build and installeverything,
+- make sure R devtools is installed.
+- type 'make -f make.util buildR' from this directory.
+
+To clean build artifacts:
+- type 'make -f make.util cleanall'
