@@ -47,7 +47,7 @@
 // used for parsing simple strings, so it pays off to
 // notice them and handle them efficiently.
 //
-// See also Anne Brüggemann-Klein and Derick Wood,
+// See also Anne Bruggemann-Klein and Derick Wood,
 // "One-unambiguous regular languages", Information and Computation 142(2).
 
 #include <stdint.h>

@@ -1,7 +1,7 @@
 
 CXX_STD = CXX11
 
-PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h
+PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h -DRE2_R_BUILD
 
 OFILES = \
         re2google/util/rune.o\

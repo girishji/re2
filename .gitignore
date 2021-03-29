@@ -9,5 +9,7 @@ src/re2google/*.orig
 src/re2google/core
 src/re2google/obj/
 src/re2google/benchlog.*
+src/re2google/benchlog/*
 src/re2google/re2/*.o
 src/re2google/util/*.o
+src/symbols.rds

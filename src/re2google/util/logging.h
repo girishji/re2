@@ -54,6 +54,10 @@
 
 #define VLOG(x) if((x)>0){}else LOG_INFO.stream()
 
+#ifdef RE2_R_BUILD
+#include <Rcpp.h>
+#endif
+
 class LogMessage {
  public:
   LogMessage(const char* file, int line)
@@ -64,7 +68,11 @@ class LogMessage {
     stream() << "\n";
     std::string s = str_.str();
     size_t n = s.size();
+    #ifdef RE2_R_BUILD
+    Rcpp::warning(s);
+    #else
     if (fwrite(s.data(), 1, n, stderr) < n) {}  // shut up gcc
+    #endif
     flushed_ = true;
   }
   ~LogMessage() {
@@ -95,7 +103,11 @@ class LogMessageFatal : public LogMessage {
       : LogMessage(file, line) {}
   ATTRIBUTE_NORETURN ~LogMessageFatal() {
     Flush();
+    #ifdef RE2_R_BUILD
+    Rcpp::stop("LogMessageFatal: fatal error occured, stopping.");
+    #else
     abort();
+    #endif
   }
  private:
   LogMessageFatal(const LogMessageFatal&) = delete;

@@ -15,3 +15,7 @@ buildR:
 	    ../R/RcppExports.R > ../R/RcppExports.R.tmp
 	mv ../R/RcppExports.R.tmp ../R/RcppExports.R
 	cd ../../ && R CMD INSTALL re2
+
+.PHONY: check
+check: clean
+	cd ../../ && R CMD check re2

@@ -527,7 +527,6 @@ class RE2 {
   // Return the number of capturing subpatterns, or -1 if the
   // regexp wasn't valid on construction.  The overall match ($0)
   // does not count: if the regexp is "(a)(b)", returns 2.
-  //int NumberOfCapturingGroups() const { return num_captures_; }
   int NumberOfCapturingGroups() const;
 
   // Return a map from names to capturing indices.

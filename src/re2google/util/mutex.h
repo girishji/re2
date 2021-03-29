@@ -75,11 +75,21 @@ void Mutex::ReaderUnlock() { ReleaseSRWLockShared(&mutex_); }
 
 #elif defined(MUTEX_IS_PTHREAD_RWLOCK)
 
+#ifdef RE2_R_BUILD
+#define SAFE_PTHREAD(fncall)    \
+  do {                          \
+    if ((fncall) != 0) Rcpp::stop("fatal error, stopping."); \
+  } while (0)
+
+#else
+
 #define SAFE_PTHREAD(fncall)    \
   do {                          \
     if ((fncall) != 0) abort(); \
   } while (0)
 
+#endif
+  
 Mutex::Mutex()             { SAFE_PTHREAD(pthread_rwlock_init(&mutex_, NULL)); }
 Mutex::~Mutex()            { SAFE_PTHREAD(pthread_rwlock_destroy(&mutex_)); }
 void Mutex::Lock()         { SAFE_PTHREAD(pthread_rwlock_wrlock(&mutex_)); }
