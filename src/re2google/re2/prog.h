@@ -82,14 +82,14 @@ class Prog {
     InstOp opcode() { return static_cast<InstOp>(out_opcode_&7); }
     int last()      { return (out_opcode_>>3)&1; }
     int out()       { return out_opcode_>>4; }
-    int out1()      { DCHECK(opcode() == kInstAlt || opcode() == kInstAltMatch); return out1_; }
-    int cap()       { DCHECK_EQ(opcode(), kInstCapture); return cap_; }
-    int lo()        { DCHECK_EQ(opcode(), kInstByteRange); return lo_; }
-    int hi()        { DCHECK_EQ(opcode(), kInstByteRange); return hi_; }
-    int foldcase()  { DCHECK_EQ(opcode(), kInstByteRange); return hint_foldcase_&1; }
-    int hint()      { DCHECK_EQ(opcode(), kInstByteRange); return hint_foldcase_>>1; }
-    int match_id()  { DCHECK_EQ(opcode(), kInstMatch); return match_id_; }
-    EmptyOp empty() { DCHECK_EQ(opcode(), kInstEmptyWidth); return empty_; }
+    int out1()      { DCHECK(opcode() == kInstAlt || opcode() == kInstAltMatch); return ia_.out1_; }
+    int cap()       { DCHECK_EQ(opcode(), kInstCapture); return ia_.cap_; }
+    int lo()        { DCHECK_EQ(opcode(), kInstByteRange); return ia_.oc_.lo_; }
+    int hi()        { DCHECK_EQ(opcode(), kInstByteRange); return ia_.oc_.hi_; }
+    int foldcase()  { DCHECK_EQ(opcode(), kInstByteRange); return ia_.oc_.hint_foldcase_&1; }
+    int hint()      { DCHECK_EQ(opcode(), kInstByteRange); return ia_.oc_.hint_foldcase_>>1; }
+    int match_id()  { DCHECK_EQ(opcode(), kInstMatch); return ia_.match_id_; }
+    EmptyOp empty() { DCHECK_EQ(opcode(), kInstEmptyWidth); return ia_.empty_; }
 
     bool greedy(Prog* p) {
       DCHECK_EQ(opcode(), kInstAltMatch);
@@ -103,7 +103,7 @@ class Prog {
       DCHECK_EQ(opcode(), kInstByteRange);
       if (foldcase() && 'A' <= c && c <= 'Z')
         c += 'a' - 'A';
-      return lo_ <= c && c <= hi_;
+      return ia_.oc_.lo_ <= c && c <= ia_.oc_.hi_;
     }
 
     // Returns string representation for debugging.
@@ -131,7 +131,7 @@ class Prog {
     }
 
     uint32_t out_opcode_;  // 28 bits: out, 1 bit: last, 3 (low) bits: opcode
-    union {                // additional instruction arguments:
+    union IArg {                // additional instruction arguments:
       uint32_t out1_;      // opcode == kInstAlt
                            //   alternate next instruction
 
@@ -145,7 +145,7 @@ class Prog {
       int32_t match_id_;   // opcode == kInstMatch
                            //   Match ID to identify this match (for re2::Set).
 
-      struct {             // opcode == kInstByteRange
+      struct OpCode {             // opcode == kInstByteRange
         uint8_t lo_;       //   byte range is lo_-hi_ inclusive
         uint8_t hi_;       //
         uint16_t hint_foldcase_;  // 15 bits: hint, 1 (low) bit: foldcase
@@ -155,11 +155,11 @@ class Prog {
                            //   means there are no remaining possibilities,
                            //   which is most likely for character classes.
                            //   foldcase: A-Z -> a-z before checking range.
-      };
+      } oc_;
 
       EmptyOp empty_;       // opcode == kInstEmptyWidth
                             //   empty_ is bitwise OR of kEmpty* flags above.
-    };
+    } ia_;
 
     friend class Compiler;
     friend struct PatchList;

@@ -14,10 +14,10 @@
 
 CXX?=g++
 # can override
-CXXFLAGS?=-O3 -g
+# CXXFLAGS?=-O3 -g
 LDFLAGS?=
 # required
-RE2_CXXFLAGS?=-std=c++11 -pthread -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -I. $(CCICU) $(CCPCRE)
+RE2_CXXFLAGS?=-std=c++11 -Wpedantic -pthread -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -I. $(CCICU) $(CCPCRE)
 RE2_LDFLAGS?=-pthread $(LDICU) $(LDPCRE)
 AR?=ar
 ARFLAGS?=rsc

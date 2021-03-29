@@ -68,9 +68,9 @@ bool Regexp::ComputeSimple() {
       return true;
     case kRegexpCharClass:
       // Simple as long as the char class is not empty, not full.
-      if (ccb_ != NULL)
-        return !ccb_->empty() && !ccb_->full();
-      return !cc_->empty() && !cc_->full();
+      if (oparg_.chclass_.ccb_ != NULL)
+        return !oparg_.chclass_.ccb_->empty() && !oparg_.chclass_.ccb_->full();
+      return !oparg_.chclass_.cc_->empty() && !oparg_.chclass_.cc_->full();
     case kRegexpCapture:
       subs = sub();
       return subs[0]->simple();
@@ -247,10 +247,10 @@ Regexp* CoalesceWalker::PostVisit(Regexp* re,
       nre_subs[i] = child_args[i];
     // Repeats and Captures have additional data that must be copied.
     if (re->op() == kRegexpRepeat) {
-      nre->min_ = re->min();
-      nre->max_ = re->max();
+      nre->oparg_.repeat_.min_ = re->min();
+      nre->oparg_.repeat_.max_ = re->max();
     } else if (re->op() == kRegexpCapture) {
-      nre->cap_ = re->cap();
+      nre->oparg_.capture_.cap_ = re->cap();
     }
     return nre;
   }
@@ -351,23 +351,23 @@ void CoalesceWalker::DoCoalesce(Regexp** r1ptr, Regexp** r2ptr) {
 
   switch (r1->op()) {
     case kRegexpStar:
-      nre->min_ = 0;
-      nre->max_ = -1;
+      nre->oparg_.repeat_.min_ = 0;
+      nre->oparg_.repeat_.max_ = -1;
       break;
 
     case kRegexpPlus:
-      nre->min_ = 1;
-      nre->max_ = -1;
+      nre->oparg_.repeat_.min_ = 1;
+      nre->oparg_.repeat_.max_ = -1;
       break;
 
     case kRegexpQuest:
-      nre->min_ = 0;
-      nre->max_ = 1;
+      nre->oparg_.repeat_.min_ = 0;
+      nre->oparg_.repeat_.max_ = 1;
       break;
 
     case kRegexpRepeat:
-      nre->min_ = r1->min();
-      nre->max_ = r1->max();
+      nre->oparg_.repeat_.min_ = r1->min();
+      nre->oparg_.repeat_.max_ = r1->max();
       break;
 
     default:
@@ -378,34 +378,34 @@ void CoalesceWalker::DoCoalesce(Regexp** r1ptr, Regexp** r2ptr) {
 
   switch (r2->op()) {
     case kRegexpStar:
-      nre->max_ = -1;
+      nre->oparg_.repeat_.max_ = -1;
       goto LeaveEmpty;
 
     case kRegexpPlus:
-      nre->min_++;
-      nre->max_ = -1;
+      nre->oparg_.repeat_.min_++;
+      nre->oparg_.repeat_.max_ = -1;
       goto LeaveEmpty;
 
     case kRegexpQuest:
       if (nre->max() != -1)
-        nre->max_++;
+        nre->oparg_.repeat_.max_++;
       goto LeaveEmpty;
 
     case kRegexpRepeat:
-      nre->min_ += r2->min();
+      nre->oparg_.repeat_.min_ += r2->min();
       if (r2->max() == -1)
-        nre->max_ = -1;
+        nre->oparg_.repeat_.max_ = -1;
       else if (nre->max() != -1)
-        nre->max_ += r2->max();
+        nre->oparg_.repeat_.max_ += r2->max();
       goto LeaveEmpty;
 
     case kRegexpLiteral:
     case kRegexpCharClass:
     case kRegexpAnyChar:
     case kRegexpAnyByte:
-      nre->min_++;
+      nre->oparg_.repeat_.min_++;
       if (nre->max() != -1)
-        nre->max_++;
+        nre->oparg_.repeat_.max_++;
       goto LeaveEmpty;
 
     LeaveEmpty:
@@ -420,9 +420,9 @@ void CoalesceWalker::DoCoalesce(Regexp** r1ptr, Regexp** r2ptr) {
       int n = 1;
       while (n < r2->nrunes() && r2->runes()[n] == r)
         n++;
-      nre->min_ += n;
+      nre->oparg_.repeat_.min_ += n;
       if (nre->max() != -1)
-        nre->max_ += n;
+        nre->oparg_.repeat_.max_ += n;
       if (n == r2->nrunes())
         goto LeaveEmpty;
       *r1ptr = nre;
@@ -510,7 +510,7 @@ Regexp* SimplifyWalker::PostVisit(Regexp* re,
       Regexp* nre = new Regexp(kRegexpCapture, re->parse_flags());
       nre->AllocSub(1);
       nre->sub()[0] = newsub;
-      nre->cap_ = re->cap();
+      nre->oparg_.capture_.cap_ = re->cap();
       nre->simple_ = true;
       return nre;
     }
@@ -550,7 +550,7 @@ Regexp* SimplifyWalker::PostVisit(Regexp* re,
       if (newsub->op() == kRegexpEmptyMatch)
         return newsub;
 
-      Regexp* nre = SimplifyRepeat(newsub, re->min_, re->max_,
+      Regexp* nre = SimplifyRepeat(newsub, re->oparg_.repeat_.min_, re->oparg_.repeat_.max_,
                                    re->parse_flags());
       newsub->Decref();
       nre->simple_ = true;

@@ -333,15 +333,15 @@ class Regexp {
       return submany_;
   }
 
-  int min() { DCHECK_EQ(op_, kRegexpRepeat); return min_; }
-  int max() { DCHECK_EQ(op_, kRegexpRepeat); return max_; }
-  Rune rune() { DCHECK_EQ(op_, kRegexpLiteral); return rune_; }
-  CharClass* cc() { DCHECK_EQ(op_, kRegexpCharClass); return cc_; }
-  int cap() { DCHECK_EQ(op_, kRegexpCapture); return cap_; }
-  const std::string* name() { DCHECK_EQ(op_, kRegexpCapture); return name_; }
-  Rune* runes() { DCHECK_EQ(op_, kRegexpLiteralString); return runes_; }
-  int nrunes() { DCHECK_EQ(op_, kRegexpLiteralString); return nrunes_; }
-  int match_id() { DCHECK_EQ(op_, kRegexpHaveMatch); return match_id_; }
+  int min() { DCHECK_EQ(op_, kRegexpRepeat); return oparg_.repeat_.min_; }
+  int max() { DCHECK_EQ(op_, kRegexpRepeat); return oparg_.repeat_.max_; }
+  Rune rune() { DCHECK_EQ(op_, kRegexpLiteral); return oparg_.rune_; }
+  CharClass* cc() { DCHECK_EQ(op_, kRegexpCharClass); return oparg_.chclass_.cc_; }
+  int cap() { DCHECK_EQ(op_, kRegexpCapture); return oparg_.capture_.cap_; }
+  const std::string* name() { DCHECK_EQ(op_, kRegexpCapture); return oparg_.capture_.name_; }
+  Rune* runes() { DCHECK_EQ(op_, kRegexpLiteralString); return oparg_.ltstr_.runes_; }
+  int nrunes() { DCHECK_EQ(op_, kRegexpLiteralString); return oparg_.ltstr_.nrunes_; }
+  int match_id() { DCHECK_EQ(op_, kRegexpHaveMatch); return oparg_.match_id_; }
 
   // Increments reference count, returns object as convenience.
   Regexp* Incref();
@@ -566,30 +566,30 @@ class Regexp {
   Regexp* down_;
 
   // Arguments to operator.  See description of operators above.
-  union {
-    struct {  // Repeat
+  union OpArg {
+    struct Repeat {  // Repeat
       int max_;
       int min_;
-    };
-    struct {  // Capture
+    } repeat_;
+    struct Capture {  // Capture
       int cap_;
       std::string* name_;
-    };
-    struct {  // LiteralString
+    } capture_;
+    struct LiteralString {  // LiteralString
       int nrunes_;
       Rune* runes_;
-    };
-    struct {  // CharClass
+    } ltstr_;
+    struct ChClass {  // CharClass
       // These two could be in separate union members,
       // but it wouldn't save any space (there are other two-word structs)
       // and keeping them separate avoids confusion during parsing.
       CharClass* cc_;
       CharClassBuilder* ccb_;
-    };
+    } chclass_;
     Rune rune_;  // Literal
     int match_id_;  // HaveMatch
     void *the_union_[2];  // as big as any other element, for memset
-  };
+  } oparg_;
 
   Regexp(const Regexp&) = delete;
   Regexp& operator=(const Regexp&) = delete;

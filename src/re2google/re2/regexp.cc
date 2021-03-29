@@ -35,7 +35,7 @@ Regexp::Regexp(RegexpOp op, ParseFlags parse_flags)
     nsub_(0),
     down_(NULL) {
   subone_ = NULL;
-  memset(the_union_, 0, sizeof the_union_);
+  memset(oparg_.the_union_, 0, sizeof oparg_.the_union_);
 }
 
 // Destructor.  Assumes already cleaned up children.
@@ -51,15 +51,15 @@ Regexp::~Regexp() {
     default:
       break;
     case kRegexpCapture:
-      delete name_;
+      delete oparg_.capture_.name_;
       break;
     case kRegexpLiteralString:
-      delete[] runes_;
+      delete[] oparg_.ltstr_.runes_;
       break;
     case kRegexpCharClass:
-      if (cc_)
-        cc_->Delete();
-      delete ccb_;
+      if (oparg_.chclass_.cc_)
+        oparg_.chclass_.cc_->Delete();
+      delete oparg_.chclass_.ccb_;
       break;
   }
 }
@@ -170,24 +170,24 @@ void Regexp::Destroy() {
 
 void Regexp::AddRuneToString(Rune r) {
   DCHECK(op_ == kRegexpLiteralString);
-  if (nrunes_ == 0) {
+  if (oparg_.ltstr_.nrunes_ == 0) {
     // start with 8
-    runes_ = new Rune[8];
-  } else if (nrunes_ >= 8 && (nrunes_ & (nrunes_ - 1)) == 0) {
+    oparg_.ltstr_.runes_ = new Rune[8];
+  } else if (oparg_.ltstr_.nrunes_ >= 8 && (oparg_.ltstr_.nrunes_ & (oparg_.ltstr_.nrunes_ - 1)) == 0) {
     // double on powers of two
-    Rune *old = runes_;
-    runes_ = new Rune[nrunes_ * 2];
-    for (int i = 0; i < nrunes_; i++)
-      runes_[i] = old[i];
+    Rune *old = oparg_.ltstr_.runes_;
+    oparg_.ltstr_.runes_ = new Rune[oparg_.ltstr_.nrunes_ * 2];
+    for (int i = 0; i < oparg_.ltstr_.nrunes_; i++)
+      oparg_.ltstr_.runes_[i] = old[i];
     delete[] old;
   }
 
-  runes_[nrunes_++] = r;
+  oparg_.ltstr_.runes_[oparg_.ltstr_.nrunes_++] = r;
 }
 
 Regexp* Regexp::HaveMatch(int match_id, ParseFlags flags) {
   Regexp* re = new Regexp(kRegexpHaveMatch, flags);
-  re->match_id_ = match_id;
+  re->oparg_.match_id_ = match_id;
   return re;
 }
 
@@ -296,7 +296,7 @@ Regexp* Regexp::Capture(Regexp* sub, ParseFlags flags, int cap) {
   Regexp* re = new Regexp(kRegexpCapture, flags);
   re->AllocSub(1);
   re->sub()[0] = sub;
-  re->cap_ = cap;
+  re->oparg_.capture_.cap_ = cap;
   return re;
 }
 
@@ -304,14 +304,14 @@ Regexp* Regexp::Repeat(Regexp* sub, ParseFlags flags, int min, int max) {
   Regexp* re = new Regexp(kRegexpRepeat, flags);
   re->AllocSub(1);
   re->sub()[0] = sub;
-  re->min_ = min;
-  re->max_ = max;
+  re->oparg_.repeat_.min_ = min;
+  re->oparg_.repeat_.max_ = max;
   return re;
 }
 
 Regexp* Regexp::NewLiteral(Rune rune, ParseFlags flags) {
   Regexp* re = new Regexp(kRegexpLiteral, flags);
-  re->rune_ = rune;
+  re->oparg_.rune_ = rune;
   return re;
 }
 
@@ -328,7 +328,7 @@ Regexp* Regexp::LiteralString(Rune* runes, int nrunes, ParseFlags flags) {
 
 Regexp* Regexp::NewCharClass(CharClass* cc, ParseFlags flags) {
   Regexp* re = new Regexp(kRegexpCharClass, flags);
-  re->cc_ = cc;
+  re->oparg_.chclass_.cc_ = cc;
   return re;
 }
 
@@ -707,8 +707,8 @@ bool Regexp::RequiredPrefix(std::string* prefix, bool* foldcase,
   }
 
   bool latin1 = (re->parse_flags() & Latin1) != 0;
-  Rune* runes = re->op_ == kRegexpLiteral ? &re->rune_ : re->runes_;
-  int nrunes = re->op_ == kRegexpLiteral ? 1 : re->nrunes_;
+  Rune* runes = re->op_ == kRegexpLiteral ? &re->oparg_.rune_ : re->oparg_.ltstr_.runes_;
+  int nrunes = re->op_ == kRegexpLiteral ? 1 : re->oparg_.ltstr_.nrunes_;
   ConvertRunesToBytes(latin1, runes, nrunes, prefix);
   *foldcase = (re->parse_flags() & FoldCase) != 0;
   return true;
@@ -735,8 +735,8 @@ bool Regexp::RequiredPrefixForAccel(std::string* prefix, bool* foldcase) {
     return false;
 
   bool latin1 = (re->parse_flags() & Latin1) != 0;
-  Rune* runes = re->op_ == kRegexpLiteral ? &re->rune_ : re->runes_;
-  int nrunes = re->op_ == kRegexpLiteral ? 1 : re->nrunes_;
+  Rune* runes = re->op_ == kRegexpLiteral ? &re->oparg_.rune_ : re->oparg_.ltstr_.runes_;
+  int nrunes = re->op_ == kRegexpLiteral ? 1 : re->oparg_.ltstr_.nrunes_;
   ConvertRunesToBytes(latin1, runes, nrunes, prefix);
   *foldcase = (re->parse_flags() & FoldCase) != 0;
   return true;

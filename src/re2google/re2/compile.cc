@@ -47,7 +47,7 @@ struct PatchList {
       Prog::Inst* ip = &inst0[l.head>>1];
       if (l.head&1) {
         l.head = ip->out1();
-        ip->out1_ = p;
+        ip->ia_.out1_ = p;
       } else {
         l.head = ip->out();
         ip->set_out(p);
@@ -63,7 +63,7 @@ struct PatchList {
       return l1;
     Prog::Inst* ip = &inst0[l1.tail>>1];
     if (l1.tail&1)
-      ip->out1_ = l2.head;
+      ip->ia_.out1_ = l2.head;
     else
       ip->set_out(l2.head);
     return {l1.head, l2.tail};
@@ -328,7 +328,7 @@ Frag Compiler::Star(Frag a, bool nongreedy) {
   inst_[id].InitAlt(0, 0);
   PatchList::Patch(inst_.data(), a.end, id);
   if (nongreedy) {
-    inst_[id].out1_ = a.begin;
+    inst_[id].ia_.out1_ = a.begin;
     return Frag(id, PatchList::Mk(id << 1));
   } else {
     inst_[id].set_out(a.begin);
@@ -467,8 +467,8 @@ int Compiler::CachedRuneByteSuffix(uint8_t lo, uint8_t hi, bool foldcase,
 }
 
 bool Compiler::IsCachedRuneByteSuffix(int id) {
-  uint8_t lo = inst_[id].lo_;
-  uint8_t hi = inst_[id].hi_;
+  uint8_t lo = inst_[id].ia_.oc_.lo_;
+  uint8_t hi = inst_[id].ia_.oc_.hi_;
   bool foldcase = inst_[id].foldcase() != 0;
   int next = inst_[id].out();
 
@@ -535,7 +535,7 @@ int Compiler::AddSuffixRecursive(int root, int id) {
     if (f.end.head == 0)
       root = br;
     else if (f.end.head&1)
-      inst_[f.begin].out1_ = br;
+      inst_[f.begin].ia_.out1_ = br;
     else
       inst_[f.begin].set_out(br);
   }
@@ -546,7 +546,7 @@ int Compiler::AddSuffixRecursive(int root, int id) {
     // instead of leaving it unreachable.
     DCHECK_EQ(id, ninst_-1);
     inst_[id].out_opcode_ = 0;
-    inst_[id].out1_ = 0;
+    inst_[id].ia_.out1_ = 0;
     ninst_--;
   }
 

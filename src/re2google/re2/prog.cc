@@ -32,33 +32,33 @@ namespace re2 {
 void Prog::Inst::InitAlt(uint32_t out, uint32_t out1) {
   DCHECK_EQ(out_opcode_, 0);
   set_out_opcode(out, kInstAlt);
-  out1_ = out1;
+  ia_.out1_ = out1;
 }
 
 void Prog::Inst::InitByteRange(int lo, int hi, int foldcase, uint32_t out) {
   DCHECK_EQ(out_opcode_, 0);
   set_out_opcode(out, kInstByteRange);
-  lo_ = lo & 0xFF;
-  hi_ = hi & 0xFF;
-  hint_foldcase_ = foldcase&1;
+  ia_.oc_.lo_ = lo & 0xFF;
+  ia_.oc_.hi_ = hi & 0xFF;
+  ia_.oc_.hint_foldcase_ = foldcase&1;
 }
 
 void Prog::Inst::InitCapture(int cap, uint32_t out) {
   DCHECK_EQ(out_opcode_, 0);
   set_out_opcode(out, kInstCapture);
-  cap_ = cap;
+  ia_.cap_ = cap;
 }
 
 void Prog::Inst::InitEmptyWidth(EmptyOp empty, uint32_t out) {
   DCHECK_EQ(out_opcode_, 0);
   set_out_opcode(out, kInstEmptyWidth);
-  empty_ = empty;
+  ia_.empty_ = empty;
 }
 
 void Prog::Inst::InitMatch(int32_t id) {
   DCHECK_EQ(out_opcode_, 0);
   set_opcode(kInstMatch);
-  match_id_ = id;
+  ia_.match_id_ = id;
 }
 
 void Prog::Inst::InitNop(uint32_t out) {
@@ -77,22 +77,22 @@ std::string Prog::Inst::Dump() {
       return StringPrintf("opcode %d", static_cast<int>(opcode()));
 
     case kInstAlt:
-      return StringPrintf("alt -> %d | %d", out(), out1_);
+      return StringPrintf("alt -> %d | %d", out(), ia_.out1_);
 
     case kInstAltMatch:
-      return StringPrintf("altmatch -> %d | %d", out(), out1_);
+      return StringPrintf("altmatch -> %d | %d", out(), ia_.out1_);
 
     case kInstByteRange:
       return StringPrintf("byte%s [%02x-%02x] %d -> %d",
                           foldcase() ? "/i" : "",
-                          lo_, hi_, hint(), out());
+                          ia_.oc_.lo_, ia_.oc_.hi_, hint(), out());
 
     case kInstCapture:
-      return StringPrintf("capture %d -> %d", cap_, out());
+      return StringPrintf("capture %d -> %d", ia_.cap_, out());
 
     case kInstEmptyWidth:
       return StringPrintf("emptywidth %#x -> %d",
-                          static_cast<int>(empty_), out());
+                          static_cast<int>(ia_.empty_), out());
 
     case kInstMatch:
       return StringPrintf("match! %d", match_id());
@@ -243,7 +243,7 @@ void Prog::Optimize() {
       while (j != 0 && (jp=inst(j))->opcode() == kInstNop) {
         j = jp->out();
       }
-      ip->out1_ = j;
+      ip->ia_.out1_ = j;
       AddToQueue(&q, ip->out1());
     }
   }
@@ -802,7 +802,7 @@ void Prog::EmitList(int root, SparseArray<int>* rootmap,
         flat->emplace_back();
         flat->back().set_opcode(kInstAltMatch);
         flat->back().set_out(static_cast<int>(flat->size()));
-        flat->back().out1_ = static_cast<uint32_t>(flat->size())+1;
+        flat->back().ia_.out1_ = static_cast<uint32_t>(flat->size())+1;
         FALLTHROUGH_INTENDED;
 
       case kInstAlt:
@@ -911,7 +911,7 @@ void Prog::ComputeHints(std::vector<Inst>* flat, int begin, int end) {
 
     if (first != end) {
       uint16_t hint = static_cast<uint16_t>(std::min(first - id, 32767));
-      ip->hint_foldcase_ |= hint<<1;
+      ip->ia_.oc_.hint_foldcase_ |= hint<<1;
     }
   }
 }
