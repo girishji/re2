@@ -1,0 +1,8 @@
+tests/re2cpp
+.DS_Store
+src/re2cpp/.git
+src/re2cpp/*.pyc
+src/re2cpp/*.orig
+src/re2cpp/core
+src/re2cpp/obj/
+src/re2cpp/benchlog.*
