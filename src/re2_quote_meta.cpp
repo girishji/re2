@@ -1,3 +1,6 @@
+// Copyright (c) 2021 Girish Palya
+// License: https://github.com/girishji/re2/blob/main/LICENSE
+
 #include <Rcpp.h>
 #include <re2/re2.h>
 

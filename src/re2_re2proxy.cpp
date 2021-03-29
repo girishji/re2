@@ -1,3 +1,6 @@
+// Copyright (c) 2021 Girish Palya
+// License: https://github.com/girishji/re2/blob/main/LICENSE
+
 #include "re2_re2proxy.h"
 
 using namespace Rcpp;

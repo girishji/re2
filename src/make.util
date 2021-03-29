@@ -6,7 +6,7 @@ include Makevars
 
 .PHONY: clean
 clean:
-	rm -f $(OFILES) *.o re2.so
+	rm -f $(OFILES) *.o re2.so symbols.rds
 
 .PHONY: buildR
 buildR:
