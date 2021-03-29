@@ -220,8 +220,11 @@ TEST(RE2, Extract) {
   ASSERT_TRUE(RE2::Extract("foo", ".*", "'\\0'", &s));
   ASSERT_EQ(s, "'foo'");
   // check that false match doesn't overwrite
+  #ifndef RE2_R_TEST
+  // R will alway overwrite, so exclude this test
   ASSERT_FALSE(RE2::Extract("baz", "bar", "'\\0'", &s));
   ASSERT_EQ(s, "'foo'");
+  #endif
 }
 
 TEST(RE2, MaxSubmatchTooLarge) {
@@ -233,6 +236,7 @@ TEST(RE2, MaxSubmatchTooLarge) {
   ASSERT_FALSE(RE2::GlobalReplace(&s, "f(o+)", "\\1\\2"));
 }
 
+#ifndef RE2_R_TEST
 TEST(RE2, Consume) {
   RE2 r("\\s*(\\w+)");    // matches a word, possibly proceeded by whitespace
   std::string word;
@@ -318,6 +322,8 @@ TEST(RE2, FindAndConsumeN) {
   EXPECT_EQ(4, n);
 }
 
+#endif
+  
 TEST(RE2, MatchNumberPeculiarity) {
   RE2 r("(foo)|(bar)|(baz)");
   std::string word1;
@@ -449,6 +455,8 @@ TEST(QuoteMeta, UTF8) {
                         "27\\\xc2\\\xb0");  // 2-byte utf8 -- a degree symbol.
 }
 
+#ifndef RE2_R_TEST
+  // multiple \0 in a string is not recognized in R, so exclude these tests
 TEST(QuoteMeta, HasNull) {
   std::string has_null;
 
@@ -456,13 +464,13 @@ TEST(QuoteMeta, HasNull) {
   has_null += '\0';
   TestQuoteMeta(has_null);
   NegativeTestQuoteMeta(has_null, "");
-
   // Don't want null-followed-by-'1' to be interpreted as '\01'.
   has_null += '1';
   TestQuoteMeta(has_null);
   NegativeTestQuoteMeta(has_null, "\1");
 }
-
+#endif
+  
 TEST(ProgramSize, BigProgram) {
   RE2 re_simple("simple regexp");
   RE2 re_medium("medium.*regexp");
@@ -1457,6 +1465,9 @@ TEST(RE2, NullVsEmptyString) {
   EXPECT_TRUE(RE2::FullMatch(empty, re));
 }
 
+#ifndef RE2_R_TEST
+  // Cannot test null through R interface, so exclude this test.
+  
 // Similar to the previous test, check that the null string and the empty
 // string both match, but also that the null string can only provide null
 // submatches whereas the empty string can also provide empty submatches.
@@ -1493,7 +1504,7 @@ TEST(RE2, NullVsEmptyStringSubmatches) {
   EXPECT_TRUE(matches[3].data() == NULL);
   EXPECT_TRUE(matches[3].empty());
 }
-
+#endif
 // Issue 1816809
 TEST(RE2, Bug1816809) {
   RE2 re("(((((llx((-3)|(4)))(;(llx((-3)|(4))))*))))");

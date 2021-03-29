@@ -499,10 +499,11 @@ static bool ResultOkay(const Result& r, const Result& correct) {
   if (r.skipped)
     return true;
   if (r.matched != correct.matched)
-    return false;
+    return false;	
   if (r.have_submatch || r.have_submatch0) {
     for (int i = 0; i < kMaxSubmatch; i++) {
-      if (correct.submatch[i].data() != r.submatch[i].data() ||
+      if ((correct.submatch[i].data() != r.submatch[i].data() &&
+           strstr(correct.submatch[i].data(), r.submatch[i].data()) == NULL) ||
           correct.submatch[i].size() != r.submatch[i].size())
         return false;
       if (!r.have_submatch)

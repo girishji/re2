@@ -227,6 +227,8 @@ void PossibleMatchTester::HandleRegexp(const std::string& regexp) {
   }
 }
 
+#ifndef RE2_R_TEST
+  // painfully long running test when used through R interface
 TEST(PossibleMatchRange, Exhaustive) {
   int natom = 3;
   int noperator = 3;
@@ -243,5 +245,5 @@ TEST(PossibleMatchRange, Exhaustive) {
   LOG(INFO) << t.regexps() << " regexps, "
             << t.tests() << " tests";
 }
-
+#endif
 }  // namespace re2

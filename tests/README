@@ -1,0 +1,37 @@
+Testing:
+
+We run all the C++ tests available in re2 distribution (see ../src/re2cpp/re2/testing), but using
+R interface. We simply replace the C++ implentation to call R functions. We use RInside
+package which embeds an R instance inside our C++ tests. This way we let C++ tests
+call R functions (in R/RcppExports.R) which mimic the behaviour of corresponding C++ methods in re2.cc.
+
+The C++ -> R interface to re2 is provided by re2_R.[h|cc] files. These files
+look very similar to re2.[h|cc] files, except the implemnation of C++ is replaced by
+calling R functions directly.
+
+For test builds, a symlink farm of the re2 distribution files will be created
+in this folder (see the Makefile). re2.cc is symlinked to re2_R.cc, and same with re2.h.
+This way we can reuse the original Makefile (src/re2cpp/Makefile) to compile and run tests.
+
+Make sure RInside is intalled.
+
+To run all re2 C++ tests through R interface:
+> make test
+
+You should see the following output:
+obj/test/charclass_test                 PASS
+obj/test/compile_test                   PASS
+obj/test/filtered_re2_test              PASS
+obj/test/mimics_pcre_test               PASS
+obj/test/parse_test                     PASS
+obj/test/possible_match_test            PASS
+obj/test/re2_test                       PASS
+obj/test/re2_arg_test                   PASS
+obj/test/regexp_test                    PASS
+obj/test/required_prefix_test           PASS
+obj/test/search_test                    PASS
+obj/test/set_test                       PASS
+obj/test/simplify_test                  PASS
+obj/test/string_generator_test          PASS
+ALL TESTS PASSED.
+
