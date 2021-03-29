@@ -1,3 +1,4 @@
+.gitmessage
 tests/re2cpp
 .DS_Store
 src/re2cpp/.git
