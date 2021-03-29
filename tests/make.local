@@ -1,4 +1,6 @@
-# XXX: Copyright
+##
+## A simple makefile for testing
+##
 
 include GNUmakefile.RInside
 CXXFLAGS += -O0 -g

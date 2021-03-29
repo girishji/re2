@@ -1,4 +1,4 @@
-// XXX copyright
+// Modified by Girish Palya
 
 // Copyright 2003-2009 The RE2 Authors.  All Rights Reserved.
 // Use of this source code is governed by a BSD-style
