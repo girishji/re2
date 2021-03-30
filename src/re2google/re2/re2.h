@@ -909,11 +909,10 @@ inline RE2::Arg RE2::Octal(T* ptr) {
 }
 
 #ifndef SWIG
-#ifndef RE2_R_BUILD
 // Silence warnings about missing initializers for members of LazyRE2.
 #if !defined(__clang__) && defined(__GNUC__) && __GNUC__ >= 6
-#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
-#endif
+// R CMD check complains about pragma
+// #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #endif
 
 // Helper for writing global or static RE2s safely.
