@@ -18,9 +18,12 @@ clean:
 .PHONY: buildR
 buildR:
 	cd ../.. && Rscript -e 'library(Rcpp);compileAttributes()'
+#	cd ../.. && Rscript -e 'library(roxygen2);roxygen2::roxygenize(roclets="rd")'
 	cd ../ && sed -r 's/(.*)more_options = NULL(.*)/\1...\2\n    more_options <- list(...)/g' \
 	    ../R/RcppExports.R > ../R/RcppExports.R.tmp
 	cd ../ && mv ../R/RcppExports.R.tmp ../R/RcppExports.R
+	$(MAKE) clean
+	cd ../re2google && $(MAKE) clean
 	cd ../../.. && R CMD build re2 && R CMD INSTALL re2_0.1.0.tar.gz
 
 #	cd ../../.. && R CMD INSTALL re2

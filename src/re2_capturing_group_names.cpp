@@ -14,7 +14,8 @@ SEXP re2_capturing_group_names(SEXP pattern) {
   const std::vector<re2::RE2ProxyPtr> &rv = container.get();
   List result(rv.size());
 
-  for (int i = 0; i < rv.size(); i++) {
+  for (std::vector<re2::RE2ProxyPtr>::size_type i = 0;
+       i < rv.size(); i++) {
     const std::map<int, std::string>& groups
       = rv[i]->get().CapturingGroupNames();
     if (groups.size() > 0) {
