@@ -67,10 +67,10 @@ class LogMessage {
   void Flush() {
     stream() << "\n";
     std::string s = str_.str();
-    size_t n = s.size();
     #ifdef RE2_R_BUILD
     Rcpp::warning(s);
     #else
+    size_t n = s.size();
     if (fwrite(s.data(), 1, n, stderr) < n) {}  // shut up gcc
     #endif
     flushed_ = true;

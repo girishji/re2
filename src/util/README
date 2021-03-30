@@ -1,0 +1,7 @@
+Install R package:
+
+To build and install everything,
+- type 'make buildR' from this directory.
+
+To clean build artifacts:
+- type 'make cleanall'

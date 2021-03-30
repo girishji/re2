@@ -12,7 +12,7 @@ CPPFLAGS += -DRE2_R_TEST
 #   source files is an option but it requires modifying the Makefile
 #   that came with re2 distro. Could also use lndir here.
 re2dir = ../src/re2google
-re2files = $(patsubst %,$(re2dir)/%,Makefile libre2.symbols libre2.symbols.darwin runtests)
+re2files = $(patsubst %,$(re2dir)/%,GNUmakefile libre2.symbols libre2.symbols.darwin runtests)
 .PHONY: symlinks
 symlinks: re2google
 re2google:

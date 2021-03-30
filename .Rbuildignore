@@ -1,0 +1,4 @@
+.git/
+.gitignore
+tests/re2google
+src/re2google/obj
