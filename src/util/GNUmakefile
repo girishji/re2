@@ -8,12 +8,13 @@ include ../Makevars
 clean:
 	cd .. && rm -f $(OFILES) *.o re2.so symbols.rds
 
-# Install from tarball. When tarball was created it ignores
-#   files from .Rbuildignore. "R CMD INSTALL re2" does
-#   not consider this file. Using tarball, it takes longer
-#   to build (no incremental build) but it is closer
-#   to user installation. It will catch if you accidentally
-#   ignore some file in .Rbuildignore
+# Install from tarball. When tarball is created by 'build'
+#    command, it ignores files from .Rbuildignore.
+#    "R CMD INSTALL re2" does not consider .Rbuildignore
+#    file. Using tarball, it takes longer
+#    to build (no incremental build) but it is closer
+#    to user installation. It will catch if some file
+#    is accidentally ignored by .Rbuildignore
 .PHONY: buildR
 buildR:
 	cd ../.. && Rscript -e 'library(Rcpp);compileAttributes()'

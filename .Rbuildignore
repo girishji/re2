@@ -1,4 +1,5 @@
 .git/
 .gitignore
 LICENSE.md
+README.md
 ^tests/re2google$
