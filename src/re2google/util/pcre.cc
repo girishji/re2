@@ -21,9 +21,11 @@
 #include "util/pcre.h"
 #include "util/strutil.h"
 
+#ifndef RE2_R_BUILD
 // Silence warnings about the wacky formatting in the operator() functions.
 #if !defined(__clang__) && defined(__GNUC__) && __GNUC__ >= 6
 #pragma GCC diagnostic ignored "-Wmisleading-indentation"
+#endif
 #endif
 
 #define PCREPORT(level) LOG(level)

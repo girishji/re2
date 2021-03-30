@@ -20,7 +20,8 @@ SEXP re2_rewrite(SEXP pattern,
   bool logical = re2::RE2Proxy::is_logical_out(more_options);
   StringVector res(rewrite.size());
 
-  re2::StringPiece vec_sp[vec.size()];
+  std::unique_ptr<re2::StringPiece[]> vec_sp
+    = std::unique_ptr<re2::StringPiece[]>(new re2::StringPiece[vec.size()]);  
   for (int i = 0; i < vec.size(); i++) {
     vec_sp[i] = re2::StringPiece(R_CHAR(vec(i)));
   }
@@ -35,7 +36,7 @@ SEXP re2_rewrite(SEXP pattern,
 
     re2::StringPiece strpc(R_CHAR(rewrite(i)));
     std::string out;
-    lv[i] = re2proxy.get().Rewrite(&out, strpc, vec_sp, veclen);
+    lv[i] = re2proxy.get().Rewrite(&out, strpc, vec_sp.get(), veclen);
     res[i] = out;
   }
 
