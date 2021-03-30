@@ -1,5 +1,5 @@
 // Copyright (c) 2021 Girish Palya
-// License: https://github.com/girishji/re2/blob/main/LICENSE
+// License: https://github.com/girishji/re2/blob/main/LICENSE.md
 
 #include "re2_re2proxy.h"
 

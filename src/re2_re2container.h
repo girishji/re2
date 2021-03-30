@@ -1,5 +1,5 @@
 // Copyright (c) 2021 Girish Palya
-// License: https://github.com/girishji/re2/blob/main/LICENSE
+// License: https://github.com/girishji/re2/blob/main/LICENSE.md
 
 #ifndef RE2_RE2_CONTAINER_H_
 #define RE2_RE2_CONTAINER_H_
