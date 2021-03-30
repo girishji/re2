@@ -37,12 +37,18 @@ typedef pthread_rwlock_t MutexType;
 typedef std::mutex MutexType;
 #endif
 
+#include <exception>
+
 namespace re2 {
 
 class Mutex {
  public:
   inline Mutex();
+#ifdef RE2_R_BUILD
+  inline ~Mutex() noexcept(false);
+#else
   inline ~Mutex();
+#endif
   inline void Lock();    // Block if needed until free then acquire exclusively
   inline void Unlock();  // Release a lock acquired via Lock()
   // Note that on systems that don't support read-write locks, these may
@@ -76,9 +82,10 @@ void Mutex::ReaderUnlock() { ReleaseSRWLockShared(&mutex_); }
 #elif defined(MUTEX_IS_PTHREAD_RWLOCK)
 
 #ifdef RE2_R_BUILD
+
 #define SAFE_PTHREAD(fncall)    \
   do {                          \
-    if ((fncall) != 0) Rcpp::stop("fatal error, stopping."); \
+    if ((fncall) != 0) throw std::runtime_error("fatal error."); \
   } while (0)
 
 #else
@@ -91,7 +98,11 @@ void Mutex::ReaderUnlock() { ReleaseSRWLockShared(&mutex_); }
 #endif
   
 Mutex::Mutex()             { SAFE_PTHREAD(pthread_rwlock_init(&mutex_, NULL)); }
+#ifdef RE2_R_BUILD
+Mutex::~Mutex() noexcept(false) { SAFE_PTHREAD(pthread_rwlock_destroy(&mutex_)); }
+#else
 Mutex::~Mutex()            { SAFE_PTHREAD(pthread_rwlock_destroy(&mutex_)); }
+#endif
 void Mutex::Lock()         { SAFE_PTHREAD(pthread_rwlock_wrlock(&mutex_)); }
 void Mutex::Unlock()       { SAFE_PTHREAD(pthread_rwlock_unlock(&mutex_)); }
 void Mutex::ReaderLock()   { SAFE_PTHREAD(pthread_rwlock_rdlock(&mutex_)); }
@@ -102,7 +113,11 @@ void Mutex::ReaderUnlock() { SAFE_PTHREAD(pthread_rwlock_unlock(&mutex_)); }
 #else
 
 Mutex::Mutex()             { }
-Mutex::~Mutex()            { }
+#ifdef RE2_R_BUILD
+Mutex::~Mutex() noexcept(false) { }
+#else
+Mutex::~Mutex() { }
+#endif
 void Mutex::Lock()         { mutex_.lock(); }
 void Mutex::Unlock()       { mutex_.unlock(); }
 void Mutex::ReaderLock()   { Lock(); }  // C++11 doesn't have std::shared_mutex.

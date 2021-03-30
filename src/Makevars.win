@@ -1,6 +1,7 @@
 CXX_STD = CXX11
 
-PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h -DNOMINMAX -DSTRICT -DUNICODE -D_UNICODE -DRE2_R_BUILD
+# see src/re2google/CMakeLists.txt
+PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h -DRE2_R_BUILD -DUNICODE -D_UNICODE -DSTRICT -DNOMINMAX
 #PKG_CPPFLAGS = -pthread
 
 OFILES = \

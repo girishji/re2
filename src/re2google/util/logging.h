@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <ostream>
 #include <sstream>
+#include <exception>
 
 #include "util/util.h"
 
@@ -55,7 +56,7 @@
 #define VLOG(x) if((x)>0){}else LOG_INFO.stream()
 
 #ifdef RE2_R_BUILD
-#include <Rcpp.h>
+#include <R_ext/Print.h>
 #endif
 
 class LogMessage {
@@ -67,12 +68,12 @@ class LogMessage {
   void Flush() {
     stream() << "\n";
     std::string s = str_.str();
-    #ifdef RE2_R_BUILD
-    Rcpp::warning(s);
-    #else
+#ifdef RE2_R_BUILD
+    Rprintf(s.data());
+#else
     size_t n = s.size();
     if (fwrite(s.data(), 1, n, stderr) < n) {}  // shut up gcc
-    #endif
+#endif
     flushed_ = true;
   }
   ~LogMessage() {
@@ -101,15 +102,19 @@ class LogMessageFatal : public LogMessage {
  public:
   LogMessageFatal(const char* file, int line)
       : LogMessage(file, line) {}
-  ATTRIBUTE_NORETURN ~LogMessageFatal() {
+#ifdef RE2_R_BUILD
+  ATTRIBUTE_NORETURN ~LogMessageFatal() noexcept(false) {
     Flush();
-    #ifdef RE2_R_BUILD
-    Rcpp::stop("LogMessageFatal: fatal error occured, stopping.");
-    #else
-    abort();
-    #endif
+    throw std::runtime_error("fatal error");
   }
- private:
+#else
+  ATTRIBUTE_NORETURN ~LogMessageFatal() throw() {
+    Flush();
+    abort();
+  }
+#endif
+  
+private:
   LogMessageFatal(const LogMessageFatal&) = delete;
   LogMessageFatal& operator=(const LogMessageFatal&) = delete;
 };
