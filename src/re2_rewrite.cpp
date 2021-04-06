@@ -7,7 +7,15 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+
+// Append the "rewrite" string, with backslash subsitutions from "vec",
+// and return the resulting string or TRUE/FALSE depending on options.
+// This method can fail because of a malformed
+// rewrite string.  CheckRewriteString guarantees that the rewrite will
+// be sucessful.
+//
+// Not exporting this method since it seems redundant.
+// // [[Rcpp::export]]
 SEXP re2_rewrite(SEXP pattern,
 		 StringVector rewrite,
 		 StringVector vec,

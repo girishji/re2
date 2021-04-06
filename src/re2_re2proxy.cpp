@@ -135,11 +135,10 @@ namespace re2 {
   void RE2Proxy::modify_options(RE2::Options& opt,
 				Nullable<List> more_options) {
   
-    //opt.set_log_errors(false); // make 'quiet' option the default
-
+    opt.set_log_errors(false); // make 'quiet' option the default
 
     auto encoding_enum = [] (std::string const& val) {
-      return val == "EncodingLatin1"
+      return (val == "EncodingLatin1" || val == "Latin1")
 	? RE2::Options::EncodingLatin1 : RE2::Options::EncodingUTF8;
     };
   

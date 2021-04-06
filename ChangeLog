@@ -1,0 +1,868 @@
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue, 06 Apr 2021 12:51:18 +0200
+
+Add roxygen comments to document functions
+
+Add roxygen comments to document functions, and misc cleanup.
+
+Add roxygen comments to document functions
+    src/re2_replace.cpp
+    src/re2_re2.cpp
+    src/re2_capturing_group_names.cpp
+    src/re2_check_rewrite_string.cpp
+    src/re2_extract.cpp
+    src/re2_get_options.cpp
+    src/re2_global_replace.cpp
+    src/re2_match.cpp
+    src/re2_max_submatch.cpp
+    src/re2_named_capturing_groups.cpp
+    src/re2_number_of_capturing_groups.cpp
+    src/re2_possible_match_range.cpp
+    src/re2_quote_meta.cpp
+
+Add dummy R file for package level documentation and remove file created by package skeleton
+    R/re2-package.R
+    man/re2-package.Rd
+
+Rename input parameter for better readability.
+    src/re2_replace.cpp
+    src/re2_extract.cpp
+    src/re2_global_replace.cpp
+    src/re2_match.cpp
+
+Remove from exporting, since this function is redundant.
+    src/re2_rewrite.cpp
+ 
+Update to generate roxygen documents.
+    src/util/GNUmakefile
+
+Change test directory name to avoid conflict with R CMD check.
+    tests/GNUmakefile
+
+Update.
+    tests/README
+    .Rbuildignore
+    .gitignore
+    DESCRIPTION
+
+Stop logging when regexp has errors.
+    src/re2_re2proxy.cpp
+
+Generated files.
+    R/RcppExports.R
+    src/RcppExports.cpp
+
+Change name of option value to be more concise, and cleanup. 
+tests/re2_R.cc
+    src/re2_re2proxy.cpp
+    src/re2_get_options.cpp
+
+Add file.
+    ChangeLog
+
+commit fbca1e72033ff5a15f18d4b974b569f753e60b44
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Mar 30 19:50:03 2021 +0200
+
+    Fix R CMD check warnings on windows
+    
+    Various cleanup.
+    
+    M  .Rbuildignore
+    Exclude obj dir
+    
+    D  man/rcpp_hello_world.Rd
+    Remove template rtifact
+    
+    M  src/re2_capturing_group_names.cpp
+    Change int to unsigned int
+    
+    M  src/util/GNUmakefile
+    Remove .o before creating tarball
+
+commit 732249316adccc8c82a58de6dfaf47ac744440ff
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Mar 30 18:39:25 2021 +0200
+
+    Fix R CMD check warnings on Windows
+    
+    Fix R CMD check warnings on Windows
+    
+    M  src/Makevars.win
+    Copy approprite flags as used in google re2
+    
+    M  src/re2_named_capturing_groups.cpp
+    M  src/re2_number_of_capturing_groups.cpp
+    Redeclared an int to unsigned int to suppress warning
+    
+    M  src/re2google/util/logging.h
+    M  src/re2google/util/mutex.h
+    Replaced Rcpp with Rprintf and std::exception, since
+    Rcpp conflicted with "include <windows.h>" by redefining
+    Free() and Ralloc()
+
+commit 226296e500be509f70493162ad7c4873061be3cd
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Mar 30 13:34:37 2021 +0200
+
+    Remove README.md from tarball
+    
+    Remove README.md from tarball since it requires pandoc (another
+    R CMD check warning).
+    
+    M  .Rbuildignore
+    Ignore README.md
+    
+    M  src/util/GNUmakefile
+    Fix readability
+
+commit 389669130018c72f7a688b1785a0bee88d8fc38b
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Mar 30 13:25:35 2021 +0200
+
+    Fix R CMD check pragma warning and other fixes
+    
+    Removed pragmas. Improve build process.
+    
+    M  src/re2google/re2/re2.h
+    M  src/re2google/util/pcre.cc
+    Removed pragmas
+    
+    M  src/util/GNUmakefile
+    Install from tarball. When tarball is created by 'build'
+       command, it ignores files from .Rbuildignore.
+       "R CMD INSTALL re2" does not consider .Rbuildignore
+       file. Using tarball, it takes longer
+       to build (no incremental build) but it is closer
+       to user installation. It will catch if some file
+       is accidentally ignored by .Rbuildignore
+    
+    M  .Rbuildignore
+    Fixed path to exempt test dir
+
+commit 1ac78d13723d9ea26f95a9f2924dcacb4d256340
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Mar 30 12:09:10 2021 +0200
+
+    Fix R CMD check warnings
+    
+    Excluded pragmas from re2 source files, and converted a variable
+    length array to use dynamic allocation.
+    
+    M  src/re2_rewrite.cpp
+    Replace variable length array with dynamic allocation with a smart
+    pointer
+    
+    M  src/re2google/re2/re2.h
+    M  src/re2google/util/pcre.cc
+    Removed pragmas.
+
+commit c3e756ee23977fd1f8e476aa4a2f48d5112f17dc
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Mar 30 11:38:44 2021 +0200
+
+    Fix R CMD check license warning
+    
+    Moved license text from LICENSE file to LICENSE.md and added it to
+    .Rbuildignore. Reflected change in cpp files.
+    
+    M  .Rbuildignore
+    M  LICENSE
+    A  LICENSE.md
+    M  src/re2_capturing_group_names.cpp
+    M  src/re2_check_rewrite_string.cpp
+    M  src/re2_extract.cpp
+    M  src/re2_get_options.cpp
+    M  src/re2_global_replace.cpp
+    M  src/re2_match.cpp
+    M  src/re2_max_submatch.cpp
+    M  src/re2_named_capturing_groups.cpp
+    M  src/re2_number_of_capturing_groups.cpp
+    M  src/re2_possible_match_range.cpp
+    M  src/re2_quote_meta.cpp
+    M  src/re2_re2.cpp
+    M  src/re2_re2container.cpp
+    M  src/re2_re2container.h
+    M  src/re2_re2proxy.cpp
+    M  src/re2_re2proxy.h
+    M  src/re2_replace.cpp
+    M  src/re2_rewrite.cpp
+
+commit 13b5c93e2bdc1dc938121266d197c3edd28286a5
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Mar 30 10:33:12 2021 +0200
+
+    Fix R CMD check warnings
+    
+    Fix miscellaneous warnings from R CMD check
+    
+    A  .Rbuildignore
+    * Exclude git and others from R CMD build
+    
+    M  DESCRIPTION
+    * Fix title
+    
+    D  src/README
+    D  src/make.util
+    R  src/re2google/Makefile.orig -> src/re2google/GNUmakefil
+    A  src/util/GNUmakefile
+    A  src/util/README
+    R  tests/make.local -> tests/GNUmakefile
+    * Rename makefile to gnu makefile and hide it away from R build process
+    * Hide README file so R CMD check does not complain
+    * makefile add .Rbuildignore processing
+    
+    M  src/re2google/util/logging.h
+    * Remove unused variable
+
+commit 19ada5f16d5c0c585cb39ba5df2ac9fa7dc50963
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 23:31:21 2021 +0200
+
+    Add license header
+    
+    Added a link to license file in the following source files.
+    M  src/re2_check_rewrite_string.cpp
+    M  src/re2_extract.cpp
+    M  src/re2_get_options.cpp
+    M  src/re2_global_replace.cpp
+    M  src/re2_match.cpp
+    M  src/re2_max_submatch.cpp
+    M  src/re2_named_capturing_groups.cpp
+    M  src/re2_number_of_capturing_groups.cpp
+    M  src/re2_possible_match_range.cpp
+    M  src/re2_quote_meta.cpp
+    M  src/re2_re2.cpp
+    M  src/re2_re2container.cpp
+    M  src/re2_re2container.h
+    M  src/re2_re2proxy.cpp
+    M  src/re2_re2proxy.h
+    M  src/re2_replace.cpp
+    M  src/re2_rewrite.cpp
+    
+    M  src/make.util
+    cleanup.
+
+commit b4f17605906d02f4d50aefcd4b7e1612390a420b
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 23:13:27 2021 +0200
+
+    Added license text
+    
+    Added short license text.
+    
+    M  LICENSE
+    Included full MIT license text.
+    
+    M  src/re2_capturing_group_names.cpp
+    Added license link.
+    
+    M  tests/make.local
+    M  tests/re2_R.cc
+    M  tests/re2_R.h
+    Cleanup
+
+commit 2e21b17f7b64a44cfcf1aeb2f6ddf2a0f6c023d7
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 22:31:17 2021 +0200
+
+    Fix warnings from R CMD check and added license
+    
+    Make R CMD check happy. Removed stderr and abort symbols.
+    
+    M  .gitignore
+    Added new entries.
+    
+    M  DESCRIPTION
+    Updated fields.
+    
+    A  LICENSE
+    Added file.
+    
+    M  src/Makevars
+    M  src/Makevars.win
+    Added a new flag to exclude abort and stderr.
+    
+    M  src/README
+    Removed unneeded info.
+    
+    M  src/make.util
+    Added target for R CMD check.
+    
+    D  src/re2google/.gitignore
+    Not needed, removed.
+    
+    R  src/re2google/Makefile -> src/re2google/Makefile.orig
+    R  tests/Makefile -> tests/make.local
+    M  tests/README
+    Renamed, since R CMD check complain that this file uses
+    GNU extensions. Updated README to reflect change.
+    
+    M  src/re2google/re2/onepass.cc
+    Removed non UTF8 character to make Solaris R CMD check happy.
+    
+    M  src/re2google/util/logging.h
+    M  src/re2google/util/mutex.h
+    Provided Rcpp alternatives to stderr and abort().
+    
+    M  tests/re2_R.h
+    Cleanup.
+
+commit ae073d8b2d90d346c3863263cb3a294a6943fd3f
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 15:55:16 2021 +0200
+
+    Adapt google's C++ tests to use R interface
+    
+    Background:
+    We run all (google's) C++ tests (see tests in
+    ../src/re2cpp/re2/testing) using R interface. We replace the C++
+    implentation (of re2.cc) to call R functions. We use RInside
+    to embed an R instance inside C++ tests. We let C++ tests to call R
+    functions which mimic the behaviour of corresponding C++ methods in
+    re2.cc.
+    
+    The C++ -> R interface is provided by re2_R.[h|cc] files. These files
+    look very similar to re2.[h|cc] files, except they call R functions
+    through embedded R.
+    
+    To run tests, a symlink farm of the re2google folder will be created
+    in this folder (see the Makefile). re2.[cc|h] are symlinked to
+    re2_R.[cc|h]. This way we reuse the original Makefile
+    (src/re2google/Makefile) to compile and run tests.
+    
+    See README in tests folder for more details.
+    
+    A  tests/re2_R.cc
+    * Embed R instance using RInside
+    * Following member functions are adapted to use R interface:
+      Replace(),
+      GlobalReplace(),
+      Extract(),
+      QuoteMeta(),
+      Match(),
+      CheckRewriteString(),
+      MaxSubmatch(),
+      Rewrite(),
+      PossibleMatchRange(),
+      NumberOfCapturingGroups(),
+      CapturingGroupNames(),
+      NamedCapturingGroups(),
+    
+    A  tests/re2_R.h
+    * Adapt NumberOfCapturingGroups() to use R interface
+    
+    M  src/re2google/re2/testing/possible_match_test.cc
+    * Exclude a long running test, since it takes much
+      longer through R interface
+    
+    M  src/re2google/re2/testing/re2_test.cc
+    * Exclude test that deal with multiple '\0' inside a
+      string, and tests that deal with NULL
+    * Exclude consume() related tests as they don't make adapt
+      well to R interface
+    
+    M  src/re2google/re2/testing/tester.cc
+    * Adapt test to use R interface
+    
+    A  tests/GNUmakefile.RInside
+    * From RInside (source this through local Makefile)
+    
+    A  tests/Makefile
+    * Added targets for testing
+    
+    A  tests/README
+    * Some info
+
+commit bfcb8979be21008ff4da55f1852590a463792792
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 14:59:56 2021 +0200
+
+    Rcpp R interface to C++ interface in re2.h
+    
+    Each cpp file contains a Rcpp C++ template corresponding to a public
+    member function in the interface file re.h.
+    make.util is a makefile that has commands to generate R and C++
+    exports files (RcppExports.R and RcppExports.cpp).
+    Makevars and Makevars.win are needed for creating and installing R
+    package.
+    
+    M  .gitignore
+    * Updated
+    
+    M  R/RcppExports.R
+    * Generated file
+    
+    A  src/Makevars
+    A  src/Makevars.win
+    * For R package installation
+    
+    A  src/README
+    * Read it
+    
+    M  src/RcppExports.cpp
+    * Generated file
+    
+    A  src/make.util
+    * A few useful commands
+    * Has bits to generate ellipsis from Rcpp::List before
+      asking devtools to generate RcppExports files
+    
+    A  src/re2_capturing_group_names.cpp
+    A  src/re2_check_rewrite_string.cpp
+    A  src/re2_extract.cpp
+    A  src/re2_get_options.cpp
+    A  src/re2_global_replace.cpp
+    A  src/re2_match.cpp
+    A  src/re2_max_submatch.cpp
+    A  src/re2_named_capturing_groups.cpp
+    A  src/re2_number_of_capturing_groups.cpp
+    A  src/re2_possible_match_range.cpp
+    A  src/re2_quote_meta.cpp
+    A  src/re2_re2.cpp
+    A  src/re2_re2container.cpp
+    A  src/re2_re2container.h
+    A  src/re2_re2proxy.cpp
+    A  src/re2_re2proxy.h
+    A  src/re2_replace.cpp
+    A  src/re2_rewrite.cpp
+    * Each file contains Rcpp function that will transform into a
+      R function
+
+commit db00796e19e5788b0f1ad92a5e997e8345d38682
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 14:35:05 2021 +0200
+
+    Remove warning messages for -Wpedantic
+    
+    Make code more portable and acceptable for CRAN.
+    Following 3 warnings (from clang OSX) are removed:
+    * anonymous structs are a GNU extension [-Wgnu-anonymous-struct]
+    * anonymous types declared in an anonymous union are an extension
+        [-Wnested-anon-types]
+    * flexible array members are a C99 feature [-Wc99-extensions]
+    
+    M  src/re2google/Makefile
+    Add -Wpedantic and remove optimization
+    
+    M  src/re2google/re2/compile.cc
+    M  src/re2google/re2/dfa.cc
+    M  src/re2google/re2/onepass.cc
+    M  src/re2google/re2/parse.cc
+    M  src/re2google/re2/prog.cc
+    M  src/re2google/re2/prog.h
+    M  src/re2google/re2/regexp.cc
+    M  src/re2google/re2/regexp.h
+    M  src/re2google/re2/simplify.cc
+    * Name anonymous structs inside anonymous unions. On debian named
+      struct inside anonymous anonymous union is ok, but not in OSX.
+    * Replace array [] with array [1]. This does not cause memory
+      leak issues since objects are created on preallocated memory.
+
+commit 99ea72d4cb285e2092ebba2f1f08e20dadc9ca41
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 14:00:56 2021 +0200
+
+    Add google re2 source repository
+    
+    Add the whole repository without any changes (after removing git
+    related artifacts). Compiles and all tests pass.
+    
+    A  src/re2google/.gitignore
+    A  src/re2google/AUTHORS
+    A  src/re2google/BUILD
+    A  src/re2google/CMakeLists.txt
+    A  src/re2google/CONTRIBUTING.md
+    A  src/re2google/CONTRIBUTORS
+    A  src/re2google/LICENSE
+    A  src/re2google/Makefile
+    A  src/re2google/README
+    A  src/re2google/WORKSPACE
+    A  src/re2google/benchlog/benchplot.py
+    A  src/re2google/benchlog/mktable
+    A  src/re2google/doc/README.xkcd
+    A  src/re2google/doc/mksyntaxgo
+    A  src/re2google/doc/mksyntaxhtml
+    A  src/re2google/doc/mksyntaxwiki
+    A  src/re2google/doc/syntax.html
+    A  src/re2google/doc/syntax.txt
+    A  src/re2google/doc/xkcd.png
+    A  src/re2google/lib/git/commit-msg.hook
+    A  src/re2google/libre2.symbols
+    A  src/re2google/libre2.symbols.darwin
+    A  src/re2google/re2.pc
+    A  src/re2google/re2/bitmap256.h
+    A  src/re2google/re2/bitstate.cc
+    A  src/re2google/re2/compile.cc
+    A  src/re2google/re2/dfa.cc
+    A  src/re2google/re2/filtered_re2.cc
+    A  src/re2google/re2/filtered_re2.h
+    A  src/re2google/re2/fuzzing/compiler-rt/LICENSE
+    A  src/re2google/re2/fuzzing/compiler-rt/include/fuzzer/FuzzedDataProvider.h
+    A  src/re2google/re2/fuzzing/re2_fuzzer.cc
+    A  src/re2google/re2/make_perl_groups.pl
+    A  src/re2google/re2/make_unicode_casefold.py
+    A  src/re2google/re2/make_unicode_groups.py
+    A  src/re2google/re2/mimics_pcre.cc
+    A  src/re2google/re2/nfa.cc
+    A  src/re2google/re2/onepass.cc
+    A  src/re2google/re2/parse.cc
+    A  src/re2google/re2/perl_groups.cc
+    A  src/re2google/re2/pod_array.h
+    A  src/re2google/re2/prefilter.cc
+    A  src/re2google/re2/prefilter.h
+    A  src/re2google/re2/prefilter_tree.cc
+    A  src/re2google/re2/prefilter_tree.h
+    A  src/re2google/re2/prog.cc
+    A  src/re2google/re2/prog.h
+    A  src/re2google/re2/re2.cc
+    A  src/re2google/re2/re2.h
+    A  src/re2google/re2/regexp.cc
+    A  src/re2google/re2/regexp.h
+    A  src/re2google/re2/set.cc
+    A  src/re2google/re2/set.h
+    A  src/re2google/re2/simplify.cc
+    A  src/re2google/re2/sparse_array.h
+    A  src/re2google/re2/sparse_set.h
+    A  src/re2google/re2/stringpiece.cc
+    A  src/re2google/re2/stringpiece.h
+    A  src/re2google/re2/testing/backtrack.cc
+    A  src/re2google/re2/testing/charclass_test.cc
+    A  src/re2google/re2/testing/compile_test.cc
+    A  src/re2google/re2/testing/dfa_test.cc
+    A  src/re2google/re2/testing/dump.cc
+    A  src/re2google/re2/testing/exhaustive1_test.cc
+    A  src/re2google/re2/testing/exhaustive2_test.cc
+    A  src/re2google/re2/testing/exhaustive3_test.cc
+    A  src/re2google/re2/testing/exhaustive_test.cc
+    A  src/re2google/re2/testing/exhaustive_tester.cc
+    A  src/re2google/re2/testing/exhaustive_tester.h
+    A  src/re2google/re2/testing/filtered_re2_test.cc
+    A  src/re2google/re2/testing/mimics_pcre_test.cc
+    A  src/re2google/re2/testing/null_walker.cc
+    A  src/re2google/re2/testing/parse_test.cc
+    A  src/re2google/re2/testing/possible_match_test.cc
+    A  src/re2google/re2/testing/random_test.cc
+    A  src/re2google/re2/testing/re2_arg_test.cc
+    A  src/re2google/re2/testing/re2_test.cc
+    A  src/re2google/re2/testing/regexp_benchmark.cc
+    A  src/re2google/re2/testing/regexp_generator.cc
+    A  src/re2google/re2/testing/regexp_generator.h
+    A  src/re2google/re2/testing/regexp_test.cc
+    A  src/re2google/re2/testing/required_prefix_test.cc
+    A  src/re2google/re2/testing/search_test.cc
+    A  src/re2google/re2/testing/set_test.cc
+    A  src/re2google/re2/testing/simplify_test.cc
+    A  src/re2google/re2/testing/string_generator.cc
+    A  src/re2google/re2/testing/string_generator.h
+    A  src/re2google/re2/testing/string_generator_test.cc
+    A  src/re2google/re2/testing/tester.cc
+    A  src/re2google/re2/testing/tester.h
+    A  src/re2google/re2/tostring.cc
+    A  src/re2google/re2/unicode.py
+    A  src/re2google/re2/unicode_casefold.cc
+    A  src/re2google/re2/unicode_casefold.h
+    A  src/re2google/re2/unicode_groups.cc
+    A  src/re2google/re2/unicode_groups.h
+    A  src/re2google/re2/walker-inl.h
+    A  src/re2google/runtests
+    A  src/re2google/testinstall.cc
+    A  src/re2google/ucs2.diff
+    A  src/re2google/util/benchmark.cc
+    A  src/re2google/util/benchmark.h
+    A  src/re2google/util/flags.h
+    A  src/re2google/util/fuzz.cc
+    A  src/re2google/util/logging.h
+    A  src/re2google/util/malloc_counter.h
+    A  src/re2google/util/mix.h
+    A  src/re2google/util/mutex.h
+    A  src/re2google/util/pcre.cc
+    A  src/re2google/util/pcre.h
+    A  src/re2google/util/rune.cc
+    A  src/re2google/util/strutil.cc
+    A  src/re2google/util/strutil.h
+    A  src/re2google/util/test.cc
+    A  src/re2google/util/test.h
+    A  src/re2google/util/utf.h
+    A  src/re2google/util/util.h
+
+commit a08d4598fc6dadd06f248b7af117aeb2d194ad36
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 13:37:30 2021 +0200
+
+    Removing a wrong commit
+    
+    Folder was not unmodified goolg re2 source
+    
+    D  src/re2goolge/.github/bazel.sh
+    D  src/re2goolge/.github/cmake.sh
+    D  src/re2goolge/.github/workflows/ci-bazel.yml
+    D  src/re2goolge/.github/workflows/ci-cmake.yml
+    D  src/re2goolge/.github/workflows/ci.yml
+    D  src/re2goolge/.gitignore
+    D  src/re2goolge/AUTHORS
+    D  src/re2goolge/BUILD
+    D  src/re2goolge/CMakeLists.txt
+    D  src/re2goolge/CONTRIBUTING.md
+    D  src/re2goolge/CONTRIBUTORS
+    D  src/re2goolge/LICENSE
+    D  src/re2goolge/Makefile
+    D  src/re2goolge/README
+    D  src/re2goolge/WORKSPACE
+    D  src/re2goolge/benchlog/benchplot.py
+    D  src/re2goolge/benchlog/mktable
+    D  src/re2goolge/doc/README.xkcd
+    D  src/re2goolge/doc/mksyntaxgo
+    D  src/re2goolge/doc/mksyntaxhtml
+    D  src/re2goolge/doc/mksyntaxwiki
+    D  src/re2goolge/doc/syntax.html
+    D  src/re2goolge/doc/syntax.txt
+    D  src/re2goolge/doc/xkcd.png
+    D  src/re2goolge/lib/git/commit-msg.hook
+    D  src/re2goolge/libre2.symbols
+    D  src/re2goolge/libre2.symbols.darwin
+    D  src/re2goolge/re2.pc
+    D  src/re2goolge/re2/bitmap256.h
+    D  src/re2goolge/re2/bitstate.cc
+    D  src/re2goolge/re2/compile.cc
+    D  src/re2goolge/re2/dfa.cc
+    D  src/re2goolge/re2/filtered_re2.cc
+    D  src/re2goolge/re2/filtered_re2.h
+    D  src/re2goolge/re2/fuzzing/compiler-rt/LICENSE
+    D  src/re2goolge/re2/fuzzing/compiler-rt/include/fuzzer/FuzzedDataProvider.h
+    D  src/re2goolge/re2/fuzzing/re2_fuzzer.cc
+    D  src/re2goolge/re2/make_perl_groups.pl
+    D  src/re2goolge/re2/make_unicode_casefold.py
+    D  src/re2goolge/re2/make_unicode_groups.py
+    D  src/re2goolge/re2/mimics_pcre.cc
+    D  src/re2goolge/re2/nfa.cc
+    D  src/re2goolge/re2/onepass.cc
+    D  src/re2goolge/re2/parse.cc
+    D  src/re2goolge/re2/perl_groups.cc
+    D  src/re2goolge/re2/pod_array.h
+    D  src/re2goolge/re2/prefilter.cc
+    D  src/re2goolge/re2/prefilter.h
+    D  src/re2goolge/re2/prefilter_tree.cc
+    D  src/re2goolge/re2/prefilter_tree.h
+    D  src/re2goolge/re2/prog.cc
+    D  src/re2goolge/re2/prog.h
+    D  src/re2goolge/re2/re2.cc
+    D  src/re2goolge/re2/re2.h
+    D  src/re2goolge/re2/regexp.cc
+    D  src/re2goolge/re2/regexp.h
+    D  src/re2goolge/re2/set.cc
+    D  src/re2goolge/re2/set.h
+    D  src/re2goolge/re2/simplify.cc
+    D  src/re2goolge/re2/sparse_array.h
+    D  src/re2goolge/re2/sparse_set.h
+    D  src/re2goolge/re2/stringpiece.cc
+    D  src/re2goolge/re2/stringpiece.h
+    D  src/re2goolge/re2/testing/backtrack.cc
+    D  src/re2goolge/re2/testing/charclass_test.cc
+    D  src/re2goolge/re2/testing/compile_test.cc
+    D  src/re2goolge/re2/testing/dfa_test.cc
+    D  src/re2goolge/re2/testing/dump.cc
+    D  src/re2goolge/re2/testing/exhaustive1_test.cc
+    D  src/re2goolge/re2/testing/exhaustive2_test.cc
+    D  src/re2goolge/re2/testing/exhaustive3_test.cc
+    D  src/re2goolge/re2/testing/exhaustive_test.cc
+    D  src/re2goolge/re2/testing/exhaustive_tester.cc
+    D  src/re2goolge/re2/testing/exhaustive_tester.h
+    D  src/re2goolge/re2/testing/filtered_re2_test.cc
+    D  src/re2goolge/re2/testing/mimics_pcre_test.cc
+    D  src/re2goolge/re2/testing/null_walker.cc
+    D  src/re2goolge/re2/testing/parse_test.cc
+    D  src/re2goolge/re2/testing/possible_match_test.cc
+    D  src/re2goolge/re2/testing/random_test.cc
+    D  src/re2goolge/re2/testing/re2_arg_test.cc
+    D  src/re2goolge/re2/testing/re2_test.cc
+    D  src/re2goolge/re2/testing/regexp_benchmark.cc
+    D  src/re2goolge/re2/testing/regexp_generator.cc
+    D  src/re2goolge/re2/testing/regexp_generator.h
+    D  src/re2goolge/re2/testing/regexp_test.cc
+    D  src/re2goolge/re2/testing/required_prefix_test.cc
+    D  src/re2goolge/re2/testing/search_test.cc
+    D  src/re2goolge/re2/testing/set_test.cc
+    D  src/re2goolge/re2/testing/simplify_test.cc
+    D  src/re2goolge/re2/testing/string_generator.cc
+    D  src/re2goolge/re2/testing/string_generator.h
+    D  src/re2goolge/re2/testing/string_generator_test.cc
+    D  src/re2goolge/re2/testing/tester.cc
+    D  src/re2goolge/re2/testing/tester.h
+    D  src/re2goolge/re2/tostring.cc
+    D  src/re2goolge/re2/unicode.py
+    D  src/re2goolge/re2/unicode_casefold.cc
+    D  src/re2goolge/re2/unicode_casefold.h
+    D  src/re2goolge/re2/unicode_groups.cc
+    D  src/re2goolge/re2/unicode_groups.h
+    D  src/re2goolge/re2/walker-inl.h
+    D  src/re2goolge/runtests
+    D  src/re2goolge/testinstall.cc
+    D  src/re2goolge/ucs2.diff
+    D  src/re2goolge/util/benchmark.cc
+    D  src/re2goolge/util/benchmark.h
+    D  src/re2goolge/util/flags.h
+    D  src/re2goolge/util/fuzz.cc
+    D  src/re2goolge/util/logging.h
+    D  src/re2goolge/util/malloc_counter.h
+    D  src/re2goolge/util/mix.h
+    D  src/re2goolge/util/mutex.h
+    D  src/re2goolge/util/pcre.cc
+    D  src/re2goolge/util/pcre.h
+    D  src/re2goolge/util/rune.cc
+    D  src/re2goolge/util/strutil.cc
+    D  src/re2goolge/util/strutil.h
+    D  src/re2goolge/util/test.cc
+    D  src/re2goolge/util/test.h
+    D  src/re2goolge/util/utf.h
+    D  src/re2goolge/util/util.h
+    ?? src/re2goolge/
+
+commit 8f7218ecf95858007f534569cf93e24c139f783c
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 12:24:36 2021 +0200
+
+    Added google re2 C++ source as is
+    
+    Verfied that all tests pass (in re2/testing)
+    
+    A  src/re2goolge/.github/bazel.sh
+    A  src/re2goolge/.github/cmake.sh
+    A  src/re2goolge/.github/workflows/ci-bazel.yml
+    A  src/re2goolge/.github/workflows/ci-cmake.yml
+    A  src/re2goolge/.github/workflows/ci.yml
+    A  src/re2goolge/.gitignore
+    A  src/re2goolge/AUTHORS
+    A  src/re2goolge/BUILD
+    A  src/re2goolge/CMakeLists.txt
+    A  src/re2goolge/CONTRIBUTING.md
+    A  src/re2goolge/CONTRIBUTORS
+    A  src/re2goolge/LICENSE
+    A  src/re2goolge/Makefile
+    A  src/re2goolge/README
+    A  src/re2goolge/WORKSPACE
+    A  src/re2goolge/benchlog/benchplot.py
+    A  src/re2goolge/benchlog/mktable
+    A  src/re2goolge/doc/README.xkcd
+    A  src/re2goolge/doc/mksyntaxgo
+    A  src/re2goolge/doc/mksyntaxhtml
+    A  src/re2goolge/doc/mksyntaxwiki
+    A  src/re2goolge/doc/syntax.html
+    A  src/re2goolge/doc/syntax.txt
+    A  src/re2goolge/doc/xkcd.png
+    A  src/re2goolge/lib/git/commit-msg.hook
+    A  src/re2goolge/libre2.symbols
+    A  src/re2goolge/libre2.symbols.darwin
+    A  src/re2goolge/re2.pc
+    A  src/re2goolge/re2/bitmap256.h
+    A  src/re2goolge/re2/bitstate.cc
+    A  src/re2goolge/re2/compile.cc
+    A  src/re2goolge/re2/dfa.cc
+    A  src/re2goolge/re2/filtered_re2.cc
+    A  src/re2goolge/re2/filtered_re2.h
+    A  src/re2goolge/re2/fuzzing/compiler-rt/LICENSE
+    A  src/re2goolge/re2/fuzzing/compiler-rt/include/fuzzer/FuzzedDataProvider.h
+    A  src/re2goolge/re2/fuzzing/re2_fuzzer.cc
+    A  src/re2goolge/re2/make_perl_groups.pl
+    A  src/re2goolge/re2/make_unicode_casefold.py
+    A  src/re2goolge/re2/make_unicode_groups.py
+    A  src/re2goolge/re2/mimics_pcre.cc
+    A  src/re2goolge/re2/nfa.cc
+    A  src/re2goolge/re2/onepass.cc
+    A  src/re2goolge/re2/parse.cc
+    A  src/re2goolge/re2/perl_groups.cc
+    A  src/re2goolge/re2/pod_array.h
+    A  src/re2goolge/re2/prefilter.cc
+    A  src/re2goolge/re2/prefilter.h
+    A  src/re2goolge/re2/prefilter_tree.cc
+    A  src/re2goolge/re2/prefilter_tree.h
+    A  src/re2goolge/re2/prog.cc
+    A  src/re2goolge/re2/prog.h
+    A  src/re2goolge/re2/re2.cc
+    A  src/re2goolge/re2/re2.h
+    A  src/re2goolge/re2/regexp.cc
+    A  src/re2goolge/re2/regexp.h
+    A  src/re2goolge/re2/set.cc
+    A  src/re2goolge/re2/set.h
+    A  src/re2goolge/re2/simplify.cc
+    A  src/re2goolge/re2/sparse_array.h
+    A  src/re2goolge/re2/sparse_set.h
+    A  src/re2goolge/re2/stringpiece.cc
+    A  src/re2goolge/re2/stringpiece.h
+    A  src/re2goolge/re2/testing/backtrack.cc
+    A  src/re2goolge/re2/testing/charclass_test.cc
+    A  src/re2goolge/re2/testing/compile_test.cc
+    A  src/re2goolge/re2/testing/dfa_test.cc
+    A  src/re2goolge/re2/testing/dump.cc
+    A  src/re2goolge/re2/testing/exhaustive1_test.cc
+    A  src/re2goolge/re2/testing/exhaustive2_test.cc
+    A  src/re2goolge/re2/testing/exhaustive3_test.cc
+    A  src/re2goolge/re2/testing/exhaustive_test.cc
+    A  src/re2goolge/re2/testing/exhaustive_tester.cc
+    A  src/re2goolge/re2/testing/exhaustive_tester.h
+    A  src/re2goolge/re2/testing/filtered_re2_test.cc
+    A  src/re2goolge/re2/testing/mimics_pcre_test.cc
+    A  src/re2goolge/re2/testing/null_walker.cc
+    A  src/re2goolge/re2/testing/parse_test.cc
+    A  src/re2goolge/re2/testing/possible_match_test.cc
+    A  src/re2goolge/re2/testing/random_test.cc
+    A  src/re2goolge/re2/testing/re2_arg_test.cc
+    A  src/re2goolge/re2/testing/re2_test.cc
+    A  src/re2goolge/re2/testing/regexp_benchmark.cc
+    A  src/re2goolge/re2/testing/regexp_generator.cc
+    A  src/re2goolge/re2/testing/regexp_generator.h
+    A  src/re2goolge/re2/testing/regexp_test.cc
+    A  src/re2goolge/re2/testing/required_prefix_test.cc
+    A  src/re2goolge/re2/testing/search_test.cc
+    A  src/re2goolge/re2/testing/set_test.cc
+    A  src/re2goolge/re2/testing/simplify_test.cc
+    A  src/re2goolge/re2/testing/string_generator.cc
+    A  src/re2goolge/re2/testing/string_generator.h
+    A  src/re2goolge/re2/testing/string_generator_test.cc
+    A  src/re2goolge/re2/testing/tester.cc
+    A  src/re2goolge/re2/testing/tester.h
+    A  src/re2goolge/re2/tostring.cc
+    A  src/re2goolge/re2/unicode.py
+    A  src/re2goolge/re2/unicode_casefold.cc
+    A  src/re2goolge/re2/unicode_casefold.h
+    A  src/re2goolge/re2/unicode_groups.cc
+    A  src/re2goolge/re2/unicode_groups.h
+    A  src/re2goolge/re2/walker-inl.h
+    A  src/re2goolge/runtests
+    A  src/re2goolge/testinstall.cc
+    A  src/re2goolge/ucs2.diff
+    A  src/re2goolge/util/benchmark.cc
+    A  src/re2goolge/util/benchmark.h
+    A  src/re2goolge/util/flags.h
+    A  src/re2goolge/util/fuzz.cc
+    A  src/re2goolge/util/logging.h
+    A  src/re2goolge/util/malloc_counter.h
+    A  src/re2goolge/util/mix.h
+    A  src/re2goolge/util/mutex.h
+    A  src/re2goolge/util/pcre.cc
+    A  src/re2goolge/util/pcre.h
+    A  src/re2goolge/util/rune.cc
+    A  src/re2goolge/util/strutil.cc
+    A  src/re2goolge/util/strutil.h
+    A  src/re2goolge/util/test.cc
+    A  src/re2goolge/util/test.h
+    A  src/re2goolge/util/utf.h
+    A  src/re2goolge/util/util.h
+
+commit a7eb1a4968c1fbb2a9b48813a7a9f71b298cb49c
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 12:20:09 2021 +0200
+
+    Cleanedup artifacts from R pkg skeleton
+    
+    M  .gitignore
+    Added new entries
+    
+    D  src/rcpp_hello_world.cpp
+    Removed file
+
+commit cbb512f8583976b9e9f84f92b20cefb0cb59efe9
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon Mar 29 10:18:46 2021 +0200
+
+    first commit

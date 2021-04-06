@@ -7,6 +7,25 @@
 
 using namespace Rcpp;
 
+//' Maximum submatch
+//'
+//' Returns the maximum submatch needed for rewrite.
+//'   For \code{\link{re2_replace}} and \code{\link{re2_extract}} to be
+//'   successful, the number
+//'   of matching groups (submatch) has to be at least a many as the
+//'   maximum group number mentioned in the rewrite string. The latter
+//'   is returned by this function.
+//'   
+//' @param rewrite Character string containing rewrite instructions.
+//' @return A non-negative integer indicating the maximum submatch.
+//'
+//' @examples
+//' stopifnot(re2_max_submatch("foo \\2,\\1") == 2)
+//' stopifnot(re2_max_submatch("bar \\2: \\5") == 5)
+//' stopifnot(re2_max_submatch(c("bar \\2: \\5", r"(\1 \9)")) == c(5, 9))
+//'
+//' @seealso \code{\link{re2_number_of_capturing_groups}}, \code{\link{re2_replace}},
+//'   \code{\link{re2_global_replace}}, \code{\link{re2_extract}}.
 // [[Rcpp::export]]
 SEXP re2_max_submatch(StringVector rewrite) {
 

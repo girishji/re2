@@ -689,9 +689,9 @@ static void embed_re2_inner(const std::string &pattern, const RE2::Options &opti
   std::string cmd = "re2ptr <- re2_re2(pattern";
 
   if (options.encoding() == RE2::Options::EncodingUTF8) {
-    R["encoding_"] = "EncodingUTF8";
+    R["encoding_"] = "UTF8";
   } else {
-    R["encoding_"] = "EncodingLatin1";        
+    R["encoding_"] = "Latin1";        
   }
   cmd += ", encoding=encoding_";
 
@@ -771,7 +771,7 @@ bool RE2::Match(const StringPiece& text,
     
     std::string evalstr = "re2_match(text_, re2ptr, startpos=startpos_, "
       "endpos=endpos_, re_anchor=re_anchor_, "
-      "nsubmatch=nsubmatch_, testing=T";
+      "nsubmatch=nsubmatch_";
     Rcpp::LogicalVector lv = R.parseEval(evalstr + ", logical=T)");
     Rcpp::StringVector result = R.parseEval(evalstr + ")");
     

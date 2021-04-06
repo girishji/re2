@@ -7,6 +7,43 @@
 
 using namespace Rcpp;
 
+//' Capturing indices to group names
+//'
+//' Return a map (named character vector) from capturing indices 
+//'   to names of groups (if named). The mapping has no
+//'   entries for unnamed groups. If parameter is a vector of pattern
+//'   strings, then a list of mappings is returned.
+//'
+//' @param pattern Character string containing a regular expression,
+//'    or a precompiled regular expression (see \code{\link{re2_re2}}).
+//'    Or, a vector of such pattern strings.
+//'
+//' @return A named character vector reflecting the mapping from
+//'   capturing indices to names. Or, a list of mappings if parameter
+//'   is a vector.
+//'
+//' @examples
+//' cgn <- re2_capturing_group_names("((abc)(?P<G2>)|((e+)(?P<G2>.*)(?P<G1>u+)))")
+//' # 1st group is the outer paranthesis, 2nd groups is the unamed (abc), and so on.
+//' stopifnot(cgn["3"] == "G2")
+//' stopifnot(cgn["6"] == "G2")
+//' stopifnot(cgn["7"] == "G1")
+//' stopifnot(length(cgn) == 3)
+//' stopifnot(is.na(cgn["1"]))
+//'
+//' # Same as above, except using compiled pattern:
+//' re2p <- re2_re2("((abc)(?P<G2>)|((e+)(?P<G2>.*)(?P<G1>u+)))")
+//' cgn <- re2_capturing_group_names(re2p)
+//'
+//' # If input is a vector of patterns, a list is returned:
+//' cgn <- re2_capturing_group_names(c("bar", "(foo)(?P<Gr1>)"))
+//' stopifnot(mode(cgn) == "list")
+//'
+//' @seealso \code{\link{re2_named_capturing_groups}},
+//'   \code{\link{re2_number_of_capturing_groups}},
+//'   \code{\link{re2_re2}}, \code{\link{re2_replace}},
+//'   \code{\link{re2_match}}, \code{\link{re2_global_replace}},
+//'   \code{\link{re2_extract}}.
 // [[Rcpp::export]]
 SEXP re2_capturing_group_names(SEXP pattern) {
 

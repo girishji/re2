@@ -38,3 +38,6 @@ obj/test/simplify_test                  PASS
 obj/test/string_generator_test          PASS
 ALL TESTS PASSED.
 
+These tests are not included in R CMD check, since they
+take a long time to compile and run, which is against
+the guidelines of R CMD check.

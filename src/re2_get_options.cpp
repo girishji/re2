@@ -6,6 +6,16 @@
 
 using namespace Rcpp;
 
+//' Retrieve options
+//'
+//' \code{re2_get_options} returns a list of all options from a
+//'   RE2 object (internal representation of compiled regexp).
+//'
+//' @param re2ptr The value obtained from call to \code{\link{re2_re2}}.
+//' @return A list of option value mappings.
+//'
+//' @seealso \code{\link{re2_re2}}.
+//'
 // [[Rcpp::export]]
 List re2_get_options(SEXP re2ptr) {
   if (TYPEOF(re2ptr) != EXTPTRSXP) {
@@ -35,7 +45,7 @@ List re2_get_options(SEXP re2ptr) {
      "one_line");
   List out(optname.size());
   out[0] = options.encoding() == RE2::Options::EncodingUTF8 ?
-    "EncodingUTF8" : "EncodingLatin1";
+    "UTF8" : "Latin1";
   out[1] = options.posix_syntax();
   out[2] = options.longest_match();
   out[3] = options.log_errors();
