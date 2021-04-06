@@ -1,29 +1,30 @@
+commit f54189db9c2c161850173a3feeb1c4d3241dc3e3
 Author: Girish Palya <girishji@gmail.com>
-Date:   Tue, 06 Apr 2021 20:25:24 +0200
+Date:   Tue Apr 6 20:28:22 2021 +0200
 
-Add RE2 regexp syntax documentation
-
-Add file RE2Syntax.md with regexp syntax. Add a python script to
-  convert markdown to R document file. Add links in other files.
-  
-M  src/re2_extract.cpp
-M  src/re2_global_replace.cpp
-M  src/re2_match.cpp
-M  src/re2_re2.cpp
-M  src/re2_replace.cpp
-Add links to re2_regexp syntax documentation.
-
-A  src/util/RE2Syntax.md
-Add regexp syntax document.
-
-A  src/util/convert.py
-Add script to convert markdown to R document.
-
-M  src/util/GNUmakefile
-Reflect changes.
-
-M  R/RcppExports.R
-Generated file
+    Add RE2 regexp syntax documentation
+    
+    Add file RE2Syntax.md with regexp syntax. Add a python script to
+      convert markdown to R document file. Add links in other files.
+    
+    M  src/re2_extract.cpp
+    M  src/re2_global_replace.cpp
+    M  src/re2_match.cpp
+    M  src/re2_re2.cpp
+    M  src/re2_replace.cpp
+    Add links to re2_regexp syntax.
+    
+    A  src/util/RE2Syntax.md
+    Add regexp syntax document.
+    
+    A  src/util/convert.py
+    Add script to convert markdown to R document.
+    
+    M  src/util/GNUmakefile
+    Reflect changes.
+    
+    M  R/RcppExports.R
+    Generated file
 
 commit 0ae00cebb75c026ba84f380a0d46077c7a79571d
 Author: Girish Palya <girishji@gmail.com>
