@@ -79,7 +79,8 @@ using namespace Rcpp;
 //'
 //' @inheritSection re2_re2 Regexp Syntax
 //'
-//' @seealso \code{\link{re2_re2}}, \code{\link{re2_replace}},
+//' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+//'   \code{\link{re2_replace}},
 //'   \code{\link{re2_match}}, \code{\link{re2_global_replace}}.
 // [[Rcpp::export]]
 SEXP re2_extract(StringVector text, SEXP pattern,

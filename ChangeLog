@@ -1,64 +1,93 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Tue, 06 Apr 2021 12:51:18 +0200
+Date:   Tue, 06 Apr 2021 20:25:24 +0200
 
-Add roxygen comments to document functions
+Add RE2 regexp syntax documentation
 
-Add roxygen comments to document functions, and misc cleanup.
+Add file RE2Syntax.md with regexp syntax. Add a python script to
+  convert markdown to R document file. Add links in other files.
+  
+M  src/re2_extract.cpp
+M  src/re2_global_replace.cpp
+M  src/re2_match.cpp
+M  src/re2_re2.cpp
+M  src/re2_replace.cpp
+Add links to re2_regexp syntax documentation.
 
-Add roxygen comments to document functions
-    src/re2_replace.cpp
-    src/re2_re2.cpp
-    src/re2_capturing_group_names.cpp
-    src/re2_check_rewrite_string.cpp
-    src/re2_extract.cpp
-    src/re2_get_options.cpp
-    src/re2_global_replace.cpp
-    src/re2_match.cpp
-    src/re2_max_submatch.cpp
-    src/re2_named_capturing_groups.cpp
-    src/re2_number_of_capturing_groups.cpp
-    src/re2_possible_match_range.cpp
-    src/re2_quote_meta.cpp
+A  src/util/RE2Syntax.md
+Add regexp syntax document.
 
-Add dummy R file for package level documentation and remove file created by package skeleton
-    R/re2-package.R
-    man/re2-package.Rd
+A  src/util/convert.py
+Add script to convert markdown to R document.
 
-Rename input parameter for better readability.
-    src/re2_replace.cpp
-    src/re2_extract.cpp
-    src/re2_global_replace.cpp
-    src/re2_match.cpp
+M  src/util/GNUmakefile
+Reflect changes.
 
-Remove from exporting, since this function is redundant.
-    src/re2_rewrite.cpp
- 
-Update to generate roxygen documents.
-    src/util/GNUmakefile
+M  R/RcppExports.R
+Generated file
 
-Change test directory name to avoid conflict with R CMD check.
-    tests/GNUmakefile
+commit 0ae00cebb75c026ba84f380a0d46077c7a79571d
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Apr 6 12:51:18 2021 +0200
 
-Update.
-    tests/README
-    .Rbuildignore
-    .gitignore
-    DESCRIPTION
-
-Stop logging when regexp has errors.
-    src/re2_re2proxy.cpp
-
-Generated files.
-    R/RcppExports.R
-    src/RcppExports.cpp
-
-Change name of option value to be more concise, and cleanup. 
-tests/re2_R.cc
-    src/re2_re2proxy.cpp
-    src/re2_get_options.cpp
-
-Add file.
-    ChangeLog
+    Add roxygen comments to document functions
+    
+    Add roxygen comments to document functions, and misc cleanup.
+    
+    Add roxygen comments to document functions
+        src/re2_replace.cpp
+        src/re2_re2.cpp
+        src/re2_capturing_group_names.cpp
+        src/re2_check_rewrite_string.cpp
+        src/re2_extract.cpp
+        src/re2_get_options.cpp
+        src/re2_global_replace.cpp
+        src/re2_match.cpp
+        src/re2_max_submatch.cpp
+        src/re2_named_capturing_groups.cpp
+        src/re2_number_of_capturing_groups.cpp
+        src/re2_possible_match_range.cpp
+        src/re2_quote_meta.cpp
+    
+    Add dummy R file for package level documentation and remove file
+      created by package skeleton
+        R/re2-package.R
+        man/re2-package.Rd
+    
+    Rename input parameter for better readability.
+        src/re2_replace.cpp
+        src/re2_extract.cpp
+        src/re2_global_replace.cpp
+        src/re2_match.cpp
+    
+    Remove from exporting, since this function is redundant.
+        src/re2_rewrite.cpp
+    
+    Update to generate roxygen documents.
+        src/util/GNUmakefile
+    
+    Change test directory name to avoid conflict with R CMD check.
+        tests/GNUmakefile
+    
+    Update.
+        tests/README
+        .Rbuildignore
+        .gitignore
+        DESCRIPTION
+    
+    Stop logging when regexp has errors.
+        src/re2_re2proxy.cpp
+    
+    Generated files.
+        R/RcppExports.R
+        src/RcppExports.cpp
+    
+    Change name of option value to be more concise, and cleanup.
+    tests/re2_R.cc
+        src/re2_re2proxy.cpp
+        src/re2_get_options.cpp
+    
+    Add file.
+        ChangeLog
 
 commit fbca1e72033ff5a15f18d4b974b569f753e60b44
 Author: Girish Palya <girishji@gmail.com>

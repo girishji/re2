@@ -107,7 +107,8 @@ using namespace Rcpp;
 //' res <- re2_replace(s, re, rewrite)
 //' stopifnot(res == expected)
 //'      
-//' @seealso \code{\link{re2_re2}}, \code{\link{re2_global_replace}},
+//' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+//'   \code{\link{re2_global_replace}},
 //'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
 // [[Rcpp::export]]
 SEXP re2_replace(StringVector text, SEXP pattern,

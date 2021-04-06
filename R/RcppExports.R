@@ -160,7 +160,8 @@ re2_check_rewrite_string <- function(pattern, rewrite, ...) {
 #'
 #' @inheritSection re2_re2 Regexp Syntax
 #'
-#' @seealso \code{\link{re2_re2}}, \code{\link{re2_replace}},
+#' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+#'   \code{\link{re2_replace}},
 #'   \code{\link{re2_match}}, \code{\link{re2_global_replace}}.
 re2_extract <- function(text, pattern, rewrite, ...) {
     more_options <- list(...)
@@ -271,7 +272,8 @@ re2_get_options <- function(re2ptr) {
 #'
 #' @inheritSection re2_re2 Regexp Syntax
 #'
-#' @seealso \code{\link{re2_re2}}, \code{\link{re2_replace}},
+#' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+#'   \code{\link{re2_replace}},
 #'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
 re2_global_replace <- function(text, pattern, rewrite, ...) {
     more_options <- list(...)
@@ -397,7 +399,8 @@ re2_global_replace <- function(text, pattern, rewrite, ...) {
 #' stopifnot(length(re2_match("ruby:1234", "(\\w+):(\\d+)",
 #'                  nsubmatch=1)) == 1)
 #'      
-#' @seealso \code{\link{re2_re2}}, \code{\link{re2_global_replace}},
+#' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+#'   \code{\link{re2_global_replace}},
 #'   \code{\link{re2_replace}}, \code{\link{re2_extract}}.
 #'
 re2_match <- function(text, pattern, ...) {
@@ -575,7 +578,7 @@ re2_quote_meta <- function(unquoted) {
 #'   backreferences and generalized assertions are not available, nor
 #'   is \verb{\Z}.
 #'
-#' See \url{https://github.com/google/re2/wiki/Syntax} for the syntax
+#' See \link{re2_regexp} or \url{https://github.com/girishji/re2/wiki/Syntax} for the syntax
 #'   supported by RE2, and a comparison with PCRE and PERL regexps.
 #'
 #' For those not familiar with Perl's regular expressions, here are
@@ -670,7 +673,7 @@ re2_quote_meta <- function(unquoted) {
 #'
 #' @usage re2_re2(pattern, \dots)
 #'
-#' @seealso \code{\link{re2_replace}}, \code{\link{re2_global_replace}},
+#' @seealso \link{re2_regexp},  \code{\link{re2_replace}}, \code{\link{re2_global_replace}},
 #'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
 re2_re2 <- function(pattern, ...) {
     more_options <- list(...)
@@ -777,7 +780,8 @@ re2_re2 <- function(pattern, ...) {
 #' res <- re2_replace(s, re, rewrite)
 #' stopifnot(res == expected)
 #'      
-#' @seealso \code{\link{re2_re2}}, \code{\link{re2_global_replace}},
+#' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+#'   \code{\link{re2_global_replace}},
 #'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
 re2_replace <- function(text, pattern, rewrite, ...) {
     more_options <- list(...)

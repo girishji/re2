@@ -126,7 +126,8 @@ using namespace Rcpp;
 //' stopifnot(length(re2_match("ruby:1234", "(\\w+):(\\d+)",
 //'                  nsubmatch=1)) == 1)
 //'      
-//' @seealso \code{\link{re2_re2}}, \code{\link{re2_global_replace}},
+//' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+//'   \code{\link{re2_global_replace}},
 //'   \code{\link{re2_replace}}, \code{\link{re2_extract}}.
 //'
 // [[Rcpp::export]]
