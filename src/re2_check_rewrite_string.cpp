@@ -37,13 +37,13 @@ using namespace Rcpp;
 //' stopifnot(re2_check_rewrite_string("abc", "foo"));
 //' stopifnot(!re2_check_rewrite_string("abc", "foo\\"));
 //' stopifnot(re2_check_rewrite_string("abc", "foo\\0bar"));
-//' #
+//' 
 //' stopifnot(re2_check_rewrite_string("a(b)c", "foo"));
 //' stopifnot(re2_check_rewrite_string("a(b)c", "foo\\0bar"));
 //' stopifnot(re2_check_rewrite_string("a(b)c", "foo\\1bar"));
 //' stopifnot(!re2_check_rewrite_string("a(b)c", "foo\\2bar"));
 //' stopifnot(re2_check_rewrite_string("a(b)c", "f\\\\2o\\1o"));
-//' #
+//' 
 //' stopifnot(re2_check_rewrite_string("a(b)(c)", "foo\\12"));
 //' stopifnot(re2_check_rewrite_string("a(b)(c)", "f\\2o\\1o"));
 //' stopifnot(!re2_check_rewrite_string("a(b)(c)", "f\\oo\\1"));

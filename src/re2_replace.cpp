@@ -59,47 +59,47 @@ using namespace Rcpp;
 //' res <- re2_replace(s, "b+", "d")
 //' expected <- c("yada dabba doo", "famad")
 //' stopifnot(res == expected)
-//' #
+//' 
 //' res <- re2_replace("boris@kremvax.ru",
 //'                    "(.*)@([^.]*)", "\\2!\\1")
 //' expected <- "kremvax!boris.ru"
 //' stopifnot(res == expected)
-//' #
+//' 
 //' re <- "(qu|[b-df-hj-np-tv-z]*)([a-z]+)"
 //' rewrite <- "\\2\\1ay"
 //' s <- "the quick brown fox jumps over the lazy dogs."
 //' expected <- "ethay quick brown fox jumps over the lazy dogs."
 //' res <- re2_replace(s, re, rewrite)
 //' stopifnot(res == expected)
-//' #
+//' 
 //' re <- "\\w+"
 //' rewrite <- "\\0-NOSPAM"
 //' s <- "abcd.efghi@google.com"
 //' expected <- "abcd-NOSPAM.efghi@google.com"
 //' res <- re2_replace(s, re, rewrite)
 //' stopifnot(res == expected)
-//' #  
+//'   
 //' re <- "a.*a"
 //' rewrite <- "(\\0)"
 //' s <- "aba\naba"
 //' expected <- "(aba)\naba"
 //' res <- re2_replace(s, re, rewrite)
 //' stopifnot(res == expected)
-//' #
+//' 
 //' re <- "b"
 //' rewrite <- "bb"
 //' s <- "ababababab"
 //' expected <- "abbabababab"
 //' res <- re2_replace(s, re, rewrite)
 //' stopifnot(res == expected)
-//' #
+//' 
 //' re <- "b+"
 //' rewrite <- "bb"
 //' s <- "bbbbbb"
 //' expected <- "bb"
 //' res <- re2_replace(s, re, rewrite)
 //' stopifnot(res == expected)
-//' #
+//' 
 //' re <- "b*"
 //' rewrite <- "bb"
 //' s <- c("bbbbbb", "aaaaa")
@@ -107,7 +107,7 @@ using namespace Rcpp;
 //' res <- re2_replace(s, re, rewrite)
 //' stopifnot(res == expected)
 //'      
-//' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+//' @seealso \code{\link{re2_re2}}, \link{re2_syntax},
 //'   \code{\link{re2_global_replace}},
 //'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
 // [[Rcpp::export]]

@@ -60,18 +60,23 @@ using namespace Rcpp;
 //'                       "(.*)@([^.]*)",
 //'                       "\\2!\\1")
 //'           == "wunnies!bunny")
+//'
 //' # Case insensitive
 //' stopifnot(re2_extract("Bunny@wunnies.pl",
 //'                       "(b.*)@([^.]*)",
 //'                       "\\2!\\1",
 //'                       case_sensitive=FALSE)
 //'           == "wunnies!Bunny")
+//' 
 //' # Max submatch too large (1 match group, 2 submatches needed)
 //' stopifnot(!re2_extract("foo", "f(o+)", "\\1\\2", logical=TRUE))
+//' 
 //' # No match, nothing is extracted
 //' stopifnot(re2_extract("baz", "bar", "'\\0'") == "")
+//' 
 //' # When match fails, logical result is a FALSE
 //' stopifnot(!re2_extract("baz", "bar", "'\\0'", logical=TRUE))
+//' 
 //' # A vector parameter
 //' stopifnot(re2_extract(c("Bunny@wunnies.pl", "cargo@cult.org"),
 //'                       "(.*)@([^.]*)", "\\2!\\1")
@@ -79,7 +84,7 @@ using namespace Rcpp;
 //'
 //' @inheritSection re2_re2 Regexp Syntax
 //'
-//' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+//' @seealso \code{\link{re2_re2}}, \link{re2_syntax},
 //'   \code{\link{re2_replace}},
 //'   \code{\link{re2_match}}, \code{\link{re2_global_replace}}.
 // [[Rcpp::export]]

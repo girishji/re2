@@ -1,3 +1,59 @@
+Author: Girish Palya <girishji@gmail.com>
+Date:   Thu, 08 Apr 2021 15:15:52 +0200
+
+Add vignettes
+
+Add vignettes and cleanup docs.
+
+A  vignettes/re2_benchmark.Rmd
+A  vignettes/re2_intro.Rmd
+A  vignettes/re2_syntax.Rmd
+A  vignettes/re2_tests.Rmd
+Add vignettes.
+
+M  src/RcppExports.cpp
+M  src/re2_check_rewrite_string.cpp
+M  src/re2_extract.cpp
+M  src/re2_global_replace.cpp
+M  src/re2_match.cpp
+M  src/re2_max_submatch.cpp
+M  src/re2_named_capturing_groups.cpp
+M  src/re2_number_of_capturing_groups.cpp
+M  src/re2_possible_match_range.cpp
+M  src/re2_re2.cpp
+M  src/re2_replace.cpp
+Fix examples section.
+
+M  src/re2google/GNUmakefile
+M  src/util/GNUmakefile
+M  src/util/README
+M  .Rbuildignore
+M  .gitignore
+M  DESCRIPTION
+M  R/re2-package.R
+M  tests/README
+Update.
+
+M  R/RcppExports.R
+Generated file.
+
+A  src/util/benchlog.macbook-air
+Performance benchmark log.
+
+M  src/util/convert.py
+To create R document frile from markdown.
+
+A  vignettes/.gitignore
+Add file.
+
+commit 9913a5f62e2194a369160c48b3768b1270cfc595
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Apr 6 20:33:20 2021 +0200
+
+    Update ChangeLog
+    
+    Update Changelog.
+
 commit f54189db9c2c161850173a3feeb1c4d3241dc3e3
 Author: Girish Palya <girishji@gmail.com>
 Date:   Tue Apr 6 20:28:22 2021 +0200

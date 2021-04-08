@@ -40,13 +40,13 @@ using namespace Rcpp;
 //' @examples
 //' r <- re2_possible_match_range("abc|def", 10)
 //' stopifnot(r["min"] == "abc", r["max"] == "def")
-//' #
+//' 
 //' r <- re2_possible_match_range("a(b)(c)[d]", 10)
 //' stopifnot(r["min"] == "abcd", r["max"] == "abcd")
-//' #
+//' 
 //' r <- re2_possible_match_range("(abc)+", 10)
 //' stopifnot(r["min"] == "abc", r["max"] == "abcac")
-//' #
+//' 
 //' r <- re2_possible_match_range("(?i)Abcdef", 10)
 //' stopifnot(r["min"] == "ABCDEF", r["max"] == "abcdef")
 //'

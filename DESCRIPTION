@@ -1,16 +1,16 @@
 Package: re2
 Type: Package
-Title: R Interface to Google RE2 (C++) Regular Expression Engine
+Title: R Interface to Google RE2 (C++) Regular Expression Library
 Version: 0.1.0
 Date: 2021-03-28
 Author: Girish Palya [aut, cre],
 	RE2 developers [ctb] (RE2 library),
 	Google Inc. [ctb, cph] (RE2 library)
 Maintainer: Girish Palya <girishji@gmail.com>
-Description: R interface to Google re2 (C++) regular expression engine.
-	     RE2 <https://github.com/google/re2> is a fast, safe,
-	     thread-friendly alternative to backtracking regular
-	     expression engines like those used in PCRE, Perl, and Python.
+Description: R interface to Google RE2 (C++) regular expression engine.
+	     RE2 is a fast, safe, thread-friendly alternative to
+	     backtracking regular expression engines like those used
+	     in PCRE, Perl, and Python.
 License: MIT + file LICENSE
 Imports: Rcpp (>= 1.0.6)
 LinkingTo: Rcpp
@@ -18,3 +18,7 @@ URL: https://github.com/girishji/re2
 BugReports: https://github.com/girishji/re2/issues
 Encoding: UTF-8
 RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

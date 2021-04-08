@@ -7,6 +7,10 @@
 
 using namespace Rcpp;
 
+SEXP re2_match_inner(StringVector text, SEXP pattern,
+		     bool logical, bool verbose,
+		     Nullable<List> more_options);
+
 //' Matching and substring extraction
 //'
 //' @description
@@ -37,7 +41,7 @@ using namespace Rcpp;
 //'                           will use: runs much faster with nsubmatch == 1
 //'                           than nsubmatch > 1, and runs even faster if
 //'                           nsubmatch == 0. Doesn't make sense to use
-//'                           nsubmatch > 1 + \code{\link{re2_number_of_capturing_groups}},
+//'                           nsubmatch > 1 + \code{re2_number_of_capturing_groups},
 //'                           but will be handled correctly.\cr
 //'   \verb{re_anchor} \tab (\verb{"UNANCHORED"})
 //'                          "UNANCHORED" - No anchoring
@@ -65,9 +69,8 @@ using namespace Rcpp;
 //' @inheritSection re2_re2 Regexp Syntax
 //'
 //' @examples
-//' #
-//' ## Matching with substring extraction:
-//' #
+//' 
+//' ## Matching with substring extraction
 //' s <- c("barbazbla", "foobar", "this is a test")
 //' pat <- "(foo)|(?P<TestGroup>bar)baz"
 //' re2_match(s, pat)
@@ -76,33 +79,34 @@ using namespace Rcpp;
 //' # [1,] "barbaz" NA    "bar"
 //' # [2,] "foo"    "foo" NA
 //' # [3,] NA       NA    NA
-//' #
+//'
+//' ## Matching with logical result
 //' re2_match(s, pat, l=TRUE)
 //' # > re2_match(s, pat, l=TRUE)
 //' # [1]  TRUE  TRUE FALSE
-//' #
+//' 
 //' stopifnot(is.matrix(re2_match(s, pat)))
 //' r <- re2_match(s, pat)
 //' stopifnot(colnames(r) == c(".0", ".1", "TestGroup"))
 //' stopifnot(nrow(r) == 3, ncol(r) == 3)
 //' stopifnot(r[2, 1:2] == c("foo", "foo"))
-//' #
+//' 
 //' ## Compile regexp and use logical result
-//' #
 //' re <- re2_re2("(foo)|(?P<TestGroup>bar)baz")
 //' stopifnot(re2_match(s, re, l=TRUE) == c(TRUE, TRUE, FALSE))
-//' #
-//' ## Full anchored match:
-//' #
+//' 
+//' ## Full anchored match
+//' 
 //' # Successful full match
 //' stopifnot(re2_match("hello", "h.*o",
 //'           re_anchor="ANCHOR_BOTH", l=TRUE))
+//' 
 //' # Unuccessful full match 
 //' stopifnot(!re2_match("hello", "e",
 //'           re_anchor="ANCHOR_BOTH", l=TRUE))
-//' #
+//' 
 //' ## UTF-8 and matching interface:
-//' #
+//' 
 //' # By default, the pattern and input text are interpreted as UTF-8.
 //' # The Latin1 option causes them to be interpreted as Latin-1.
 //' x <- "fa\xE7ile"
@@ -110,15 +114,9 @@ using namespace Rcpp;
 //' x
 //' stopifnot(!re2_match(x, "fa\xE7", l=TRUE))
 //' stopifnot(re2_match(x, "fa\xE7", l=TRUE, encoding="Latin1"))
-//' #
-//' ## Use of nsubgroup (ask for less):
-//' #
-//' re2_match("ruby:1234", "(\\w+):(\\d+)")
-//' # > re2_match("ruby:1234", "(\\w+):(\\d+)")
-//' #      .0          .1     .2
-//' # [1,] "ruby:1234" "ruby" "1234"
-//' stopifnot(length(re2_match("ruby:1234", "(\\w+):(\\d+)")) == 3) 
-//' #
+//' 
+//' ## Use of nsubmatch (ask for less):
+//' 
 //' re2_match("ruby:1234", "(\\w+):(\\d+)", nsubmatch=1)
 //' # > re2_match("ruby:1234", "(\\w+):(\\d+)", nsubmatch=1)
 //' #      .0
@@ -126,20 +124,81 @@ using namespace Rcpp;
 //' stopifnot(length(re2_match("ruby:1234", "(\\w+):(\\d+)",
 //'                  nsubmatch=1)) == 1)
 //'      
-//' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+//' @seealso \code{\link{re2_match_l}}, \code{\link{re2_re2}},
+//'   \link{re2_syntax},
 //'   \code{\link{re2_global_replace}},
 //'   \code{\link{re2_replace}}, \code{\link{re2_extract}}.
 //'
 // [[Rcpp::export]]
 SEXP re2_match(StringVector text, SEXP pattern,
 	       Nullable<List> more_options = R_NilValue) {
-  
-  re2::RE2Proxy re2proxy(pattern, more_options);
-  LogicalVector lv(text.size());
 
   bool logical = re2::RE2Proxy::is_logical_out(more_options);
   bool verbose = re2::RE2Proxy::is_verbose_out(more_options);
-  
+  return re2_match_inner(text, pattern, logical, verbose,
+			 more_options);
+}
+
+//' Matching (searching for pattern)
+//'
+//' @description
+//' Match against text using a regular expression.
+//'
+//' I.e., matching regexp "(foo)|(bar)baz" on "barbazbla" will return
+//' TRUE.
+//'
+//' @inheritParams re2_match
+//'
+//' @inheritSection re2_re2 RE2 Options
+//'
+//' @return A logical vector. TRUE if match is found, FALSE if not.
+//'
+//' @usage re2_match_l(text, pattern, ...)
+//'
+//' @inheritSection re2_re2 Regexp Syntax
+//'
+//' @examples
+//' 
+//' ## Matching against a character vector
+//' s <- c("barbazbla", "foobar", "this is a test")
+//' pat <- "(foo)|(?P<TestGroup>bar)baz"
+//' re2_match_l(s, pat)
+//' # > re2_match_l(s, pat)
+//' # [1]  TRUE  TRUE FALSE
+//' 
+//' ## Use precompiled regexp
+//' re <- re2_re2("(foo)|(?P<TestGroup>bar)baz")
+//' stopifnot(re2_match_l(s, re) == c(TRUE, TRUE, FALSE))
+//' 
+//' ## UTF-8 and matching interface:
+//' # By default, the pattern and input text are interpreted as UTF-8.
+//' # The Latin1 option causes them to be interpreted as Latin-1.
+//' x <- "fa\xE7ile"
+//' Encoding(x) <- "latin1"
+//' x
+//' stopifnot(!re2_match_l(x, "fa\xE7"))
+//' stopifnot(re2_match_l(x, "fa\xE7", encoding="Latin1"))
+//'      
+//' @seealso \code{\link{re2_match}}, \code{\link{re2_re2}},
+//'   \link{re2_syntax},
+//'   \code{\link{re2_global_replace}},
+//'   \code{\link{re2_replace}}, \code{\link{re2_extract}}.
+//'
+// [[Rcpp::export]]
+SEXP re2_match_l(StringVector text, SEXP pattern,
+		Nullable<List> more_options = R_NilValue) {
+  return re2_match_inner(text, pattern, true, false,
+			 more_options);
+}
+
+/************************************************************/
+SEXP re2_match_inner(StringVector text, SEXP pattern,
+		     bool logical, bool verbose,
+		     Nullable<List> more_options = R_NilValue) {
+
+  re2::RE2Proxy re2proxy(pattern, more_options);
+  LogicalVector lv(text.size());
+
   RE2::Anchor anchor = RE2::UNANCHORED;
   re2::RE2Proxy::set_option_anchor(anchor, "re_anchor", more_options);
   

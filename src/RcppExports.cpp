@@ -81,6 +81,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// re2_match_l
+SEXP re2_match_l(StringVector text, SEXP pattern, Nullable<List> more_options);
+RcppExport SEXP _re2_re2_match_l(SEXP textSEXP, SEXP patternSEXP, SEXP more_optionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< StringVector >::type text(textSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type pattern(patternSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type more_options(more_optionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(re2_match_l(text, pattern, more_options));
+    return rcpp_result_gen;
+END_RCPP
+}
 // re2_max_submatch
 SEXP re2_max_submatch(StringVector rewrite);
 RcppExport SEXP _re2_re2_max_submatch(SEXP rewriteSEXP) {
@@ -172,6 +185,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_re2_re2_get_options", (DL_FUNC) &_re2_re2_get_options, 1},
     {"_re2_re2_global_replace", (DL_FUNC) &_re2_re2_global_replace, 4},
     {"_re2_re2_match", (DL_FUNC) &_re2_re2_match, 3},
+    {"_re2_re2_match_l", (DL_FUNC) &_re2_re2_match_l, 3},
     {"_re2_re2_max_submatch", (DL_FUNC) &_re2_re2_max_submatch, 1},
     {"_re2_re2_named_capturing_groups", (DL_FUNC) &_re2_re2_named_capturing_groups, 1},
     {"_re2_re2_number_of_capturing_groups", (DL_FUNC) &_re2_re2_number_of_capturing_groups, 1},

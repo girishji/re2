@@ -75,11 +75,13 @@ with open("RE2Syntax.md") as fp:
     data = fp.read()
 
 print("""% Generated file <Girish Palya>
-\\name{re2_regexp}
+\\name{re2_syntax}
 \\alias{re2_regexp}
+\\alias{re2_syntax}
 \\alias{re2regexp}
 \\alias{re2_regular_expressions}
 \\title{RE2 Regular Expression Syntax}
 \\description{""")
 parser.feed(data)
-print("}")
+print("}\n")
+print("<https://github.com/girishji/re2/wiki/Syntax>")

@@ -1,7 +1,7 @@
 Testing:
 
 We run all (google's) C++ tests available in re2 distribution (see
-tests in ../src/re2cpp/re2/testing) using R interface. We replace
+tests in ../src/re2google/re2/testing) using R interface. We replace
 the C++ implentation (of re2.cc) to call R functions. We use RInside
 to embed an R instance inside C++ tests. We let C++ tests to call R
 functions which mimic the behaviour of corresponding C++ methods in
@@ -9,7 +9,8 @@ re2.cc.
 
 The C++ -> R interface is provided by re2_R.[h|cc] files. These files
 look very similar to re2.[h|cc] files, except they call R functions
-through embedded R.
+through embedded R. Only once instance of embedded R is used for
+a suite of tests (executable file).
 
 To run tests, a symlink farm of the re2google folder will be created
 in this folder (see the Makefile). re2.[cc|h] are symlinked to
@@ -19,7 +20,7 @@ re2_R.[cc|h]. This way we reuse the original Makefile
 Make sure RInside is intalled.
 
 To run all re2 C++ tests through R interface:
-> make -f make.local test
+> make test
 
 You should see the following output:
 obj/test/charclass_test                 PASS

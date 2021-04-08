@@ -22,11 +22,11 @@ using namespace Rcpp;
 //' @examples
 //' res <- re2_named_capturing_groups("(hello world)")
 //' stopifnot(is.na(res))
-//' #
+//' 
 //' res <- re2_named_capturing_groups("directions from (?P<S>.*) to (?P<D>.*)")
 //' stopifnot(res["S"] == 1)
 //' stopifnot(res["D"] == 2)
-//' #
+//' 
 //' s <- "(?P<A>expr(?P<B>expr)(?P<C>expr))((expr)(?P<D>expr))"
 //' res <- re2_named_capturing_groups(s)
 //' stopifnot(res["A"] == 1)

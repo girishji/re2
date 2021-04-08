@@ -33,7 +33,7 @@ buildR:
 	cd ../ && sed -r 's/(.*)more_options = NULL(.*)/\1...\2\n    more_options <- list(...)/g' \
 	    ../R/RcppExports.R > ../R/RcppExports.R.tmp
 	cd ../ && mv ../R/RcppExports.R.tmp ../R/RcppExports.R
-	python3 convert.py > ../../man/re2_regexp.Rd
+	python3 convert.py > ../../man/re2_syntax.Rd
 	$(MAKE) clean
 	cd ../../.. && R CMD build re2
 
@@ -54,7 +54,7 @@ rox:
 	cd ../ && sed -r 's/(.*)more_options = NULL(.*)/\1...\2\n    more_options <- list(...)/g' \
 	    ../R/RcppExports.R > ../R/RcppExports.R.tmp
 	cd ../ && mv ../R/RcppExports.R.tmp ../R/RcppExports.R
-	python3 convert.py > ../../man/re2_regexp.Rd
+	python3 convert.py > ../../man/re2_syntax.Rd
 	cd ../../.. && R CMD INSTALL re2
 
 .PHONY: examples

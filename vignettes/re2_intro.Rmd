@@ -1,0 +1,110 @@
+---
+title: "Introduction to re2"
+output: rmarkdown::html_vignette
+description: >
+  Start here if this is your first time using re2. You'll find a brief
+  introduction to Google's RE2 regular expression matching library,
+  and you'll learn about important functions to match, extract, and
+  replace patterns in strings.
+vignette: >
+  %\VignetteIndexEntry{Introduction to re2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE}
+library(re2)
+```
+
+## re2: R interface to the Google's RE2 (C++) regular-expression library
+
+re2 provides functions for matching, replacement, and extraction of
+regular expression pattern in a character vector. It can be a drop-in
+replacement for other regular expression libraries.
+
+Why use re2?
+
+Perl, PCRE, Python, Ruby, Java, and many other languages rely on
+regular expression implementations based on recursive backtracking
+that can be excruciatingly slow. The time complexity can be
+exponential in some matching situations. In contrast, regular
+expression matching using finite automata-based techniques (like re2)
+can be simple and fast, guaranteeing linear time execution and a fixed
+stack footprint. See references for more information.
+
+### Primary re2 functions
+
+re2 supports four types of operations: matching, substring
+    extraction, replacement, and extraction with replacement.
+
+#### re2_matchl() or re2_match()
+
+*Matching* is provided by `re2_matchl()` (or `re2_match()` with logical option
+set to TRUE). Matching regexp "(foo)|(bar)baz" on "barbazbla" will
+return TRUE, for instance.
+
+```{r}
+re2_match("foobar", "foo")
+
+```
+
+*Substring extraction* is provided by `re2_match()`.
+Matching regexp "(foo)|(bar)baz" on "barbazbla" will return
+submatches '.0' = "barbaz", '.1' = NA, and '.2' = "bar". '.0' is
+the entire matching text. '.1' is the first group, and so
+on. Groups can also be named.
+
+...
+
+*Replacement* functionality is provided by `re2_replace()` and
+`re2_global_replace()`. Replacing first occurrence of
+pattern "b+" using replacement string "d" on text "yabba dabba doo"
+will result in "yada dabba doo". Replacing globally will result in
+"yada dada doo".
+
+...
+
+*Extraction with replacement* is provided by
+`re2_extract()`. It is like replacement except that
+non-matching text is ignored. Extracting "(.*)@([^.]*)" from text
+"bunny@wunnies.pl", using replacement string "\\2!\\1" will result
+in "wunnies!bunny". "\\1" and "\\2" are names of capturing
+subgroups.
+
+...
+
+In all the above functions regexp patterns can be precompiled and
+reused for efficiency. See \code{\link{re2_re2}}. In addition, both
+input parameter and result are vectorized.
+
+...
+
+There are also a few utility functions (not needed for most applications):
+`re2_get_options()`,
+`re2_capturing_group_names()`,
+`re2_named_capturing_groups()`,
+`re2_number_of_capturing_groups()`,
+`re2_quote_meta()`,
+`re2_max_submatch()`,
+`re2_possible_match_range()`,
+`re2_check_rewrite_string()`.
+
+### Syntax
+
+
+### References
+
+* [Regular Expression Matching Can Be Simple And Fast](https://swtch.com/~rsc/regexp/regexp1.html)
+* [Regular Expression Matching: the Virtual Machine Approach](https://swtch.com/~rsc/regexp/regexp2.html)
+* [Regular Expression Matching in the Wild](https://swtch.com/~rsc/regexp/regexp3.html)
+* [RE2 Syntax](https://github.com/google/re2/wiki/Syntax)
+* [RE2 C++ source](https://github.com/google/re2)
+
+

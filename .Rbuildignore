@@ -1,8 +1,10 @@
 .git/
 .gitignore
+vignettes/.gitignore
 ChangeLog
 LICENSE.md
 README.md
 tests/re2google_test/
 ^tests/re2google_test$
 ^src/re2google/obj$
+src/util/benchlog*

@@ -20,7 +20,7 @@ using namespace Rcpp;
 //' @examples
 //' s <- "(?P<A>expr(?P<B>expr)(?P<C>expr))((expr)(?P<D>expr))"
 //' stopifnot(re2_number_of_capturing_groups(s) == 6)
-//' #
+//' 
 //' re2p <- re2_re2("directions from (?P<S>.*) to (?P<D>.*)")
 //' stopifnot(re2_number_of_capturing_groups(re2p) == 2)
 //'

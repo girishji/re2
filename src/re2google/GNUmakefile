@@ -9,12 +9,12 @@
 
 # To build against PCRE for testing or benchmarking,
 # uncomment the next two lines:
-# CCPCRE=-I/usr/local/include -DUSEPCRE
-# LDPCRE=-L/usr/local/lib -lpcre
+CCPCRE=-I/usr/local/include -DUSEPCRE
+LDPCRE=-L/usr/local/lib -lpcre
 
 CXX?=g++
 # can override
-# CXXFLAGS?=-O3 -g
+CXXFLAGS?=-O3 -g
 LDFLAGS?=
 # required
 RE2_CXXFLAGS?=-std=c++11 -Wpedantic -pthread -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -I. $(CCICU) $(CCPCRE)

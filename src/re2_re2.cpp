@@ -23,7 +23,7 @@ using namespace Rcpp;
 //'   backreferences and generalized assertions are not available, nor
 //'   is \verb{\Z}.
 //'
-//' See \link{re2_regexp} or \url{https://github.com/girishji/re2/wiki/Syntax} for the syntax
+//' See \link{re2_syntax} for the syntax
 //'   supported by RE2, and a comparison with PCRE and PERL regexps.
 //'
 //' For those not familiar with Perl's regular expressions, here are
@@ -113,12 +113,13 @@ using namespace Rcpp;
 //' @examples
 //' re2p <- re2_re2("hello world")
 //' stopifnot(mode(re2p) == "externalptr")
+//' 
 //' re2p <- re2_re2("Ruby:1234", case_sensitive=FALSE)
 //' stopifnot(mode(re2p) == "externalptr")
 //'
 //' @usage re2_re2(pattern, \dots)
 //'
-//' @seealso \link{re2_regexp},  \code{\link{re2_replace}}, \code{\link{re2_global_replace}},
+//' @seealso \link{re2_syntax},  \code{\link{re2_replace}}, \code{\link{re2_global_replace}},
 //'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
 // [[Rcpp::export]]
 XPtr<RE2> re2_re2(std::string& pattern,

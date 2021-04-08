@@ -72,13 +72,13 @@ re2_capturing_group_names <- function(pattern) {
 #' stopifnot(re2_check_rewrite_string("abc", "foo"));
 #' stopifnot(!re2_check_rewrite_string("abc", "foo\\"));
 #' stopifnot(re2_check_rewrite_string("abc", "foo\\0bar"));
-#' #
+#' 
 #' stopifnot(re2_check_rewrite_string("a(b)c", "foo"));
 #' stopifnot(re2_check_rewrite_string("a(b)c", "foo\\0bar"));
 #' stopifnot(re2_check_rewrite_string("a(b)c", "foo\\1bar"));
 #' stopifnot(!re2_check_rewrite_string("a(b)c", "foo\\2bar"));
 #' stopifnot(re2_check_rewrite_string("a(b)c", "f\\\\2o\\1o"));
-#' #
+#' 
 #' stopifnot(re2_check_rewrite_string("a(b)(c)", "foo\\12"));
 #' stopifnot(re2_check_rewrite_string("a(b)(c)", "f\\2o\\1o"));
 #' stopifnot(!re2_check_rewrite_string("a(b)(c)", "f\\oo\\1"));
@@ -141,18 +141,23 @@ re2_check_rewrite_string <- function(pattern, rewrite, ...) {
 #'                       "(.*)@([^.]*)",
 #'                       "\\2!\\1")
 #'           == "wunnies!bunny")
+#'
 #' # Case insensitive
 #' stopifnot(re2_extract("Bunny@wunnies.pl",
 #'                       "(b.*)@([^.]*)",
 #'                       "\\2!\\1",
 #'                       case_sensitive=FALSE)
 #'           == "wunnies!Bunny")
+#' 
 #' # Max submatch too large (1 match group, 2 submatches needed)
 #' stopifnot(!re2_extract("foo", "f(o+)", "\\1\\2", logical=TRUE))
+#' 
 #' # No match, nothing is extracted
 #' stopifnot(re2_extract("baz", "bar", "'\\0'") == "")
+#' 
 #' # When match fails, logical result is a FALSE
 #' stopifnot(!re2_extract("baz", "bar", "'\\0'", logical=TRUE))
+#' 
 #' # A vector parameter
 #' stopifnot(re2_extract(c("Bunny@wunnies.pl", "cargo@cult.org"),
 #'                       "(.*)@([^.]*)", "\\2!\\1")
@@ -160,7 +165,7 @@ re2_check_rewrite_string <- function(pattern, rewrite, ...) {
 #'
 #' @inheritSection re2_re2 Regexp Syntax
 #'
-#' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+#' @seealso \code{\link{re2_re2}}, \link{re2_syntax},
 #'   \code{\link{re2_replace}},
 #'   \code{\link{re2_match}}, \code{\link{re2_global_replace}}.
 re2_extract <- function(text, pattern, rewrite, ...) {
@@ -227,42 +232,42 @@ re2_get_options <- function(re2ptr) {
 #' res <- re2_global_replace(s, "b+", "d")
 #' expected <- c("yada dada doo", "famad")
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "(qu|[b-df-hj-np-tv-z]*)([a-z]+)"
 #' rewrite <- "\\2\\1ay"
 #' s <- "the quick brown fox jumps over the lazy dogs."
 #' expected <- "ethay ickquay ownbray oxfay umpsjay overay ethay azylay ogsday."
 #' res <- re2_global_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "\\w+"
 #' rewrite <- "\\0-NOSPAM"
 #' s <- "abcd.efghi@google.com"
 #' expected <- "abcd-NOSPAM.efghi-NOSPAM@google-NOSPAM.com-NOSPAM"
 #' res <- re2_global_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #  
+#'  
 #' re <- "a.*a"
 #' rewrite <- "(\\0)"
 #' s <- "aba\naba"
 #' expected <- "(aba)\n(aba)"
 #' res <- re2_global_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "b"
 #' rewrite <- "bb"
 #' s <- "ababababab"
 #' expected <- "abbabbabbabbabb"
 #' res <- re2_global_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "b+"
 #' rewrite <- "bb"
 #' s <- "bbbbbb"
 #' expected <- "bb"
 #' res <- re2_global_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "b*"
 #' rewrite <- "bb"
 #' s <- c("bbbbbb", "aaaaa")
@@ -272,7 +277,7 @@ re2_get_options <- function(re2ptr) {
 #'
 #' @inheritSection re2_re2 Regexp Syntax
 #'
-#' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+#' @seealso \code{\link{re2_re2}}, \link{re2_syntax},
 #'   \code{\link{re2_replace}},
 #'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
 re2_global_replace <- function(text, pattern, rewrite, ...) {
@@ -310,7 +315,7 @@ re2_global_replace <- function(text, pattern, rewrite, ...) {
 #'                           will use: runs much faster with nsubmatch == 1
 #'                           than nsubmatch > 1, and runs even faster if
 #'                           nsubmatch == 0. Doesn't make sense to use
-#'                           nsubmatch > 1 + \code{\link{re2_number_of_capturing_groups}},
+#'                           nsubmatch > 1 + \code{re2_number_of_capturing_groups},
 #'                           but will be handled correctly.\cr
 #'   \verb{re_anchor} \tab (\verb{"UNANCHORED"})
 #'                          "UNANCHORED" - No anchoring
@@ -338,9 +343,8 @@ re2_global_replace <- function(text, pattern, rewrite, ...) {
 #' @inheritSection re2_re2 Regexp Syntax
 #'
 #' @examples
-#' #
-#' ## Matching with substring extraction:
-#' #
+#' 
+#' ## Matching with substring extraction
 #' s <- c("barbazbla", "foobar", "this is a test")
 #' pat <- "(foo)|(?P<TestGroup>bar)baz"
 #' re2_match(s, pat)
@@ -349,33 +353,34 @@ re2_global_replace <- function(text, pattern, rewrite, ...) {
 #' # [1,] "barbaz" NA    "bar"
 #' # [2,] "foo"    "foo" NA
 #' # [3,] NA       NA    NA
-#' #
+#'
+#' ## Matching with logical result
 #' re2_match(s, pat, l=TRUE)
 #' # > re2_match(s, pat, l=TRUE)
 #' # [1]  TRUE  TRUE FALSE
-#' #
+#' 
 #' stopifnot(is.matrix(re2_match(s, pat)))
 #' r <- re2_match(s, pat)
 #' stopifnot(colnames(r) == c(".0", ".1", "TestGroup"))
 #' stopifnot(nrow(r) == 3, ncol(r) == 3)
 #' stopifnot(r[2, 1:2] == c("foo", "foo"))
-#' #
+#' 
 #' ## Compile regexp and use logical result
-#' #
 #' re <- re2_re2("(foo)|(?P<TestGroup>bar)baz")
 #' stopifnot(re2_match(s, re, l=TRUE) == c(TRUE, TRUE, FALSE))
-#' #
-#' ## Full anchored match:
-#' #
+#' 
+#' ## Full anchored match
+#' 
 #' # Successful full match
 #' stopifnot(re2_match("hello", "h.*o",
 #'           re_anchor="ANCHOR_BOTH", l=TRUE))
+#' 
 #' # Unuccessful full match 
 #' stopifnot(!re2_match("hello", "e",
 #'           re_anchor="ANCHOR_BOTH", l=TRUE))
-#' #
+#' 
 #' ## UTF-8 and matching interface:
-#' #
+#' 
 #' # By default, the pattern and input text are interpreted as UTF-8.
 #' # The Latin1 option causes them to be interpreted as Latin-1.
 #' x <- "fa\xE7ile"
@@ -383,15 +388,9 @@ re2_global_replace <- function(text, pattern, rewrite, ...) {
 #' x
 #' stopifnot(!re2_match(x, "fa\xE7", l=TRUE))
 #' stopifnot(re2_match(x, "fa\xE7", l=TRUE, encoding="Latin1"))
-#' #
-#' ## Use of nsubgroup (ask for less):
-#' #
-#' re2_match("ruby:1234", "(\\w+):(\\d+)")
-#' # > re2_match("ruby:1234", "(\\w+):(\\d+)")
-#' #      .0          .1     .2
-#' # [1,] "ruby:1234" "ruby" "1234"
-#' stopifnot(length(re2_match("ruby:1234", "(\\w+):(\\d+)")) == 3) 
-#' #
+#' 
+#' ## Use of nsubmatch (ask for less):
+#' 
 #' re2_match("ruby:1234", "(\\w+):(\\d+)", nsubmatch=1)
 #' # > re2_match("ruby:1234", "(\\w+):(\\d+)", nsubmatch=1)
 #' #      .0
@@ -399,13 +398,64 @@ re2_global_replace <- function(text, pattern, rewrite, ...) {
 #' stopifnot(length(re2_match("ruby:1234", "(\\w+):(\\d+)",
 #'                  nsubmatch=1)) == 1)
 #'      
-#' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+#' @seealso \code{\link{re2_match_l}}, \code{\link{re2_re2}},
+#'   \link{re2_syntax},
 #'   \code{\link{re2_global_replace}},
 #'   \code{\link{re2_replace}}, \code{\link{re2_extract}}.
 #'
 re2_match <- function(text, pattern, ...) {
     more_options <- list(...)
     .Call(`_re2_re2_match`, text, pattern, more_options)
+}
+
+#' Matching (searching for pattern)
+#'
+#' @description
+#' Match against text using a regular expression.
+#'
+#' I.e., matching regexp "(foo)|(bar)baz" on "barbazbla" will return
+#' TRUE.
+#'
+#' @inheritParams re2_match
+#'
+#' @inheritSection re2_re2 RE2 Options
+#'
+#' @return A logical vector. TRUE if match is found, FALSE if not.
+#'
+#' @usage re2_match_l(text, pattern, ...)
+#'
+#' @inheritSection re2_re2 Regexp Syntax
+#'
+#' @examples
+#' 
+#' ## Matching against a character vector
+#' s <- c("barbazbla", "foobar", "this is a test")
+#' pat <- "(foo)|(?P<TestGroup>bar)baz"
+#' re2_match_l(s, pat)
+#' # > re2_match_l(s, pat)
+#' # [1]  TRUE  TRUE FALSE
+#' 
+#' ## Use precompiled regexp
+#' re <- re2_re2("(foo)|(?P<TestGroup>bar)baz")
+#' stopifnot(re2_match_l(s, re) == c(TRUE, TRUE, FALSE))
+#' 
+#' ## UTF-8 and matching interface:
+#' # By default, the pattern and input text are interpreted as UTF-8.
+#' # The Latin1 option causes them to be interpreted as Latin-1.
+#' x <- "fa\xE7ile"
+#' Encoding(x) <- "latin1"
+#' x
+#' stopifnot(!re2_match_l(x, "fa\xE7"))
+#' stopifnot(re2_match_l(x, "fa\xE7", encoding="Latin1"))
+#'      
+#' @seealso \code{\link{re2_match}}, \code{\link{re2_re2}},
+#'   \link{re2_syntax},
+#'   \code{\link{re2_global_replace}},
+#'   \code{\link{re2_replace}}, \code{\link{re2_extract}}.
+#'
+re2_match_l <- function(text, pattern, ...) {
+    more_options <- list(...)
+    .Call(`_re2_re2_match_l`, text, pattern, more_options)
 }
 
 #' Maximum submatch
@@ -423,7 +473,7 @@ re2_match <- function(text, pattern, ...) {
 #' @examples
 #' stopifnot(re2_max_submatch("foo \\2,\\1") == 2)
 #' stopifnot(re2_max_submatch("bar \\2: \\5") == 5)
-#' stopifnot(re2_max_submatch(c("bar \\2: \\5", r"(\1 \9)")) == c(5, 9))
+#' stopifnot(re2_max_submatch(c("bar \\2: \\5", "\\1 \\9")) == c(5, 9))
 #'
 #' @seealso \code{\link{re2_number_of_capturing_groups}}, \code{\link{re2_replace}},
 #'   \code{\link{re2_global_replace}}, \code{\link{re2_extract}}.
@@ -446,11 +496,11 @@ re2_max_submatch <- function(rewrite) {
 #' @examples
 #' res <- re2_named_capturing_groups("(hello world)")
 #' stopifnot(is.na(res))
-#' #
+#' 
 #' res <- re2_named_capturing_groups("directions from (?P<S>.*) to (?P<D>.*)")
 #' stopifnot(res["S"] == 1)
 #' stopifnot(res["D"] == 2)
-#' #
+#' 
 #' s <- "(?P<A>expr(?P<B>expr)(?P<C>expr))((expr)(?P<D>expr))"
 #' res <- re2_named_capturing_groups(s)
 #' stopifnot(res["A"] == 1)
@@ -480,7 +530,7 @@ re2_named_capturing_groups <- function(pattern) {
 #' @examples
 #' s <- "(?P<A>expr(?P<B>expr)(?P<C>expr))((expr)(?P<D>expr))"
 #' stopifnot(re2_number_of_capturing_groups(s) == 6)
-#' #
+#' 
 #' re2p <- re2_re2("directions from (?P<S>.*) to (?P<D>.*)")
 #' stopifnot(re2_number_of_capturing_groups(re2p) == 2)
 #'
@@ -527,13 +577,13 @@ re2_number_of_capturing_groups <- function(pattern) {
 #' @examples
 #' r <- re2_possible_match_range("abc|def", 10)
 #' stopifnot(r["min"] == "abc", r["max"] == "def")
-#' #
+#' 
 #' r <- re2_possible_match_range("a(b)(c)[d]", 10)
 #' stopifnot(r["min"] == "abcd", r["max"] == "abcd")
-#' #
+#' 
 #' r <- re2_possible_match_range("(abc)+", 10)
 #' stopifnot(r["min"] == "abc", r["max"] == "abcac")
-#' #
+#' 
 #' r <- re2_possible_match_range("(?i)Abcdef", 10)
 #' stopifnot(r["min"] == "ABCDEF", r["max"] == "abcdef")
 #'
@@ -578,7 +628,7 @@ re2_quote_meta <- function(unquoted) {
 #'   backreferences and generalized assertions are not available, nor
 #'   is \verb{\Z}.
 #'
-#' See \link{re2_regexp} or \url{https://github.com/girishji/re2/wiki/Syntax} for the syntax
+#' See \link{re2_syntax} for the syntax
 #'   supported by RE2, and a comparison with PCRE and PERL regexps.
 #'
 #' For those not familiar with Perl's regular expressions, here are
@@ -668,12 +718,13 @@ re2_quote_meta <- function(unquoted) {
 #' @examples
 #' re2p <- re2_re2("hello world")
 #' stopifnot(mode(re2p) == "externalptr")
+#' 
 #' re2p <- re2_re2("Ruby:1234", case_sensitive=FALSE)
 #' stopifnot(mode(re2p) == "externalptr")
 #'
 #' @usage re2_re2(pattern, \dots)
 #'
-#' @seealso \link{re2_regexp},  \code{\link{re2_replace}}, \code{\link{re2_global_replace}},
+#' @seealso \link{re2_syntax},  \code{\link{re2_replace}}, \code{\link{re2_global_replace}},
 #'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
 re2_re2 <- function(pattern, ...) {
     more_options <- list(...)
@@ -732,47 +783,47 @@ re2_re2 <- function(pattern, ...) {
 #' res <- re2_replace(s, "b+", "d")
 #' expected <- c("yada dabba doo", "famad")
 #' stopifnot(res == expected)
-#' #
+#' 
 #' res <- re2_replace("boris@kremvax.ru",
 #'                    "(.*)@([^.]*)", "\\2!\\1")
 #' expected <- "kremvax!boris.ru"
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "(qu|[b-df-hj-np-tv-z]*)([a-z]+)"
 #' rewrite <- "\\2\\1ay"
 #' s <- "the quick brown fox jumps over the lazy dogs."
 #' expected <- "ethay quick brown fox jumps over the lazy dogs."
 #' res <- re2_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "\\w+"
 #' rewrite <- "\\0-NOSPAM"
 #' s <- "abcd.efghi@google.com"
 #' expected <- "abcd-NOSPAM.efghi@google.com"
 #' res <- re2_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #  
+#'   
 #' re <- "a.*a"
 #' rewrite <- "(\\0)"
 #' s <- "aba\naba"
 #' expected <- "(aba)\naba"
 #' res <- re2_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "b"
 #' rewrite <- "bb"
 #' s <- "ababababab"
 #' expected <- "abbabababab"
 #' res <- re2_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "b+"
 #' rewrite <- "bb"
 #' s <- "bbbbbb"
 #' expected <- "bb"
 #' res <- re2_replace(s, re, rewrite)
 #' stopifnot(res == expected)
-#' #
+#' 
 #' re <- "b*"
 #' rewrite <- "bb"
 #' s <- c("bbbbbb", "aaaaa")
@@ -780,7 +831,7 @@ re2_re2 <- function(pattern, ...) {
 #' res <- re2_replace(s, re, rewrite)
 #' stopifnot(res == expected)
 #'      
-#' @seealso \code{\link{re2_re2}}, \link{re2_regexp},
+#' @seealso \code{\link{re2_re2}}, \link{re2_syntax},
 #'   \code{\link{re2_global_replace}},
 #'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
 re2_replace <- function(text, pattern, rewrite, ...) {

@@ -11,23 +11,23 @@
 #'     backtracking that can be excruciatingly slow. The time
 #'     complexity can be exponential in some matching situations. In
 #'     contrast, regular expression matching using finite
-#'     automata-based techniques (like RE2) can be simple and fast,
+#'     automata-based techniques (like re2) can be simple and fast,
 #'     guaranteeing linear time execution (in the length of the input
 #'     string) and a fixed stack footprint (memory usage of execution
 #'     engine can be configured).
 #'
-#' RE2 supports pearl style regular expressions (with extensions like
+#' re2 supports pearl style regular expressions (with extensions like
 #'     \\d, \\w, \\s, ...) and provides most of the functionality of
 #'     PCRE -- eschewing only backreferences and look-around
-#'     assertions. RE2 is designed with safety in mind, and
+#'     assertions. re2 is designed with safety in mind, and
 #'     implemented with an explicit goal of being able to handle
 #'     regular expressions from untrusted users without risk. Google
 #'     has open sourced RE2 C++ project since 2010. See links to Russ
 #'     Cox's articles in references section.
 #'
-#' @section Primary RE2 functions:
+#' @section Primary re2 functions:
 #'
-#' RE2 supports four types of operations: matching, substring
+#' re2 supports four types of operations: matching, substring
 #'     extraction, replacement, and extraction with replacement.
 #' 
 #' \bold{Matching} is provided by \code{\link{re2_match}} with logical option
@@ -58,7 +58,7 @@
 #' reused for efficiency. See \code{\link{re2_re2}}. In addition, both
 #' input parameter and result are vectorized.
 #'
-#' Primary RE2 functions are:
+#' Primary re2 functions are:
 #' \itemize{
 #' \item \code{\link{re2_match}}
 #' \item \code{\link{re2_replace}}
@@ -67,9 +67,7 @@
 #' \item \code{\link{re2_re2}}
 #' }
 #' 
-#' XXX RE2 regular expression syntax.
-#'
-#' @section Secondary functions:
+#' @section Secondary functions (not needed for most applications):
 #' 
 #' There are also a few utility functions:
 #' \code{\link{re2_get_options}},

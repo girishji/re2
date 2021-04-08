@@ -5,3 +5,7 @@ To build and install everything,
 
 To clean build artifacts:
 - type 'make cleanall'
+
+To run benchmark tests:
+- uncomment PCRE options in re2google makefile
+- type 'make benchlog'

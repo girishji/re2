@@ -1,0 +1,22 @@
+---
+title: "Benchmark against PCRE"
+output: rmarkdown::html_vignette
+description: >
+  Results of benchmarking against PCRE (Perl
+  Compatible Regular Expressions).
+vignette: >
+  %\VignetteIndexEntry{Benchmark against PCRE}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(re2)
+```
