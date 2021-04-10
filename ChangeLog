@@ -1,12 +1,45 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Sat, 10 Apr 2021 09:46:05 +0200
+Date:   Sat, 10 Apr 2021 13:59:04 +0200
 
-Fix makefile bug
+Unexported some R functions
 
-Fix self referencing variable bug, and other cleanup.
+Some functions are used only for testing through RInside interface.
+They are exported only when testing flag is set, but otherwise
+not needed for general distribution.
 
-M  src/Makevars
-M  tests/GNUmakefile
+M  src/re2_capturing_group_names.cpp
+M  src/re2_check_rewrite_string.cpp
+M  src/re2_max_submatch.cpp
+M  src/re2_named_capturing_groups.cpp
+M  src/re2_number_of_capturing_groups.cpp
+M  src/re2_possible_match_range.cpp
+M  src/re2_quote_meta.cpp
+M  src/util/GNUmakefile
+Add .function as RcppExport variable. In DESCRIPTION file
+these can be unexported through suitable regexp (modified
+through the GNUmakefile above.
+
+M  .Rbuildignore
+M  R/RcppExports.R
+M  tests/README
+M  tests/re2_R.cc
+Updated
+
+commit 557de01839cfc373041f2619ae4693b20c45c4ac
+Author: Girish Palya <girishji@gmail.com>
+Date:   Sat Apr 10 09:46:05 2021 +0200
+
+    # Title: Summary, imperative, start upper case, don't end with a period
+    # No more than 50 chars. #### 50 chars is here: #
+    Fix makefile bug
+    # Remember blank line between title and body.
+    
+    # Body: Explain *what* and *why* (not *how*). Include task ID (Jira issue).
+    # Wrap at 72 chars. ################################## which is here: #
+    Fix self referencing variable bug, and other cleanup.
+    
+    M  src/Makevars
+    M  tests/GNUmakefile
 
 commit f7e13d01825f1bcaecc35da69e3fab2597a04df6
 Author: Girish Palya <girishji@gmail.com>

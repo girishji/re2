@@ -375,7 +375,7 @@ const std::map<std::string, int>& RE2::NamedCapturingGroups() const {
 	
     R["pattern"] = this->pattern();
     Rcpp::Nullable<Rcpp::IntegerVector> ngrpids
-      = R.parseEval("re2_named_capturing_groups(pattern)");
+      = R.parseEval(".re2_named_capturing_groups(pattern)");
     if (ngrpids.isNull()) {
       return result;
     }
@@ -405,7 +405,7 @@ const std::map<int, std::string>& RE2::CapturingGroupNames() const {
 	
     R["pattern"] = this->pattern();
     Rcpp::Nullable<Rcpp::StringVector> grpnames
-      = R.parseEval("re2_capturing_group_names(pattern)");
+      = R.parseEval(".re2_capturing_group_names(pattern)");
     if (grpnames.isNull()) {
       return result;
     }
@@ -604,7 +604,7 @@ int RE2::NumberOfCapturingGroups() const {
     embed_re2(*this);
     	
     Rcpp::IntegerVector result
-      = R.parseEval("re2_number_of_capturing_groups(re2ptr)");
+      = R.parseEval(".re2_number_of_capturing_groups(re2ptr)");
     return Rcpp::as<int>(result);
     
   } catch(std::exception& ex) {
@@ -642,7 +642,7 @@ std::string RE2::QuoteMeta(const StringPiece& unquoted) {
     R.parseEvalQ(txt);              // load library, no return value
 	
     R["txt"] = unquoted.as_string();   // assign a char* (string) to 'txt'
-    Rcpp::StringVector result = R.parseEval("re2_quote_meta(txt)");
+    Rcpp::StringVector result = R.parseEval(".re2_quote_meta(txt)");
     return Rcpp::as< std::string >(result[0]);
     
   } catch(std::exception& ex) {
@@ -660,7 +660,7 @@ bool RE2::PossibleMatchRange(std::string* min, std::string* max,
     embed_re2(*this);
 
     R["maxlen_"] = maxlen;
-    std::string evalstr = "re2_possible_match_range(re2ptr, maxlen_";
+    std::string evalstr = ".re2_possible_match_range(re2ptr, maxlen_";
     SEXP lv = R.parseEval(evalstr + ", l=T)");
     Rcpp::StringVector result = R.parseEval(evalstr + ")");
 
@@ -864,7 +864,7 @@ bool RE2::CheckRewriteString(const StringPiece& rewrite,
     embed_re2(*this);
 
     R["rewrite_"] = rewrite.as_string();
-    std::string evalstr = "re2_check_rewrite_string(re2ptr, rewrite_";
+    std::string evalstr = ".re2_check_rewrite_string(re2ptr, rewrite_";
     Rcpp::LogicalVector lv = R.parseEval(evalstr + ")");
     Rcpp::List verbose = R.parseEval(evalstr + ", v=T)");
     Rcpp::StringVector errors = verbose["error"];
@@ -887,7 +887,7 @@ bool RE2::CheckRewriteString(const StringPiece& rewrite,
 int RE2::MaxSubmatch(const StringPiece& rewrite) {
   try {
     R["rewrite_"] = rewrite.as_string();
-    std::string evalstr = "re2_max_submatch(rewrite_)";
+    std::string evalstr = ".re2_max_submatch(rewrite_)";
     Rcpp::IntegerVector ms = R.parseEval(evalstr);
     return ms(0);
       

@@ -6,20 +6,20 @@
 
 using namespace Rcpp;
 
-//' Escape regexp characters
-//'
-//' Escapes all potentially meaningful regexp characters in
-//' regexp string. The returned string, used as a regular expression,
-//' will match exactly the original string.  For example,
-//' \preformatted{          1.5-2.0?}
-//' may become:
-//' \preformatted{          1\.5\-2\.0\?}
-//'
-//' @param unquoted Character string or vector with regexp.
-//'
-//' @return Character string or vector with escape characters added.
-//'   
-// [[Rcpp::export]]
+// Escape regexp characters
+//
+// Escapes all potentially meaningful regexp characters in
+// regexp string. The returned string, used as a regular expression,
+// will match exactly the original string.  For example,
+// \preformatted{          1.5-2.0?}
+// may become:
+// \preformatted{          1\.5\-2\.0\?}
+//
+// @param unquoted Character string or vector with regexp.
+//
+// @return Character string or vector with escape characters added.
+//   
+// [[Rcpp::export(.re2_quote_meta)]]
 CharacterVector re2_quote_meta(CharacterVector unquoted) {
   CharacterVector outv(unquoted.size());
   for (int i=0; i < unquoted.size(); i++) {
