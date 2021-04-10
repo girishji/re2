@@ -13,5 +13,7 @@ src/re2google/benchlog/*
 src/re2google/re2/*.o
 src/re2google/util/*.o
 src/symbols.rds
+src/RcppExports.cpp
+R/RcppExports.R
 man/*.Rd
 inst/doc
