@@ -1,10 +1,10 @@
 ---
-title: "re2_tests"
+title: "RE2 unit tests and benchmarking"
 output: rmarkdown::html_vignette
 description: >
   Some notes on testing.
 vignette: >
-  %\VignetteIndexEntry{re2_tests}
+  %\VignetteIndexEntry{RE2 unit tests and benchmarking}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -74,3 +74,5 @@ To run benchmark tests:
 > cd re2/tests
 > make benchlog
 ```
+
+Benchmarking RE2 against XXX is carried out using R interface.

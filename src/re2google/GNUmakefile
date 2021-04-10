@@ -9,8 +9,8 @@
 
 # To build against PCRE for testing or benchmarking,
 # uncomment the next two lines:
-CCPCRE=-I/usr/local/include -DUSEPCRE
-LDPCRE=-L/usr/local/lib -lpcre
+# CCPCRE=-I/usr/local/include -DUSEPCRE
+# LDPCRE=-L/usr/local/lib -lpcre
 
 CXX?=g++
 # can override

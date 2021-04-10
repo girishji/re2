@@ -1,50 +1,79 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Thu, 08 Apr 2021 15:15:52 +0200
+Date:   Sat, 10 Apr 2021 08:48:09 +0200
 
-Add vignettes
+Update vignettes
 
-Add vignettes and cleanup docs.
+Add more content to vignettes and fix errors.
 
-A  vignettes/re2_benchmark.Rmd
-A  vignettes/re2_intro.Rmd
-A  vignettes/re2_syntax.Rmd
-A  vignettes/re2_tests.Rmd
-Add vignettes.
+M  vignettes/re2_benchmark.Rmd
+M  vignettes/re2_syntax.Rmd
+M  vignettes/re2_tests.Rmd
+Add content.
+Escape \ so knittr/pandoc is happy
 
-M  src/RcppExports.cpp
-M  src/re2_check_rewrite_string.cpp
-M  src/re2_extract.cpp
-M  src/re2_global_replace.cpp
-M  src/re2_match.cpp
-M  src/re2_max_submatch.cpp
-M  src/re2_named_capturing_groups.cpp
-M  src/re2_number_of_capturing_groups.cpp
-M  src/re2_possible_match_range.cpp
-M  src/re2_re2.cpp
-M  src/re2_replace.cpp
-Fix examples section.
+M  src/Makevars
+Add pthread option, since RE2 uses it and it gives a slight
+performance boost.
 
 M  src/re2google/GNUmakefile
 M  src/util/GNUmakefile
-M  src/util/README
-M  .Rbuildignore
-M  .gitignore
-M  DESCRIPTION
-M  R/re2-package.R
-M  tests/README
-Update.
-
-M  R/RcppExports.R
-Generated file.
-
-A  src/util/benchlog.macbook-air
-Performance benchmark log.
-
+M  src/util/RE2Syntax.md
 M  src/util/convert.py
-To create R document frile from markdown.
+Reflect changes.
 
-A  vignettes/.gitignore
-Add file.
+commit c59dd2a3fb1d5094c19d7b24fa8c3bed4845b3bd
+Author: Girish Palya <girishji@gmail.com>
+Date:   Thu Apr 8 15:15:52 2021 +0200
+
+    # Title: Summary, imperative, start upper case, don't end with a period
+    # No more than 50 chars. #### 50 chars is here: #
+    Add vignettes
+    # Remember blank line between title and body.
+    
+    # Body: Explain *what* and *why* (not *how*). Include task ID (Jira issue).
+    # Wrap at 72 chars. ################################## which is here: #
+    Add vignettes and cleanup docs.
+    
+    A  vignettes/re2_benchmark.Rmd
+    A  vignettes/re2_intro.Rmd
+    A  vignettes/re2_syntax.Rmd
+    A  vignettes/re2_tests.Rmd
+    Add vignettes.
+    
+    M  src/RcppExports.cpp
+    M  src/re2_check_rewrite_string.cpp
+    M  src/re2_extract.cpp
+    M  src/re2_global_replace.cpp
+    M  src/re2_match.cpp
+    M  src/re2_max_submatch.cpp
+    M  src/re2_named_capturing_groups.cpp
+    M  src/re2_number_of_capturing_groups.cpp
+    M  src/re2_possible_match_range.cpp
+    M  src/re2_re2.cpp
+    M  src/re2_replace.cpp
+    Fix examples section.
+    
+    M  src/re2google/GNUmakefile
+    M  src/util/GNUmakefile
+    M  src/util/README
+    M  .Rbuildignore
+    M  .gitignore
+    M  DESCRIPTION
+    M  R/re2-package.R
+    M  tests/README
+    Update.
+    
+    M  R/RcppExports.R
+    Generated file.
+    
+    A  src/util/benchlog.macbook-air
+    Performance benchmark log.
+    
+    M  src/util/convert.py
+    To create R document frile from markdown.
+    
+    A  vignettes/.gitignore
+    Add file.
 
 commit 9913a5f62e2194a369160c48b3768b1270cfc595
 Author: Girish Palya <girishji@gmail.com>

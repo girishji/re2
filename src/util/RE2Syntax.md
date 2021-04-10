@@ -1,14 +1,3 @@
-# Black Lives Matter. [Support the Equal Justice Initiative.](https://support.eji.org/give/153413/#!/donation/checkout)
-
-<p>
-Regular expressions are a notation for
-describing sets of character strings.
-When a particular string is in the set
-described by a regular expression,
-we often say that the regular expression
-<i>matches</i>
-the string.
-</p>
 
 <p>
 The simplest regular expression is a single literal character.
@@ -86,6 +75,10 @@ not more powerful.
 
 <p>This page lists the regular expression syntax accepted by RE2.
 <p>It also lists some syntax accepted by PCRE, PERL, and VIM.
+
+<p>Grayed out expressions are not supported by RE2.
+
+
 
 <table>
 <tr><th>kinds of single-character expressions</th><th>examples</th></tr>

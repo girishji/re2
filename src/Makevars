@@ -1,7 +1,16 @@
-
+## 
 CXX_STD = CXX11
 
+# Preprocessor flags
 PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h -DRE2_R_BUILD
+
+# RE2 uses pthread. Follow "1.2.1.2 Using pthreads" of R manual on packages
+#   pthread not available on windows.
+PKG_CPPFLAGS = $(PKG_CPPFLAGS) -pthread
+PKG_LIBS = -pthread
+
+# Compiler flags from RE2
+# PKG_CXXFLAGS=-std=c++11 -Wpedantic -pthread -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -I.
 
 OFILES = \
         re2google/util/rune.o\

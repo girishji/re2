@@ -19,6 +19,7 @@ tarball=re2_0.1.0.tar.gz
 clean:
 	cd .. && rm -f $(OFILES) *.o re2.so symbols.rds
 	cd ../../.. && rm -f $(tarball)
+	cd ../.. && rm -f vignettes/*.html
 
 .PHONY: cleanDoc
 cleanDoc:

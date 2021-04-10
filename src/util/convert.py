@@ -58,7 +58,7 @@ class MyHTMLParser(HTMLParser):
             print(self.emap[tag], end='')
 
     def handle_data(self, data):
-        if re.search("Black Lives", data):
+        if re.search("Grayed out expressions are not supported", data):
             return
         if self.a_tag and not data == '(link)':
             raise TypeError("Link error")

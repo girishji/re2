@@ -17,6 +17,74 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(re2)
-```
+## Benchmark against PCRE
+
+Regular expression matching can be done in two ways: using recursive
+backtracking (used by Perl, PCRE, Python, and others) or using finite
+automata-based techniques (RE2). While regular expression
+implementations based on recursive backtracking can have exponential
+time complexity in some matching situations, regular expression
+matching using finite automata-based techniques guarantee linear time
+execution (in the length of the input string) and a fixed stack
+footprint.
+
+In all the benchmarking examples RE2 is limited to 8388608 Bytes of
+memory budget, and both PCRE and RE2 tests use R interface (not just
+C++ backend) through a persistent embedded R instance.
+
+Random strings are generated using De Bruijn sequence and tested
+against various regular expressions. X-axis represents string length
+from 8 bytes to 16M bytes. Y-axis is the nanoseconds per operation
+averaged over many iterations. Both axes are plotted in log
+scale. Regular expression pattern is precompiled and cached.
+Benchmark tests are part of Google C++ distribution.
+
+### When RE2 does better than PCRE
+
+RE2 can have advantage when input string size is over 1K.
+
+A pattern like `[ -~]*ABCDEFGHIJKLMNOPQRSTUVWXYZ$` can be hard because
+of the leading `[ -~]*`. A bad backtracking implementation will take
+O(text^2) time to figure out there's no match.
+
+Search_Hard.png
+
+Regexp like `[XYZ]ABCDEFGHIJKLMNOPQRSTUVWXYZ$` can be hard since it starts with a character class and thus can't be searched for first char (like C's memchr()).
+
+Search_Medium.png
+
+// This has quite a high degree of fanout.
+// NFA execution will be particularly slow.
+#define FANOUT     "(?:[\\x{80}-\\x{10FFFF}]?){100}[\\x{80}-\\x{10FFFF}]"
+
+Search_Fanout.png
+
+### When PCRE does better than RE2
+
+FullMatch_DotStar.png
+"(?s).*
+
+Search_Parens.png
+
+
+
+### When RE2 and PCRE are comparable
+
+
+SearchPhone.png
+
+here uncached:
+Search_Success.png
+Search_Success1.png
+
+Search_Easy0.png
+Search_Easy1.png
+
+### R interface penalty
+
+Full report:
+
+
+exponential
+
+## Comparison with C++ 

@@ -1,11 +1,11 @@
 ---
-title: "Regular Expression Syntax"
+title: "RE2 Regular Expression Syntax"
 output: rmarkdown::html_vignette
 description: >
   A reference of sytax supported by RE2, and comparison with PCRE
   and PERL regexps.
 vignette: >
-  %\VignetteIndexEntry{Regular Expression Syntax}
+  %\VignetteIndexEntry{RE2 Regular Expression Syntax}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,16 +16,10 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-<p>
-Regular expressions are a notation for
-describing sets of character strings.
-When a particular string is in the set
-described by a regular expression,
-we often say that the regular expression
-<i>matches</i>
-the string.
-</p>
+<!---
+Escape all the backslashes, and escape a few (not all) $ and ` from the original .md file.
+Add a line about grayed out expressions.
+-->
 
 <p>
 The simplest regular expression is a single literal character.
@@ -34,7 +28,7 @@ Except for the metacharacters like
 characters match themselves.
 To match a metacharacter, escape it with
 a backslash:
-<code>\+</code>
+<code>\\+</code>
 matches a literal plus character.
 </p>
 
@@ -103,20 +97,23 @@ not more powerful.
 
 <p>This page lists the regular expression syntax accepted by RE2.
 <p>It also lists some syntax accepted by PCRE, PERL, and VIM.
+<p>Grayed out expressions are not supported by RE2.
+
+<div  class="markdown-body">
 
 <table>
 <tr><th>kinds of single-character expressions</th><th>examples</th></tr>
 <tr><td>any character, possibly including newline (s=true)</td><td><code>.</code></td></tr>
 <tr><td>character class</td><td><code>[xyz]</code></td></tr>
 <tr><td>negated character class</td><td><code>[^xyz]</code></td></tr>
-<tr><td>Perl character class <a href="#perl">(link)</a></td><td><code>\d</code></td></tr>
-<tr><td>negated Perl character class</td><td><code>\D</code></td></tr>
+<tr><td>Perl character class <a href="#perl">(link)</a></td><td><code>\\d</code></td></tr>
+<tr><td>negated Perl character class</td><td><code>\\D</code></td></tr>
 <tr><td>ASCII character class <a href="#ascii">(link)</a></td><td><code>[[:alpha:]]</code></td></tr>
 <tr><td>negated ASCII character class</td><td><code>[[:^alpha:]]</code></td></tr>
-<tr><td>Unicode character class (one-letter name)</td><td><code>\pN</code></td></tr>
-<tr><td>Unicode character class</td><td><code>\p{Greek}</code></td></tr>
-<tr><td>negated Unicode character class (one-letter name)</td><td><code>\PN</code></td></tr>
-<tr><td>negated Unicode character class</td><td><code>\P{Greek}</code></td></tr>
+<tr><td>Unicode character class (one-letter name)</td><td><code>\\pN</code></td></tr>
+<tr><td>Unicode character class</td><td><code>\\p{Greek}</code></td></tr>
+<tr><td>negated Unicode character class (one-letter name)</td><td><code>\\PN</code></td></tr>
+<tr><td>negated Unicode character class</td><td><code>\\P{Greek}</code></td></tr>
 </table>
 
 <table>
@@ -178,7 +175,7 @@ not more powerful.
 <tr><th></th><th>Flags</th></tr>
 <tr><td><code>i</code></td><td>case-insensitive (default false)</td></tr>
 <tr><td><code>m</code></td><td>multi-line mode: <code>^</code> and <code>$</code> match begin/end line in addition to begin/end text (default false)</td></tr>
-<tr><td><code>s</code></td><td>let <code>.</code> match <code>\n</code> (default false)</td></tr>
+<tr><td><code>s</code></td><td>let <code>.</code> match <code>\\n</code> (default false)</td></tr>
 <tr><td><code>U</code></td><td>ungreedy: swap meaning of <code>x*</code> and <code>x*?</code>, <code>x+</code> and <code>x+?</code>, etc (default false)</td></tr>
 </table>
 
@@ -187,14 +184,14 @@ not more powerful.
 <table>
 <tr><th></th><th>Empty strings</th></tr>
 <tr><td><code>^</code></td><td>at beginning of text or line (<code>m</code>=true)</td></tr>
-<tr><td><code>$</code></td><td>at end of text (like <code>\z</code> not <code>\Z</code>) or line (<code>m</code>=true)</td></tr>
-<tr><td><code>\A</code></td><td>at beginning of text</td></tr>
-<tr><td><code>\b</code></td><td>at ASCII word boundary (<code>\w</code> on one side and <code>\W</code>, <code>\A</code>, or <code>\z</code> on the other)</td></tr>
-<tr><td><code>\B</code></td><td>not at ASCII word boundary</td></tr>
-<tr><td><font color='#808080'><code>\g</code></font></td><td>at beginning of subtext being searched <small>(NOT SUPPORTED)</small> <small>PCRE</small></td></tr>
-<tr><td><font color='#808080'><code>\G</code></font></td><td>at end of last match <small>(NOT SUPPORTED)</small> <small>PERL</small></td></tr>
-<tr><td><font color='#808080'><code>\Z</code></font></td><td>at end of text, or before newline at end of text <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><code>\z</code></td><td>at end of text</td></tr>
+<tr><td><code>\$</code></td><td>at end of text (like <code>\\z</code> not <code>\\Z</code>) or line (<code>m</code>=true)</td></tr>
+<tr><td><code>\\A</code></td><td>at beginning of text</td></tr>
+<tr><td><code>\\b</code></td><td>at ASCII word boundary (<code>\\w</code> on one side and <code>\\W</code>, <code>\\A</code>, or <code>\\z</code> on the other)</td></tr>
+<tr><td><code>\\B</code></td><td>not at ASCII word boundary</td></tr>
+<tr><td><font color='#808080'><code>\\g</code></font></td><td>at beginning of subtext being searched <small>(NOT SUPPORTED)</small> <small>PCRE</small></td></tr>
+<tr><td><font color='#808080'><code>\\G</code></font></td><td>at end of last match <small>(NOT SUPPORTED)</small> <small>PERL</small></td></tr>
+<tr><td><font color='#808080'><code>\\Z</code></font></td><td>at end of text, or before newline at end of text <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><code>\\z</code></td><td>at end of text</td></tr>
 <tr><td><font color='#808080'><code>(?=re)</code></font></td><td>before text matching <code>re</code> <small>(NOT SUPPORTED)</small></td></tr>
 <tr><td><font color='#808080'><code>(?!re)</code></font></td><td>before text not matching <code>re</code> <small>(NOT SUPPORTED)</small></td></tr>
 <tr><td><font color='#808080'><code>(?&lt;=re)</code></font></td><td>after text matching <code>re</code> <small>(NOT SUPPORTED)</small></td></tr>
@@ -204,95 +201,95 @@ not more powerful.
 <tr><td><font color='#808080'><code>re@!</code></font></td><td>before text not matching <code>re</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 <tr><td><font color='#808080'><code>re@&lt;=</code></font></td><td>after text matching <code>re</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 <tr><td><font color='#808080'><code>re@&lt;!</code></font></td><td>after text not matching <code>re</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\zs</code></font></td><td>sets start of match (= \K) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\ze</code></font></td><td>sets end of match <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%^</code></font></td><td>beginning of file <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%$</code></font></td><td>end of file <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%V</code></font></td><td>on screen <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%#</code></font></td><td>cursor position <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%'m</code></font></td><td>mark <code>m</code> position <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%23l</code></font></td><td>in line 23 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%23c</code></font></td><td>in column 23 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%23v</code></font></td><td>in virtual column 23 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\zs</code></font></td><td>sets start of match (= \\K) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\ze</code></font></td><td>sets end of match <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%^</code></font></td><td>beginning of file <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%$</code></font></td><td>end of file <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%V</code></font></td><td>on screen <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%#</code></font></td><td>cursor position <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%'m</code></font></td><td>mark <code>m</code> position <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%23l</code></font></td><td>in line 23 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%23c</code></font></td><td>in column 23 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%23v</code></font></td><td>in virtual column 23 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 </table>
 
 <table>
 <tr><th></th><th>Escape sequences</th></tr>
-<tr><td><code>\a</code></td><td>bell (≡ <code>\007</code>)</td></tr>
-<tr><td><code>\f</code></td><td>form feed (≡ <code>\014</code>)</td></tr>
-<tr><td><code>\t</code></td><td>horizontal tab (≡ <code>\011</code>)</td></tr>
-<tr><td><code>\n</code></td><td>newline (≡ <code>\012</code>)</td></tr>
-<tr><td><code>\r</code></td><td>carriage return (≡ <code>\015</code>)</td></tr>
-<tr><td><code>\v</code></td><td>vertical tab character (≡ <code>\013</code>)</td></tr>
-<tr><td><code>\*</code></td><td>literal <code>*</code>, for any punctuation character <code>*</code></td></tr>
-<tr><td><code>\123</code></td><td>octal character code (up to three digits)</td></tr>
-<tr><td><code>\x7F</code></td><td>hex character code (exactly two digits)</td></tr>
-<tr><td><code>\x{10FFFF}</code></td><td>hex character code</td></tr>
-<tr><td><code>\C</code></td><td>match a single byte even in UTF-8 mode</td></tr>
-<tr><td><code>\Q...\E</code></td><td>literal text <code>...</code> even if <code>...</code> has punctuation</td></tr>
-<tr><td><font color='#808080'><code>\1</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\b</code></font></td><td>backspace <small>(NOT SUPPORTED)</small> (use <code>\010</code>)</td></tr>
-<tr><td><font color='#808080'><code>\cK</code></font></td><td>control char ^K <small>(NOT SUPPORTED)</small> (use <code>\001</code> etc)</td></tr>
-<tr><td><font color='#808080'><code>\e</code></font></td><td>escape <small>(NOT SUPPORTED)</small> (use <code>\033</code>)</td></tr>
-<tr><td><font color='#808080'><code>\g1</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\g{1}</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\g{+1}</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\g{-1}</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\g{name}</code></font></td><td>named backreference <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\g&lt;name&gt;</code></font></td><td>subroutine call <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\g'name'</code></font></td><td>subroutine call <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\k&lt;name&gt;</code></font></td><td>named backreference <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\k'name'</code></font></td><td>named backreference <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\lX</code></font></td><td>lowercase <code>X</code> <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\ux</code></font></td><td>uppercase <code>x</code> <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\L...\E</code></font></td><td>lowercase text <code>...</code> <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\K</code></font></td><td>reset beginning of <code>$0</code> <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\N{name}</code></font></td><td>named Unicode character <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\R</code></font></td><td>line break <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\U...\E</code></font></td><td>upper case text <code>...</code> <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\X</code></font></td><td>extended Unicode sequence <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\%d123</code></font></td><td>decimal character 123 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%xFF</code></font></td><td>hex character FF <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%o123</code></font></td><td>octal character 123 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%u1234</code></font></td><td>Unicode character 0x1234 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\%U12345678</code></font></td><td>Unicode character 0x12345678 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><code>\\a</code></td><td>bell (≡ <code>\\007</code>)</td></tr>
+<tr><td><code>\\f</code></td><td>form feed (≡ <code>\\014</code>)</td></tr>
+<tr><td><code>\\t</code></td><td>horizontal tab (≡ <code>\\011</code>)</td></tr>
+<tr><td><code>\\n</code></td><td>newline (≡ <code>\\012</code>)</td></tr>
+<tr><td><code>\\r</code></td><td>carriage return (≡ <code>\\015</code>)</td></tr>
+<tr><td><code>\\v</code></td><td>vertical tab character (≡ <code>\\013</code>)</td></tr>
+<tr><td><code>\\*</code></td><td>literal <code>*</code>, for any punctuation character <code>*</code></td></tr>
+<tr><td><code>\\123</code></td><td>octal character code (up to three digits)</td></tr>
+<tr><td><code>\\x7F</code></td><td>hex character code (exactly two digits)</td></tr>
+<tr><td><code>\\x{10FFFF}</code></td><td>hex character code</td></tr>
+<tr><td><code>\\C</code></td><td>match a single byte even in UTF-8 mode</td></tr>
+<tr><td><code>\\Q...\\E</code></td><td>literal text <code>...</code> even if <code>...</code> has punctuation</td></tr>
+<tr><td><font color='#808080'><code>\\1</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\b</code></font></td><td>backspace <small>(NOT SUPPORTED)</small> (use <code>\\010</code>)</td></tr>
+<tr><td><font color='#808080'><code>\\cK</code></font></td><td>control char ^K <small>(NOT SUPPORTED)</small> (use <code>\\001</code> etc)</td></tr>
+<tr><td><font color='#808080'><code>\\e</code></font></td><td>escape <small>(NOT SUPPORTED)</small> (use <code>\\033</code>)</td></tr>
+<tr><td><font color='#808080'><code>\\g1</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\g{1}</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\g{+1}</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\g{-1}</code></font></td><td>backreference <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\g{name}</code></font></td><td>named backreference <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\g&lt;name&gt;</code></font></td><td>subroutine call <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\g'name'</code></font></td><td>subroutine call <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\k&lt;name&gt;</code></font></td><td>named backreference <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\k'name'</code></font></td><td>named backreference <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\lX</code></font></td><td>lowercase <code>X</code> <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\ux</code></font></td><td>uppercase <code>x</code> <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\L...\\E</code></font></td><td>lowercase text <code>...</code> <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\K</code></font></td><td>reset beginning of <code>$0</code> <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\N{name}</code></font></td><td>named Unicode character <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\R</code></font></td><td>line break <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\U...\\E</code></font></td><td>upper case text <code>...</code> <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\X</code></font></td><td>extended Unicode sequence <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\%d123</code></font></td><td>decimal character 123 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%xFF</code></font></td><td>hex character FF <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%o123</code></font></td><td>octal character 123 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%u1234</code></font></td><td>Unicode character 0x1234 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\%U12345678</code></font></td><td>Unicode character 0x12345678 <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 </table>
 
 <table>
 <tr><th></th><th>Character class elements</th></tr>
 <tr><td><code>x</code></td><td>single character</td></tr>
 <tr><td><code>A-Z</code></td><td>character range (inclusive)</td></tr>
-<tr><td><code>\d</code></td><td>Perl character class</td></tr>
+<tr><td><code>\\d</code></td><td>Perl character class</td></tr>
 <tr><td><code>[:foo:]</code></td><td>ASCII character class <code>foo</code></td></tr>
-<tr><td><code>\p{Foo}</code></td><td>Unicode character class <code>Foo</code></td></tr>
-<tr><td><code>\pF</code></td><td>Unicode character class <code>F</code> (one-letter name)</td></tr>
+<tr><td><code>\\p{Foo}</code></td><td>Unicode character class <code>Foo</code></td></tr>
+<tr><td><code>\\pF</code></td><td>Unicode character class <code>F</code> (one-letter name)</td></tr>
 </table>
 
 <table>
 <tr><th></th><th>Named character classes as character class elements</th></tr>
-<tr><td><code>[\d]</code></td><td>digits (≡ <code>\d</code>)</td></tr>
-<tr><td><code>[^\d]</code></td><td>not digits (≡ <code>\D</code>)</td></tr>
-<tr><td><code>[\D]</code></td><td>not digits (≡ <code>\D</code>)</td></tr>
-<tr><td><code>[^\D]</code></td><td>not not digits (≡ <code>\d</code>)</td></tr>
+<tr><td><code>[\\d]</code></td><td>digits (≡ <code>\\d</code>)</td></tr>
+<tr><td><code>[^\\d]</code></td><td>not digits (≡ <code>\\D</code>)</td></tr>
+<tr><td><code>[\\D]</code></td><td>not digits (≡ <code>\\D</code>)</td></tr>
+<tr><td><code>[^\\D]</code></td><td>not not digits (≡ <code>\\d</code>)</td></tr>
 <tr><td><code>[[:name:]]</code></td><td>named ASCII class inside character class (≡ <code>[:name:]</code>)</td></tr>
 <tr><td><code>[^[:name:]]</code></td><td>named ASCII class inside negated character class (≡ <code>[:^name:]</code>)</td></tr>
-<tr><td><code>[\p{Name}]</code></td><td>named Unicode property inside character class (≡ <code>\p{Name}</code>)</td></tr>
-<tr><td><code>[^\p{Name}]</code></td><td>named Unicode property inside negated character class (≡ <code>\P{Name}</code>)</td></tr>
+<tr><td><code>[\\p{Name}]</code></td><td>named Unicode property inside character class (≡ <code>\\p{Name}</code>)</td></tr>
+<tr><td><code>[^\\p{Name}]</code></td><td>named Unicode property inside negated character class (≡ <code>\\P{Name}</code>)</td></tr>
 </table>
 
 <a name="perl"></a>
 <table>
 <tr><th></th><th>Perl character classes (all ASCII-only)</th></tr>
-<tr><td><code>\d</code></td><td>digits (≡ <code>[0-9]</code>)</td></tr>
-<tr><td><code>\D</code></td><td>not digits (≡ <code>[^0-9]</code>)</td></tr>
-<tr><td><code>\s</code></td><td>whitespace (≡ <code>[\t\n\f\r ]</code>)</td></tr>
-<tr><td><code>\S</code></td><td>not whitespace (≡ <code>[^\t\n\f\r ]</code>)</td></tr>
-<tr><td><code>\w</code></td><td>word characters (≡ <code>[0-9A-Za-z_]</code>)</td></tr>
-<tr><td><code>\W</code></td><td>not word characters (≡ <code>[^0-9A-Za-z_]</code>)</td></tr>
-<tr><td><font color='#808080'><code>\h</code></font></td><td>horizontal space <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\H</code></font></td><td>not horizontal space <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\v</code></font></td><td>vertical space <small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>\V</code></font></td><td>not vertical space <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><code>\\d</code></td><td>digits (≡ <code>[0-9]</code>)</td></tr>
+<tr><td><code>\\D</code></td><td>not digits (≡ <code>[^0-9]</code>)</td></tr>
+<tr><td><code>\\s</code></td><td>whitespace (≡ <code>[\\t\\n\\f\\r ]</code>)</td></tr>
+<tr><td><code>\\S</code></td><td>not whitespace (≡ <code>[^\\t\\n\\f\\r ]</code>)</td></tr>
+<tr><td><code>\\w</code></td><td>word characters (≡ <code>[0-9A-Za-z_]</code>)</td></tr>
+<tr><td><code>\\W</code></td><td>not word characters (≡ <code>[^0-9A-Za-z_]</code>)</td></tr>
+<tr><td><font color='#808080'><code>\\h</code></font></td><td>horizontal space <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\H</code></font></td><td>not horizontal space <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\v</code></font></td><td>vertical space <small>(NOT SUPPORTED)</small></td></tr>
+<tr><td><font color='#808080'><code>\\V</code></font></td><td>not vertical space <small>(NOT SUPPORTED)</small></td></tr>
 </table>
 
 <a name="ascii"></a>
@@ -300,15 +297,15 @@ not more powerful.
 <tr><th></th><th>ASCII character classes</th></tr>
 <tr><td><code>[[:alnum:]]</code></td><td>alphanumeric (≡ <code>[0-9A-Za-z]</code>)</td></tr>
 <tr><td><code>[[:alpha:]]</code></td><td>alphabetic (≡ <code>[A-Za-z]</code>)</td></tr>
-<tr><td><code>[[:ascii:]]</code></td><td>ASCII (≡ <code>[\x00-\x7F]</code>)</td></tr>
-<tr><td><code>[[:blank:]]</code></td><td>blank (≡ <code>[\t ]</code>)</td></tr>
-<tr><td><code>[[:cntrl:]]</code></td><td>control (≡ <code>[\x00-\x1F\x7F]</code>)</td></tr>
+<tr><td><code>[[:ascii:]]</code></td><td>ASCII (≡ <code>[\\x00-\\x7F]</code>)</td></tr>
+<tr><td><code>[[:blank:]]</code></td><td>blank (≡ <code>[\\t ]</code>)</td></tr>
+<tr><td><code>[[:cntrl:]]</code></td><td>control (≡ <code>[\\x00-\\x1F\\x7F]</code>)</td></tr>
 <tr><td><code>[[:digit:]]</code></td><td>digits (≡ <code>[0-9]</code>)</td></tr>
-<tr><td><code>[[:graph:]]</code></td><td>graphical (≡ <code>[!-~]</code> ≡ <code>[A-Za-z0-9!"#$%&amp;'()*+,\-./:;&lt;=&gt;?@[\\\]^_</code><code>`</code><code>{|}~]</code>)</td></tr>
+<tr><td><code>[[:graph:]]</code></td><td>graphical (≡ <code>[!-~]</code> ≡ <code>[A-Za-z0-9!"#$%&amp;'()*+,\\-./:;&lt;=&gt;?@[\\\\\\]^_</code><code>\`</code><code>{|}~]</code>)</td></tr>
 <tr><td><code>[[:lower:]]</code></td><td>lower case (≡ <code>[a-z]</code>)</td></tr>
 <tr><td><code>[[:print:]]</code></td><td>printable (≡ <code>[ -~]</code> ≡ <code>[ [:graph:]]</code>)</td></tr>
 <tr><td><code>[[:punct:]]</code></td><td>punctuation (≡ <code>[!-/:-@[-</code><code>`</code><code>{-~]</code>)</td></tr>
-<tr><td><code>[[:space:]]</code></td><td>whitespace (≡ <code>[\t\n\v\f\r ]</code>)</td></tr>
+<tr><td><code>[[:space:]]</code></td><td>whitespace (≡ <code>[\\t\\n\\v\\f\\r ]</code>)</td></tr>
 <tr><td><code>[[:upper:]]</code></td><td>upper case (≡ <code>[A-Z]</code>)</td></tr>
 <tr><td><code>[[:word:]]</code></td><td>word characters (≡ <code>[0-9A-Za-z_]</code>)</td></tr>
 <tr><td><code>[[:xdigit:]]</code></td><td>hex digit (≡ <code>[0-9A-Fa-f]</code>)</td></tr>
@@ -519,40 +516,40 @@ not more powerful.
 
 <table>
 <tr><th></th><th>Vim character classes</th></tr>
-<tr><td><font color='#808080'><code>\i</code></font></td><td>identifier character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\I</code></font></td><td><code>\i</code> except digits <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\k</code></font></td><td>keyword character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\K</code></font></td><td><code>\k</code> except digits <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\f</code></font></td><td>file name character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\F</code></font></td><td><code>\f</code> except digits <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\p</code></font></td><td>printable character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\P</code></font></td><td><code>\p</code> except digits <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\s</code></font></td><td>whitespace character (≡ <code>[ \t]</code>) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\S</code></font></td><td>non-white space character (≡ <code>[^ \t]</code>) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><code>\d</code></td><td>digits (≡ <code>[0-9]</code>) <small>VIM</small></td></tr>
-<tr><td><code>\D</code></td><td>not <code>\d</code> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\x</code></font></td><td>hex digits (≡ <code>[0-9A-Fa-f]</code>) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\X</code></font></td><td>not <code>\x</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\o</code></font></td><td>octal digits (≡ <code>[0-7]</code>) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\O</code></font></td><td>not <code>\o</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><code>\w</code></td><td>word character <small>VIM</small></td></tr>
-<tr><td><code>\W</code></td><td>not <code>\w</code> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\h</code></font></td><td>head of word character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\H</code></font></td><td>not <code>\h</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\a</code></font></td><td>alphabetic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\A</code></font></td><td>not <code>\a</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\l</code></font></td><td>lowercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\L</code></font></td><td>not lowercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\u</code></font></td><td>uppercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\U</code></font></td><td>not uppercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\_x</code></font></td><td><code>\x</code> plus newline, for any <code>x</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\c</code></font></td><td>ignore case <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\C</code></font></td><td>match case <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\m</code></font></td><td>magic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\M</code></font></td><td>nomagic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\v</code></font></td><td>verymagic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\V</code></font></td><td>verynomagic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\Z</code></font></td><td>ignore differences in Unicode combining characters <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\i</code></font></td><td>identifier character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\I</code></font></td><td><code>\\i</code> except digits <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\k</code></font></td><td>keyword character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\K</code></font></td><td><code>\\k</code> except digits <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\f</code></font></td><td>file name character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\F</code></font></td><td><code>\\f</code> except digits <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\p</code></font></td><td>printable character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\P</code></font></td><td><code>\\p</code> except digits <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\s</code></font></td><td>whitespace character (≡ <code>[ \\t]</code>) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\S</code></font></td><td>non-white space character (≡ <code>[^ \\t]</code>) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><code>\\d</code></td><td>digits (≡ <code>[0-9]</code>) <small>VIM</small></td></tr>
+<tr><td><code>\\D</code></td><td>not <code>\\d</code> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\x</code></font></td><td>hex digits (≡ <code>[0-9A-Fa-f]</code>) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\X</code></font></td><td>not <code>\\x</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\o</code></font></td><td>octal digits (≡ <code>[0-7]</code>) <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\O</code></font></td><td>not <code>\\o</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><code>\\w</code></td><td>word character <small>VIM</small></td></tr>
+<tr><td><code>\\W</code></td><td>not <code>\\w</code> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\h</code></font></td><td>head of word character <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\H</code></font></td><td>not <code>\\h</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\a</code></font></td><td>alphabetic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\A</code></font></td><td>not <code>\\a</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\l</code></font></td><td>lowercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\L</code></font></td><td>not lowercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\u</code></font></td><td>uppercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\U</code></font></td><td>not uppercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\_x</code></font></td><td><code>\\x</code> plus newline, for any <code>x</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\c</code></font></td><td>ignore case <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\C</code></font></td><td>match case <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\m</code></font></td><td>magic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\M</code></font></td><td>nomagic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\v</code></font></td><td>verymagic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\V</code></font></td><td>verynomagic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>\\Z</code></font></td><td>ignore differences in Unicode combining characters <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 </table>
 
 <table>
@@ -582,8 +579,10 @@ not more powerful.
 <tr><td><font color='#808080'><code>(*CR)</code></font></td><td><small>(NOT SUPPORTED)</small></td></tr>
 <tr><td><font color='#808080'><code>(*CRLF)</code></font></td><td><small>(NOT SUPPORTED)</small></td></tr>
 <tr><td><font color='#808080'><code>(*LF)</code></font></td><td><small>(NOT SUPPORTED)</small></td></tr>
-<tr><td><font color='#808080'><code>(*BSR_ANYCRLF)</code></font></td><td>set \R convention <small>(NOT SUPPORTED)</small> <small>PCRE</small></td></tr>
+<tr><td><font color='#808080'><code>(*BSR_ANYCRLF)</code></font></td><td>set \\R convention <small>(NOT SUPPORTED)</small> <small>PCRE</small></td></tr>
 <tr><td><font color='#808080'><code>(*BSR_UNICODE)</code></font></td><td><small>(NOT SUPPORTED)</small> <small>PCRE</small></td></tr>
 </table>
+
+</div>
 
 [RE2 Syntax](https://github.com/girishji/re2/wiki/Syntax)
