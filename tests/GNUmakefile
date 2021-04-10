@@ -14,6 +14,7 @@ CPPFLAGS += -DRE2_R_TEST
 re2dir = ../src/re2google
 re2testdir = re2google_test
 re2files = $(patsubst %,$(re2dir)/%,GNUmakefile libre2.symbols libre2.symbols.darwin runtests)
+
 .PHONY: symlinks
 symlinks: $(re2testdir)
 $(re2testdir):

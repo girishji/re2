@@ -2,11 +2,10 @@
 CXX_STD = CXX11
 
 # Preprocessor flags
-PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h -DRE2_R_BUILD
+PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h -DRE2_R_BUILD -pthread
 
 # RE2 uses pthread. Follow "1.2.1.2 Using pthreads" of R manual on packages
 #   pthread not available on windows.
-PKG_CPPFLAGS = $(PKG_CPPFLAGS) -pthread
 PKG_LIBS = -pthread
 
 # Compiler flags from RE2

@@ -1,25 +1,41 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Sat, 10 Apr 2021 08:48:09 +0200
+Date:   Sat, 10 Apr 2021 09:46:05 +0200
 
-Update vignettes
+Fix makefile bug
 
-Add more content to vignettes and fix errors.
-
-M  vignettes/re2_benchmark.Rmd
-M  vignettes/re2_syntax.Rmd
-M  vignettes/re2_tests.Rmd
-Add content.
-Escape \ so knittr/pandoc is happy
+Fix self referencing variable bug, and other cleanup.
 
 M  src/Makevars
-Add pthread option, since RE2 uses it and it gives a slight
-performance boost.
+M  tests/GNUmakefile
 
-M  src/re2google/GNUmakefile
-M  src/util/GNUmakefile
-M  src/util/RE2Syntax.md
-M  src/util/convert.py
-Reflect changes.
+commit f7e13d01825f1bcaecc35da69e3fab2597a04df6
+Author: Girish Palya <girishji@gmail.com>
+Date:   Sat Apr 10 08:48:09 2021 +0200
+
+    # Title: Summary, imperative, start upper case, don't end with a period
+    # No more than 50 chars. #### 50 chars is here: #
+    Update vignettes
+    # Remember blank line between title and body.
+    
+    # Body: Explain *what* and *why* (not *how*). Include task ID (Jira issue).
+    # Wrap at 72 chars. ################################## which is here: #
+    Add more content to vignettes and fix errors.
+    
+    M  vignettes/re2_benchmark.Rmd
+    M  vignettes/re2_syntax.Rmd
+    M  vignettes/re2_tests.Rmd
+    Add content.
+    Escape \ so knittr/pandoc is happy
+    
+    M  src/Makevars
+    Add pthread option, since RE2 uses it and it gives a slight
+    performance boost.
+    
+    M  src/re2google/GNUmakefile
+    M  src/util/GNUmakefile
+    M  src/util/RE2Syntax.md
+    M  src/util/convert.py
+    Reflect changes.
 
 commit c59dd2a3fb1d5094c19d7b24fa8c3bed4845b3bd
 Author: Girish Palya <girishji@gmail.com>
