@@ -133,7 +133,7 @@ typedef void SearchImpl(benchmark::State& state, const char* regexp,
 
 SearchImpl SearchDFA, SearchNFA, SearchOnePass, SearchBitState, SearchPCRE,
     SearchRE2, SearchCachedDFA, SearchCachedNFA, SearchCachedOnePass,
-    SearchCachedBitState, SearchCachedPCRE, SearchCachedRE2;
+  SearchCachedBitState, SearchCachedPCRE, SearchCachedRE2, SearchUnCachedRE2;;
 
 typedef void ParseImpl(benchmark::State& state, const char* regexp,
                        const StringPiece& text);
@@ -208,6 +208,7 @@ void Search_Easy0_CachedDFA(benchmark::State& state)     { Search(state, EASY0, 
 void Search_Easy0_CachedNFA(benchmark::State& state)     { Search(state, EASY0, SearchCachedNFA); }
 void Search_Easy0_CachedPCRE(benchmark::State& state)    { Search(state, EASY0, SearchCachedPCRE); }
 void Search_Easy0_CachedRE2(benchmark::State& state)     { Search(state, EASY0, SearchCachedRE2); }
+void Search_Easy0_UnCachedRE2(benchmark::State& state)     { Search(state, EASY0, SearchUnCachedRE2); }
 
 BENCHMARK_RANGE(Search_Easy0_CachedDFA,     8, 16<<20)->ThreadRange(1, NumCPUs());
 BENCHMARK_RANGE(Search_Easy0_CachedNFA,     8, 256<<10)->ThreadRange(1, NumCPUs());
@@ -215,6 +216,8 @@ BENCHMARK_RANGE(Search_Easy0_CachedNFA,     8, 256<<10)->ThreadRange(1, NumCPUs(
 BENCHMARK_RANGE(Search_Easy0_CachedPCRE,    8, 16<<20)->ThreadRange(1, NumCPUs());
 #endif
 BENCHMARK_RANGE(Search_Easy0_CachedRE2,     8, 16<<20)->ThreadRange(1, NumCPUs());
+
+//BENCHMARK_RANGE(Search_Easy0_UnCachedRE2,     8, 16<<20)->ThreadRange(1, NumCPUs());
 
 void Search_Easy1_CachedDFA(benchmark::State& state)     { Search(state, EASY1, SearchCachedDFA); }
 void Search_Easy1_CachedNFA(benchmark::State& state)     { Search(state, EASY1, SearchCachedNFA); }
@@ -1050,6 +1053,22 @@ void SearchCachedRE2(benchmark::State& state, const char* regexp,
       CHECK_EQ(RE2::FullMatch(text, re), expect_match);
     else
       CHECK_EQ(RE2::PartialMatch(text, re), expect_match);
+  }
+}
+
+void SearchUnCachedRE2(benchmark::State& state, const char* regexp,
+                     const StringPiece& text, Prog::Anchor anchor,
+                     bool expect_match) {
+
+  for (auto _ : state) {
+    RE2 *re = new RE2(regexp);
+    CHECK_EQ(re->error(), "");
+    if (anchor == Prog::kAnchored)
+      CHECK_EQ(RE2::FullMatch(text, *re), expect_match);
+    else	
+      CHECK_EQ(RE2::PartialMatch(text, *re), expect_match);
+    
+    delete re;
   }
 }
 

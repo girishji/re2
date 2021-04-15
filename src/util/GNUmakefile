@@ -53,16 +53,19 @@ installR: restore
 	$(MAKE) buildR
 	cd ../../.. && R CMD INSTALL $(tarball)
 
-.PHONY: quick _quick
-quick: restore _quick
-_quick:
-	$(MAKE) clean cleanDoc
+.PHONY: prepare
+prepare:
 	cd ../re2google && $(MAKE) clean
 	cd ../.. && Rscript -e 'library(Rcpp);compileAttributes()'
 	cd ../ && sed -r 's/(.*)more_options = NULL(.*)/\1...\2\n    more_options <- list(...)/g' \
 	    ../R/RcppExports.R > ../R/RcppExports.R.tmp
 	cd ../ && mv ../R/RcppExports.R.tmp ../R/RcppExports.R
-	cd ../../tests && $(MAKE) cleanall # .Rbuildignore is useless
+	cd ../../tests && $(MAKE) cleanall # .Rbuildignore does not always work
+
+.PHONY: quick
+quick: restore
+	$(MAKE) clean cleanDoc
+	$(MAKE) prepare
 	cd ../../.. && R CMD build --no-build-vignettes --no-manual re2
 	cd ../../.. && R CMD INSTALL $(tarball)
 
@@ -71,7 +74,8 @@ test:
 	grep -v exportPattern $(namespacefile) > /tmp/.namespace
 	echo 'exportPattern("^(\\\\.)*[[:alpha:]]+")' >> /tmp/.namespace
 	mv /tmp/.namespace $(namespacefile)
-	$(MAKE) _quick
+	$(MAKE) prepare
+	cd ../../.. && R CMD INSTALL re2
 
 .PHONY: check
 check: restore

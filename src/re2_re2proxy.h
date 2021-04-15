@@ -19,15 +19,15 @@ namespace re2 {
     const RE2& get() const;
     static void modify_options(RE2::Options& opt,
 			       Nullable<List> more_options);
-    static void set_option(bool& opt, const std::string& name,
+    static bool set_option(bool& opt, const std::string& name,
 			   Nullable<List> options);
-    static void set_option_uint(size_t& opt,
+    static bool set_option_uint(size_t& opt,
 				const std::string& name,
 				Nullable<List> options);
-    static void set_option_int(int& opt,
+    static bool set_option_int(int& opt,
 			       const std::string& name,
 			       Nullable<List> options);
-    static void set_option_anchor(RE2::Anchor &opt,
+    static bool set_option_anchor(RE2::Anchor &opt,
 				  const std::string& name,
 				  Nullable<List> options);
     static bool is_logical_out(Nullable<List> options);

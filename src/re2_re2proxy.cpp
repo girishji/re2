@@ -1,3 +1,4 @@
+
 // Copyright (c) 2021 Girish Palya
 // License: https://github.com/girishji/re2/blob/main/LICENSE.md
 
@@ -74,42 +75,48 @@ namespace re2 {
   }
   
   /************************************************************/
-  void RE2Proxy::set_option(bool& opt, const std::string& name,
+  bool RE2Proxy::set_option(bool& opt, const std::string& name,
 			    Nullable<List> options) {
     if (options.isNotNull()) {
       List mopts(options);
       if (mopts.containsElementNamed(name.c_str())) {
 	opt = as<bool>(mopts[name]);
+	return true;
       }
     }
+    return false;
   }
 
   /************************************************************/
-  void RE2Proxy::set_option_uint(size_t& opt,
+  bool RE2Proxy::set_option_uint(size_t& opt,
 				 const std::string& name,
 				 Nullable<List> options) {
     if (options.isNotNull()) {
       List mopts(options); // casting to underlying type List
       if (mopts.containsElementNamed(name.c_str())) {
 	opt = as<size_t>(mopts[name]);
+	return true;
       }
     }
+    return false;
   }
 
     /************************************************************/
-  void RE2Proxy::set_option_int(int& opt,
+  bool RE2Proxy::set_option_int(int& opt,
 				const std::string& name,
 				Nullable<List> options) {
     if (options.isNotNull()) {
       List mopts(options); // casting to underlying type List
       if (mopts.containsElementNamed(name.c_str())) {
 	opt = as<int>(mopts[name]);
+	return true;
       }
     }
+    return false;
   }
 
   /************************************************************/
-  void RE2Proxy::set_option_anchor(RE2::Anchor& anchor,
+  bool RE2Proxy::set_option_anchor(RE2::Anchor& anchor,
 				   const std::string& name,
 				   Nullable<List> options) {
     if (options.isNotNull()) {
@@ -127,8 +134,10 @@ namespace re2 {
 	    = "Expecting valid anchor type: [type=%s].";
 	  throw ::Rcpp::not_compatible(fmt, opt);
 	}
+	return true;
       }
     }
+    return false;
   }
 
   /************************************************************/
