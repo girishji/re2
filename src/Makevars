@@ -53,3 +53,4 @@ OBJECTS = $(OFILES) \
 	re2_check_rewrite_string.o \
 	re2_max_submatch.o \
 	re2_rewrite.o \
+	re2_random_text.o \

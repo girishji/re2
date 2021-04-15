@@ -1,34 +1,49 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Thu, 15 Apr 2021 10:05:14 +0200
+Date:   Thu, 15 Apr 2021 10:06:36 +0200
 
-Add benchmark and isolate test functions 
+Leftover from previous commit
 
-Add R code to benchmark RE2 against stringr.
-Some R functions should only be used for unit testing from RInside.
-  Change NAMESPACE file so that these functions get exported only
-  during testing. This change is done through makefile.
+Compile  random text generator file
 
-M  src/re2_match.cpp
-Refactor code.
+M  src/Makevars
 
-A  src/re2_random_text.cpp
-Add random text generator for benchmark test
+commit 5dcc40530bf17dbdc6fe0671bea897c0793cda5c
+Author: Girish Palya <girishji@gmail.com>
+Date:   Thu Apr 15 10:05:14 2021 +0200
 
-M  src/re2_re2proxy.cpp
-M  src/re2_re2proxy.h
-set functions return bool instead of void. Minor optimization.
-
-M  src/re2google/re2/testing/regexp_benchmark.cc
-Add new benchmark test for non-cached RE2.
-
-M  src/util/GNUmakefile
-Make changes for NAMESPACE file.
-
-D  src/util/benchlog.macbook-air
-Not needed.
-
-A  tests/benchmark.R
-Add test.
+    # Title: Summary, imperative, start upper case, don't end with a period
+    # No more than 50 chars. #### 50 chars is here: #
+    Add benchmark and isolate test functions
+    # Remember blank line between title and body.
+    
+    # Body: Explain *what* and *why* (not *how*). Include task ID (Jira issue).
+    # Wrap at 72 chars. ################################## which is here: #
+    Add R code to benchmark RE2 against stringr.
+    Some R functions should only be used for unit testing from RInside.
+      Change NAMESPACE file so that these functions get exported only
+      during testing. This change is done through makefile.
+    
+    M  src/re2_match.cpp
+    Refactor code.
+    
+    A  src/re2_random_text.cpp
+    Add random text generator for benchmark test
+    
+    M  src/re2_re2proxy.cpp
+    M  src/re2_re2proxy.h
+    set functions return bool instead of void. Minor optimization.
+    
+    M  src/re2google/re2/testing/regexp_benchmark.cc
+    Add new benchmark test for non-cached RE2.
+    
+    M  src/util/GNUmakefile
+    Make changes for NAMESPACE file.
+    
+    D  src/util/benchlog.macbook-air
+    Not needed.
+    
+    A  tests/benchmark.R
+    Add test.
 
 commit df7364720ca34da2336e46184b2e9f2c93aa3413
 Author: Girish Palya <girishji@gmail.com>
