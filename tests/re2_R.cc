@@ -769,7 +769,7 @@ bool RE2::Match(const StringPiece& text,
       R["re_anchor_"] = "ANCHOR_BOTH";
     }
     
-    std::string evalstr = "re2_match(text_, re2ptr, startpos=startpos_, "
+    std::string evalstr = "re2_match_cpp(text_, re2ptr, startpos=startpos_, "
       "endpos=endpos_, re_anchor=re_anchor_, "
       "nsubmatch=nsubmatch_";
     Rcpp::LogicalVector lv = R.parseEval(evalstr + ", logical=T)");

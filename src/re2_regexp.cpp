@@ -7,14 +7,10 @@
 
 using namespace Rcpp;
 
-//' Compile regex pattern
+//' Compile regular expression pattern
 //'
-//' \code{re2_re2} compiles a character string containing a regular
+//' \code{re2_regexp} compiles a character string containing a regular
 //'   expression and returns a pointer to the internal representation.
-//'   The returned value can be used (instead of
-//'   character string pattern) in \code{\link{re2_match}},
-//'   \code{\link{re2_replace}}, \code{\link{re2_global_replace}},
-//'   \code{\link{re2_extract}}, etc. for efficiency.
 //'
 //' @section Regexp Syntax:
 //'
@@ -52,18 +48,15 @@ using namespace Rcpp;
 //' @param pattern Character string containing a
 //' regular expression.
 //'
-//' @param \dots Options, as comma separated \verb{option=value}. See "RE2 Options" section below.
-//'
-//' @section RE2 Options:
-//' The options are (defaults in parentheses):
+//' @param \dots The options are (defaults in parentheses):
 //'
 //' \tabular{lll}{
-//'   \verb{encoding} \tab (\verb{"UTF8"}) Text and pattern are UTF-8;
+//'   \verb{encoding} \tab (\verb{"UTF8"}) String and pattern are UTF-8;
 //'                                 Otherwise \verb{"Latin1"}.\cr
 //'   \verb{posix_syntax} \tab (\verb{FALSE}) Restrict regexps to POSIX egrep syntax.\cr 
 //'   \verb{longest_match} \tab (\verb{FALSE}) Search for longest match, not first match.\cr
-//'   \verb{max_mem} \tab (see below) Approx. max memory footprint of RE2.\cr
-//'   \verb{literal} \tab (\verb{FALSE}) Interpret string as literal, not regexp.\cr
+//'   \verb{max_mem} \tab (see below) Approx. max memory footprint of RE2 C++ object.\cr
+//'   \verb{literal} \tab (\verb{FALSE}) Interpret pattern as literal, not regexp.\cr
 //'   \verb{never_nl} \tab (\verb{FALSE}) Never match \\n, even if it is in regexp.\cr
 //'   \verb{dot_nl} \tab (\verb{FALSE}) Dot matches everything including new line.\cr
 //'   \verb{never_capture} \tab (\verb{FALSE}) Parse all parens as non-capturing.\cr
@@ -79,51 +72,52 @@ using namespace Rcpp;
 //'   \verb{word_boundary} \tab (\verb{FALSE}) Allow Perl's \verb{\\b \\B} (word boundary and not).\cr
 //'   \verb{one_line} \tab (\verb{FALSE}) \verb{^} and \verb{$} only match beginning and end of text.\cr
 //' }
-//' The \verb{max_mem} option controls how much memory can be used
-//' to hold the compiled form of the regexp (the Prog) and
-//' its cached DFA graphs. Code Search placed limits on the number
-//' of Prog instructions and DFA states: 10,000 for both.
-//' In RE2, those limits would translate to about 240 KB per Prog
-//' and perhaps 2.5 MB per DFA (DFA state sizes vary by regexp; RE2 does a
-//' better job of keeping them small than Code Search did).
-//' Each RE2 has two Progs (one forward, one reverse), and each Prog
-//' can have two DFAs (one first match, one longest match). \cr
-//' That makes 4 DFAs: 
-//' \tabular{lll}{
-//'   forward, first-match   \tab - \tab used for \verb{UNANCHORED} or \verb{ANCHOR_START} 
-//'                             searches if \verb{longest_match=FALSE}. \cr
-//'   forward, longest-match \tab - \tab used for all \verb{ANCHOR_BOTH} searches,
-//'                             and the other two kinds if 
-//'                             \verb{longest_match=TRUE}. \cr
-//'   reverse, first-match   \tab - \tab never used. \cr
-//'   reverse, longest-match \tab - \tab used as second phase for unanchored
-//'                                      searches. \cr
-//' }
-//' The RE2 memory budget is statically divided between the two
-//' Progs and then the DFAs: two thirds to the forward Prog
-//' and one third to the reverse Prog.  The forward Prog gives half
-//' of what it has left over to each of its DFAs.  The reverse Prog
-//' gives it all to its longest-match DFA.
 //'
-//' Once a DFA fills its budget, it flushes its cache and starts over.
-//' If this happens too often, RE2 falls back on the NFA implementation.
-//' 
+//' The \verb{max_mem} option controls how much memory can be used to
+//' hold the compiled form of the regexp and its cached DFA
+//' graphs (DFA: The execution engine that implements Deterministic
+//' Finite Automaton search). Default is 8MB.
+//'
 //' @return Compiled regular expression.
 //'
 //' @examples
-//' re2p <- re2_re2("hello world")
+//' re2p <- re2_regexp("hello world")
 //' stopifnot(mode(re2p) == "externalptr")
+//'
+//' ## UTF-8 and matching interface
+//' # By default, pattern and input text are interpreted as UTF-8.
+//' # The Latin1 option causes them to be interpreted as Latin-1.
+//' x <- "fa\xE7ile"
+//' Encoding(x) <- "latin1"
+//' re2_detect(x, "fa\xE7")
+//' stopifnot(!re2_detect(x, "fa\xE7"))
+//' re <- re2_regexp("fa\xE7", encoding="Latin1")
+//' re2_detect(x, re)
+//' stopifnot(re2_detect(x, re))
+//'
+//' ## Case insensitive
+//' re2_detect("fOobar ", re2_regexp("Foo", case_sensitive=FALSE))
+//' res <- re2_detect("fOobar ", re2_regexp("Foo", case_sensitive=FALSE))
+//' stopifnot(res == TRUE)
 //' 
-//' re2p <- re2_re2("Ruby:1234", case_sensitive=FALSE)
-//' stopifnot(mode(re2p) == "externalptr")
+//' ## Use of never_nl
+//' re <- re2_regexp("(abc(.|\n)*def)", never_nl=FALSE)
+//' re2_match("abc\ndef\n", re)
+//' res <- re2_match("abc\ndef\n", re)
+//' stopifnot(res[1, 2] == "abc\ndef")
+//' #
+//' re <- re2_regexp("(abc(.|\n)*def)", never_nl=TRUE)
+//' re2_match("abc\ndef\n", re)
+//' res <- re2_match("abc\ndef\n", re)
+//' stopifnot(is.na(res[1, 2]))
 //'
-//' @usage re2_re2(pattern, \dots)
+//' @usage re2_regexp(pattern, \dots)
 //'
-//' @seealso \link{re2_syntax},  \code{\link{re2_replace}}, \code{\link{re2_global_replace}},
-//'   \code{\link{re2_match}}, \code{\link{re2_extract}}.
+//' @seealso \link{re2_syntax} has RE2 syntax.
+//' 
 // [[Rcpp::export]]
-XPtr<RE2> re2_re2(std::string& pattern,
-		  Nullable<List> more_options = R_NilValue) {
+XPtr<RE2> re2_regexp(std::string& pattern,
+		     Nullable<List> more_options = R_NilValue) {
 
   RE2::Options opt;
   re2::RE2Proxy::modify_options(opt, more_options);

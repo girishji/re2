@@ -40,14 +40,16 @@ OBJECTS = $(OFILES) \
 	re2_re2proxy.o \
 	re2_re2container.o \
 	re2_quote_meta.o \
-	re2_re2.o \
+	re2_regexp.o \
 	re2_number_of_capturing_groups.o \
 	re2_get_options.o \
 	re2_replace.o \
 	re2_global_replace.o \
 	re2_named_capturing_groups.o \
 	re2_capturing_group_names.o \
+	re2_match_cpp.o \
 	re2_match.o \
+	re2_detect.o \
 	re2_extract.o \
 	re2_possible_match_range.o \
 	re2_check_rewrite_string.o \

@@ -1,11 +1,35 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Thu, 15 Apr 2021 10:06:36 +0200
+Date:   Fri, 16 Apr 2021 08:05:04 +0200
 
-Leftover from previous commit
+Refactor and fix documentation
 
-Compile  random text generator file
+Add re2_match_cpp to isolate hairy options.
+Add re2_detect as a convenient wrapper for re2_match_cpp.
+Rename re2_re2 to re2_regexp (more intuitive).
+Fix documentation.
 
 M  src/Makevars
+A  src/re2_detect.cpp
+M  src/re2_match.cpp
+A  src/re2_match_cpp.cpp
+M  src/re2_re2proxy.cpp
+R  src/re2_re2.cpp -> src/re2_regexp.cpp
+M  tests/re2_R.cc
+
+commit d198d43a2a36df2e72e17b6e09cc9501eb61fdf0
+Author: Girish Palya <girishji@gmail.com>
+Date:   Thu Apr 15 10:06:36 2021 +0200
+
+    # Title: Summary, imperative, start upper case, don't end with a period
+    # No more than 50 chars. #### 50 chars is here: #
+    Leftover from previous commit
+    # Remember blank line between title and body.
+    
+    # Body: Explain *what* and *why* (not *how*). Include task ID (Jira issue).
+    # Wrap at 72 chars. ################################## which is here: #
+    Compile  random text generator file
+    
+    M  src/Makevars
 
 commit 5dcc40530bf17dbdc6fe0671bea897c0793cda5c
 Author: Girish Palya <girishji@gmail.com>
