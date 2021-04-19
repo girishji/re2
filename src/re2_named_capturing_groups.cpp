@@ -3,7 +3,7 @@
 
 #include <Rcpp.h>
 #include <re2/re2.h>
-#include "re2_re2container.h"
+#include "re2_re2proxy.h"
 
 using namespace Rcpp;
 
@@ -34,40 +34,27 @@ using namespace Rcpp;
 // stopifnot(res["C"] == 3)
 // stopifnot(res["D"] == 6)
 //
-// @seealso \code{\link{re2_capturing_group_names}},
-//   \code{\link{re2_number_of_capturing_groups}},
-//   \code{\link{re2_re2}}, \code{\link{re2_replace}},
-//   \code{\link{re2_match}}, \code{\link{re2_global_replace}},
-//   \code{\link{re2_extract}}.
 // [[Rcpp::export(.re2_named_capturing_groups)]]
 SEXP re2_named_capturing_groups(SEXP pattern) {
 
-  re2::RE2Container container(pattern); // vectorize
-  const std::vector<re2::RE2ProxyPtr> &rv = container.get();
-  List result(rv.size());
+  re2::RE2Proxy container(pattern); 
+  List result(1);
 
-  for (std::vector<re2::RE2ProxyPtr>::size_type i = 0;
-       i < rv.size(); i++) {
-    const std::map<std::string, int>& groups
-      = rv[i]->get().NamedCapturingGroups();
-    if (groups.size() > 0) {
-      std::vector<std::string> keys;
-      std::vector<int> values;
-      values.reserve(groups.size());
-      keys.reserve(groups.size());
-      for (auto const& element : groups) {
-	keys.push_back(element.first);
-	values.push_back(element.second);
-      }
-      IntegerVector groupids = wrap(values);
-      groupids.attr("names") = keys;
-      result[i] = groupids;
+  const std::map<std::string, int>& groups
+    = container[0].get().NamedCapturingGroups();
+  if (groups.size() > 0) {
+    std::vector<std::string> keys;
+    std::vector<int> values;
+    values.reserve(groups.size());
+    keys.reserve(groups.size());
+    for (auto const& element : groups) {
+      keys.push_back(element.first);
+      values.push_back(element.second);
     }
+    IntegerVector groupids = wrap(values);
+    groupids.attr("names") = keys;
+    result[0] = groupids;
   }
 
-  if (result.size() == 1) {
-    return result(0);
-  } else {
-    return result;
-  }
+  return result(0);
 }

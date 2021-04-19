@@ -3,7 +3,7 @@
 
 #include <Rcpp.h>
 #include <re2/re2.h>
-#include "re2_re2container.h"
+#include "re2_re2proxy.h"
 
 using namespace Rcpp;
 
@@ -31,48 +31,27 @@ using namespace Rcpp;
 // stopifnot(length(cgn) == 3)
 // stopifnot(is.na(cgn["1"]))
 //
-// # Same as above, except using compiled pattern:
-// re2p <- re2_re2("((abc)(?P<G2>)|((e+)(?P<G2>.*)(?P<G1>u+)))")
-// cgn <- re2_capturing_group_names(re2p)
-//
-// # If input is a vector of patterns, a list is returned:
-// cgn <- re2_capturing_group_names(c("bar", "(foo)(?P<Gr1>)"))
-// stopifnot(mode(cgn) == "list")
-//
-// @seealso \code{\link{re2_named_capturing_groups}},
-//   \code{\link{re2_number_of_capturing_groups}},
-//   \code{\link{re2_re2}}, \code{\link{re2_replace}},
-//   \code{\link{re2_match}}, \code{\link{re2_global_replace}},
-//   \code{\link{re2_extract}}.
 // [[Rcpp::export(.re2_capturing_group_names)]]
 SEXP re2_capturing_group_names(SEXP pattern) {
 
-  re2::RE2Container container(pattern); // vectorize
-  const std::vector<re2::RE2ProxyPtr> &rv = container.get();
-  List result(rv.size());
+  re2::RE2Proxy container(pattern); 
+  List result(1);
 
-  for (std::vector<re2::RE2ProxyPtr>::size_type i = 0;
-       i < rv.size(); i++) {
-    const std::map<int, std::string>& groups
-      = rv[i]->get().CapturingGroupNames();
-    if (groups.size() > 0) {
-      std::vector<std::string> values;
-      std::vector<int> keys;
-      values.reserve(groups.size());
-      keys.reserve(groups.size());
-      for (auto const& element : groups) {
-	keys.push_back(element.first);
-	values.push_back(element.second);
-      }
-      StringVector groupids = wrap(values);
-      groupids.attr("names") = keys;
-      result[i] = groupids;
+  const std::map<int, std::string>& groups
+    = container[0].get().CapturingGroupNames();
+  if (groups.size() > 0) {
+    std::vector<std::string> values;
+    std::vector<int> keys;
+    values.reserve(groups.size());
+    keys.reserve(groups.size());
+    for (auto const& element : groups) {
+      keys.push_back(element.first);
+      values.push_back(element.second);
     }
+    StringVector groupids = wrap(values);
+    groupids.attr("names") = keys;
+    result[0] = groupids;
   }
 
-  if (result.size() == 1) {
-    return result[0];
-  } else {
-    return result;
-  }
+  return result[0];
 }

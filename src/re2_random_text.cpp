@@ -13,7 +13,7 @@ using namespace Rcpp;
 // Generate random text that won't contain the search string,
 // to test worst-case search behavior.
 //
-// [[Rcpp::export(.re2_random_text)]]
+//// [[Rcpp::export(.re2_random_text)]]
 std::string re2_random_text(int64_t nbytes) {
   static const std::string* const text = []() {
     std::string* text = new std::string;

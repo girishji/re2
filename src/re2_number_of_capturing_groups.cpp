@@ -3,7 +3,7 @@
 
 #include <Rcpp.h>
 #include <re2/re2.h>
-#include "re2_re2container.h"
+#include "re2_re2proxy.h"
 
 using namespace Rcpp;
 
@@ -24,20 +24,10 @@ using namespace Rcpp;
 // re2p <- re2_re2("directions from (?P<S>.*) to (?P<D>.*)")
 // stopifnot(re2_number_of_capturing_groups(re2p) == 2)
 //
-// @seealso
-//   \code{\link{re2_named_capturing_groups}},
-//   \code{\link{re2_capturing_group_names}},
-//   \code{\link{re2_re2}}, \code{\link{re2_replace}},
-//   \code{\link{re2_match}}, \code{\link{re2_global_replace}},
-//   \code{\link{re2_extract}}.
 // [[Rcpp::export(.re2_number_of_capturing_groups)]]
 IntegerVector re2_number_of_capturing_groups(SEXP pattern) {
-  re2::RE2Container container(pattern); // vectorize
-  const std::vector<re2::RE2ProxyPtr> &rv = container.get();
-  IntegerVector result(rv.size());
-  for (std::vector<re2::RE2ProxyPtr>::size_type i = 0;
-       i < rv.size(); i++) {
-    result[i] = rv[i]->get().NumberOfCapturingGroups();
-  }
+  re2::RE2Proxy container(pattern);
+  IntegerVector result(1);
+  result[0] = container[0].get().NumberOfCapturingGroups();
   return result;
 }

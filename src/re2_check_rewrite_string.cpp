@@ -31,31 +31,16 @@ using namespace Rcpp;
 // @return TRUE/FALSE or a vector of logical values. With verbose
 //   option error strings are also returned in case of error.
 //
-// @usage re2_check_rewrite_string(pattern, rewrite, ...)
-//
 // @examples
 // stopifnot(re2_check_rewrite_string("abc", "foo"));
 // stopifnot(!re2_check_rewrite_string("abc", "foo\\"));
 // stopifnot(re2_check_rewrite_string("abc", "foo\\0bar"));
 // 
-// stopifnot(re2_check_rewrite_string("a(b)c", "foo"));
-// stopifnot(re2_check_rewrite_string("a(b)c", "foo\\0bar"));
-// stopifnot(re2_check_rewrite_string("a(b)c", "foo\\1bar"));
-// stopifnot(!re2_check_rewrite_string("a(b)c", "foo\\2bar"));
-// stopifnot(re2_check_rewrite_string("a(b)c", "f\\\\2o\\1o"));
-// 
-// stopifnot(re2_check_rewrite_string("a(b)(c)", "foo\\12"));
-// stopifnot(re2_check_rewrite_string("a(b)(c)", "f\\2o\\1o"));
-// stopifnot(!re2_check_rewrite_string("a(b)(c)", "f\\oo\\1"));
-// 
 // [[Rcpp::export(.re2_check_rewrite_string)]]
-SEXP re2_check_rewrite_string(SEXP pattern, StringVector rewrite,
-			      Nullable<List> more_options
-			      = R_NilValue) {
+SEXP re2_check_rewrite_string(SEXP pattern, StringVector rewrite) {
 
-  re2::RE2Proxy re2proxy(pattern, more_options);
+  re2::RE2Proxy re2proxy(pattern);
   LogicalVector lv(rewrite.size());
-  bool verbose = re2::RE2Proxy::is_verbose_out(more_options);
   StringVector errors(rewrite.size());
 
   for (int i = 0; i < rewrite.size(); i++) {
@@ -68,13 +53,10 @@ SEXP re2_check_rewrite_string(SEXP pattern, StringVector rewrite,
 
     re2::StringPiece strpc(R_CHAR(rewrite(i))); // shallow copy 
     std::string err_str;
-    lv[i] = re2proxy.get().CheckRewriteString(strpc, &err_str);
+    lv[i] = re2proxy[0].get().CheckRewriteString(strpc, &err_str);
     errors[i] = err_str;
   }
 
-  if (verbose) {
-    return List::create(Named("success") = lv,
-			Named("error") = errors);
-  }
-  return lv;
+  return List::create(Named("success") = lv,
+		      Named("error") = errors);
 }

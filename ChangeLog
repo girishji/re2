@@ -1,20 +1,80 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Fri, 16 Apr 2021 08:05:04 +0200
+Date:   Mon, 19 Apr 2021 23:06:08 +0200
 
-Refactor and fix documentation
+Add new functionality
 
-Add re2_match_cpp to isolate hairy options.
-Add re2_detect as a convenient wrapper for re2_match_cpp.
-Rename re2_re2 to re2_regexp (more intuitive).
-Fix documentation.
+Add detect, count, split, which, subset, locate functions.
+Vectorize pattern string.
+Add benchmarking test.
 
-M  src/Makevars
-A  src/re2_detect.cpp
+A  src/re2_do_match.cpp
+A  src/re2_do_match.h
+Abstract matching logic so it can be reused for other related
+functions.
+
+M  src/re2_detect.cpp
+A  src/re2_split.cpp
 M  src/re2_match.cpp
-A  src/re2_match_cpp.cpp
+M  src/re2_match_cpp.cpp
+A  src/re2_locate.cpp
+Add new functions.
+
 M  src/re2_re2proxy.cpp
-R  src/re2_re2.cpp -> src/re2_regexp.cpp
+M  src/re2_re2proxy.h
+Vectorize regexp pattern.
+
+D  src/re2_extract.cpp
+A  src/re2_extract_replace.cpp
+D  src/re2_global_replace.cpp
+M  src/re2_max_submatch.cpp
+M  src/re2_named_capturing_groups.cpp
+M  src/re2_number_of_capturing_groups.cpp
+M  src/re2_possible_match_range.cpp
+M  src/Makevars
+M  src/re2_capturing_group_names.cpp
+M  src/re2_check_rewrite_string.cpp
 M  tests/re2_R.cc
+M  src/re2_replace.cpp
+A  src/re2_replace_all.cpp
+Reflect changes related to vectorization of regexp.
+
+M  src/re2_random_text.cpp
+Add benchmark.
+
+D  src/re2_re2container.cpp
+D  src/re2_re2container.h
+D  src/re2_rewrite.cpp
+Nuke.
+
+M  src/re2_regexp.cpp
+Fix doc.
+
+M  src/util/GNUmakefile
+Cleanup.
+
+commit 7527ff00ec42306d5299684899ca5fc9ba0b1100
+Author: Girish Palya <girishji@gmail.com>
+Date:   Fri Apr 16 08:05:04 2021 +0200
+
+    # Title: Summary, imperative, start upper case, don't end with a period
+    # No more than 50 chars. #### 50 chars is here: #
+    Refactor and fix documentation
+    # Remember blank line between title and body.
+    
+    # Body: Explain *what* and *why* (not *how*). Include task ID (Jira issue).
+    # Wrap at 72 chars. ################################## which is here: #
+    Add re2_match_cpp to isolate hairy options.
+    Add re2_detect as a convenient wrapper for re2_match_cpp.
+    Rename re2_re2 to re2_regexp (more intuitive).
+    Fix documentation.
+    
+    M  src/Makevars
+    A  src/re2_detect.cpp
+    M  src/re2_match.cpp
+    A  src/re2_match_cpp.cpp
+    M  src/re2_re2proxy.cpp
+    R  src/re2_re2.cpp -> src/re2_regexp.cpp
+    M  tests/re2_R.cc
 
 commit d198d43a2a36df2e72e17b6e09cc9501eb61fdf0
 Author: Girish Palya <girishji@gmail.com>

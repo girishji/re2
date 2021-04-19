@@ -7,13 +7,6 @@
 
 using namespace Rcpp;
 
-SEXP re2_match_inner(StringVector text, const RE2& re2regexp,
-                     bool logical, bool verbose,
-		     size_t startpos,
-		     size_t endpos,
-		     int nsubmatch,
-		     RE2::Anchor anchor);
-
 //' Find the presence of a pattern in string(s)
 //'
 //' @description
@@ -47,8 +40,55 @@ SEXP re2_match_inner(StringVector text, const RE2& re2regexp,
 //'   \code{\link{re2_match_cpp}} which this function wraps.
 //'
 // [[Rcpp::export]]
-SEXP re2_detect(StringVector string, SEXP pattern) {
+LogicalVector re2_detect(StringVector string, SEXP pattern) {
   re2::RE2Proxy re2proxy(pattern);
-  return re2_match_inner(string, re2proxy.get(), true, false,
-			 0, SIZE_MAX, 0, RE2::UNANCHORED);
+  StringVector& vstring = string;
+  LogicalVector result(vstring.size());
+
+  if ((vstring.size() % re2proxy.size()) != 0) {
+    Rcerr << "Warning: string vector length is not a "
+      "multiple of pattern vector length" << '\n';
+  }
+    
+  for (int i = 0; i < vstring.size(); i++) {
+    if (vstring(i) == NA_STRING) {
+      result(i) = NA_LOGICAL;
+      continue;
+    }
+    int re_idx = i % re2proxy.size();
+    re2::StringPiece text(R_CHAR(vstring(i)));
+
+    if (re2proxy[re_idx].get().Match(text, 0, text.size(),
+				     RE2::UNANCHORED,
+				     nullptr, 0)) {
+      result(i) = true;
+    } else {
+      result(i) = false;
+    }
+  }
+  return result;
+}
+
+// [[Rcpp::export]]
+IntegerVector re2_which(StringVector string, SEXP pattern) {
+  LogicalVector vec = re2_detect(string, pattern);
+  std::vector<int> res;
+  for (int i = 0; i < vec.size(); i++) {
+    if (vec(i)) {
+      res.push_back(i + 1);
+    }
+  }
+  return wrap(res);  
+}
+
+// [[Rcpp::export]]
+StringVector re2_subset(StringVector string, SEXP pattern) {
+  LogicalVector vec = re2_detect(string, pattern);
+  std::vector<std::string> res;
+  for (int i = 0; i < vec.size(); i++) {
+    if (vec(i)) {
+      res.push_back(as<std::string>(string(i)));
+    }
+  }
+  return wrap(res);      
 }

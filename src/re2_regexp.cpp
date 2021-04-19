@@ -7,6 +7,10 @@
 
 using namespace Rcpp;
 
+static void modify_options(RE2::Options& opt,
+			   Nullable<List> more_options);
+
+
 //' Compile regular expression pattern
 //'
 //' \code{re2_regexp} compiles a character string containing a regular
@@ -120,11 +124,58 @@ XPtr<RE2> re2_regexp(std::string& pattern,
 		     Nullable<List> more_options = R_NilValue) {
 
   RE2::Options opt;
-  re2::RE2Proxy::modify_options(opt, more_options);
+  modify_options(opt, more_options);
 
   auto re2ptr = new RE2(pattern, opt);
   if (!(re2ptr->ok())) {
     throw std::invalid_argument(re2ptr->error());
   }
   return XPtr<RE2>(re2ptr);
+}
+
+static void modify_options(RE2::Options& opt,
+			   Nullable<List> more_options) {
+  
+  opt.set_log_errors(false); // make 'quiet' option the default
+
+  static auto encoding_enum = [] (std::string const& val) {
+    return (val == "EncodingLatin1" || val == "Latin1")
+      ? RE2::Options::EncodingLatin1 : RE2::Options::EncodingUTF8;
+  };
+  
+#define SETTER(name) else if (strcmp(R_CHAR(names(i)), #name) == 0) {   \
+      opt.set_##name(as<bool>(mopts(i))); }
+    
+  if (more_options.isNotNull()) {
+    List mopts(more_options);
+    if (mopts.size() > 0) {
+        StringVector names = mopts.names();
+
+      for (int i = 0; i < names.size(); i++) {
+	if (strcmp(R_CHAR(names(i)), "encoding") == 0) {
+	  opt.set_encoding(encoding_enum(as<std::string>(mopts(i))));
+	}
+        
+        SETTER(posix_syntax)
+        SETTER(longest_match)
+        SETTER(log_errors)
+        SETTER(literal)
+        SETTER(never_nl)
+        SETTER(dot_nl)
+        SETTER(never_capture)
+        SETTER(case_sensitive)
+        SETTER(perl_classes)
+        SETTER(word_boundary)
+        SETTER(one_line)
+
+        else if (strcmp(R_CHAR(names(i)), "max_mem") == 0) {
+          opt.set_max_mem(as<int>(mopts(i)));
+        } else {
+	  const char* fmt
+	    = "Expecting valid option: [type=%s].";
+	  throw ::Rcpp::not_compatible(fmt, R_CHAR(names(i)));
+	}
+      }
+    }
+  }
 }

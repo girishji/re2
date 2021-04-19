@@ -16,8 +16,10 @@ include ../Makevars
 tarball=re2_0.1.0.tar.gz
 namespacefile=../../NAMESPACE
 
+all: test
+
 .PHONY: restore
-restore: 
+restore:
 	if grep "exportPattern(\"^(" $(namespacefile) >/dev/null; then \
 		grep -v exportPattern $(namespacefile) > /tmp/.namespace; \
 		echo "exportPattern(\"^[[:alpha:]]+\")" >> /tmp/.namespace; \
@@ -32,7 +34,16 @@ clean:
 
 .PHONY: cleanDoc
 cleanDoc:
-	rm -f ../../man/*.Rd 
+	rm -f ../../man/*.Rd
+
+.PHONY: fix_R_exports
+fix_R_exports:
+	sed -r -e 's/(.*)more_options = NULL(.*)/\1...\2\n    more_options <- list(...)/g' \
+		-e 's/(re2_split(.+)function(.+))n)/\1n = Inf)/' \
+		../../R/RcppExports.R > /tmp/RcppExports.R.tmp
+	if ! cmp  ../../R/RcppExports.R  /tmp/RcppExports.R.tmp > /dev/null; then \
+		mv /tmp/RcppExports.R.tmp ../../R/RcppExports.R ; \
+	fi
 
 .PHONY: buildR
 buildR: restore
@@ -40,12 +51,10 @@ buildR: restore
 	cd ../re2google && $(MAKE) clean
 	cd ../.. && Rscript -e 'library(Rcpp);compileAttributes()'
 	cd ../.. && Rscript -e 'library(roxygen2);roxygen2::roxygenize(roclets="rd")'
-	cd ../ && sed -r 's/(.*)more_options = NULL(.*)/\1...\2\n    more_options <- list(...)/g' \
-	    ../R/RcppExports.R > ../R/RcppExports.R.tmp
-	cd ../ && mv ../R/RcppExports.R.tmp ../R/RcppExports.R
+	$(MAKE) fix_R_exports
 	python3 convert.py > ../../man/re2_syntax.Rd
 	$(MAKE) clean # clean up roxygen created binaries
-	cd ../../tests && $(MAKE) cleanall # .Rbuildignore is useless
+	cd ../../tests && $(MAKE) cleanall # .Rbuildignore doesn't ignore
 	cd ../../.. && R CMD build re2
 
 .PHONY: installR
@@ -57,15 +66,13 @@ installR: restore
 prepare:
 	cd ../re2google && $(MAKE) clean
 	cd ../.. && Rscript -e 'library(Rcpp);compileAttributes()'
-	cd ../ && sed -r 's/(.*)more_options = NULL(.*)/\1...\2\n    more_options <- list(...)/g' \
-	    ../R/RcppExports.R > ../R/RcppExports.R.tmp
-	cd ../ && mv ../R/RcppExports.R.tmp ../R/RcppExports.R
-	cd ../../tests && $(MAKE) cleanall # .Rbuildignore does not always work
+	$(MAKE) fix_R_exports
 
 .PHONY: quick
 quick: restore
 	$(MAKE) clean cleanDoc
 	$(MAKE) prepare
+	cd ../../tests && $(MAKE) cleanall # .Rbuildignore does not always work
 	cd ../../.. && R CMD build --no-build-vignettes --no-manual re2
 	cd ../../.. && R CMD INSTALL $(tarball)
 
@@ -86,9 +93,7 @@ check: restore
 rox: restore
 	cd ../.. && Rscript -e 'library(Rcpp);compileAttributes()'
 	cd ../.. && Rscript -e 'library(roxygen2);roxygen2::roxygenize(roclets="rd")'
-	cd ../ && sed -r 's/(.*)more_options = NULL(.*)/\1...\2\n    more_options <- list(...)/g' \
-	    ../R/RcppExports.R > ../R/RcppExports.R.tmp
-	cd ../ && mv ../R/RcppExports.R.tmp ../R/RcppExports.R
+	$(MAKE) fix_R_exports
 	python3 convert.py > ../../man/re2_syntax.Rd
 	cd ../../.. && R CMD INSTALL re2
 

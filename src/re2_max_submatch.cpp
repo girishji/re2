@@ -24,8 +24,6 @@ using namespace Rcpp;
 // stopifnot(re2_max_submatch("bar \\2: \\5") == 5)
 // stopifnot(re2_max_submatch(c("bar \\2: \\5", "\\1 \\9")) == c(5, 9))
 //
-// @seealso \code{\link{re2_number_of_capturing_groups}}, \code{\link{re2_replace}},
-//   \code{\link{re2_global_replace}}, \code{\link{re2_extract}}.
 // [[Rcpp::export(.re2_max_submatch)]]
 SEXP re2_max_submatch(StringVector rewrite) {
 

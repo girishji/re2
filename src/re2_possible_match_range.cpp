@@ -50,31 +50,19 @@ using namespace Rcpp;
 // r <- re2_possible_match_range("(?i)Abcdef", 10)
 // stopifnot(r["min"] == "ABCDEF", r["max"] == "abcdef")
 //
-// @seealso \code{\link{re2_re2}}, \code{\link{re2_replace}},
-//   \code{\link{re2_match}}, \code{\link{re2_global_replace}},
-//   \code{\link{re2_extract}}.
 // [[Rcpp::export(.re2_possible_match_range)]]
 SEXP re2_possible_match_range(SEXP pattern,
-			      int maxlen,
-			      Nullable<List> more_options
-			      = R_NilValue) {
+			      int maxlen, bool logical=false) {
 
-  re2::RE2Proxy re2proxy(pattern, more_options);
+  re2::RE2Proxy re2proxy(pattern);
 
-  bool logical = re2::RE2Proxy::is_logical_out(more_options);
-  bool verbose = re2::RE2Proxy::is_verbose_out(more_options);
-  
   StringVector outv(2);
   std::string min, max;
-  bool rval = re2proxy.get().PossibleMatchRange(&min, &max, maxlen);
+  bool rval = re2proxy[0].get().PossibleMatchRange(&min, &max, maxlen);
   outv[0] = min;
   outv[1] = max;
   outv.attr("names") = StringVector::create("min", "max");
     
-  if (verbose) {
-    return List::create(Named("success") = rval,
-			Named("result") = outv);
-  }
   if (logical) {
     return Rcpp::wrap(rval);
   } else {

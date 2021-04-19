@@ -53,7 +53,7 @@ static const int kVecSize = 1+kMaxArgs;
 //   works only for static linking.
 static RInside R;              // create an embedded R instance
 static void embed_re2(const RE2 &re2);
-  
+
 static std::random_device rd;
 static std::mt19937_64 gen(rd());
 
@@ -461,7 +461,7 @@ bool RE2::Replace(std::string* str,
                   const RE2& re,
                   const StringPiece& rewrite) {
 
-  std::uniform_int_distribution<int> dist(0, 3); //0,1,2,3
+  std::uniform_int_distribution<int> dist(0, 1); //0,1
 
   try {
     std::string txt = "suppressMessages(library(re2))";
@@ -478,35 +478,15 @@ bool RE2::Replace(std::string* str,
       Rcpp::LogicalVector lv
 	= R.parseEval("re2_replace(tstr, tpat, trewr, logical=T)");
       return lv(0);
-
-    } else if (dist(gen) == 1) {
-
-      Rcpp::List result2 = R.parseEval("re2_replace(tstr, tpat, trewr, verbose=T)");
-      Rcpp::LogicalVector lv = result2["success"];
-      Rcpp::StringVector sv = result2["result"];
-      std::string changed = Rcpp::as< std::string >(sv(0));
-      *str = changed;
-      return lv(0);
-
-    } else if (dist(gen) == 2) {
-
+    } else {
       Rcpp::StringVector result
-	= R.parseEval("rptr <- re2_re2(tpat); re2_replace(tstr, rptr, trewr)");
+	= R.parseEval("rptr <- re2_regexp(tpat); re2_replace(tstr, rptr, trewr)");
       std::string changed = Rcpp::as< std::string >(result(0));
       *str = changed;
       Rcpp::LogicalVector lv
-	= R.parseEval("rptr <- re2_re2(tpat); re2_replace(tstr, rptr, trewr, logical=T)");
+	= R.parseEval("rptr <- re2_regexp(tpat); re2_replace(tstr, rptr, trewr, logical=T)");
       return lv(0);
-
-    } else {
-      Rcpp::List result2 = R.parseEval("rptr <- re2_re2(tpat); re2_replace(tstr, rptr, trewr, verbose=T)");
-      Rcpp::LogicalVector lv = result2["success"];
-      Rcpp::StringVector sv = result2["result"];
-      std::string changed = Rcpp::as< std::string >(sv(0));
-      *str = changed;
-      return lv(0);      
-    }
-    
+    }    
   } catch(std::exception& ex) {
     std::cerr << "Exception caught: " << ex.what() << std::endl;
   } catch(...) {
@@ -519,7 +499,7 @@ int RE2::GlobalReplace(std::string* str,
                        const RE2& re,
                        const StringPiece& rewrite) {
 
-  std::uniform_int_distribution<int> dist(0, 3); //0,1,2,3
+  std::uniform_int_distribution<int> dist(0, 1); //0,1
 
   try {
     std::string txt = "suppressMessages(library(re2))";
@@ -530,37 +510,20 @@ int RE2::GlobalReplace(std::string* str,
     R["trewr"] = rewrite.as_string();
     
     if (dist(gen) == 0) {
-      Rcpp::StringVector result = R.parseEval("re2_global_replace(tstr, tpat, trewr)");
+      Rcpp::StringVector result = R.parseEval("re2_replace_all(tstr, tpat, trewr)");
       std::string changed = Rcpp::as< std::string >(result(0));      
       *str = changed;
-      Rcpp::IntegerVector lv = R.parseEval("re2_global_replace(tstr, tpat, trewr, count=T)");
-      return lv[0];
-
-    } else if (dist(gen) == 1) {
-
-      Rcpp::List result2 = R.parseEval("re2_global_replace(tstr, tpat, trewr, verbose=T)");
-      Rcpp::IntegerVector lv = result2["count"];
-      Rcpp::StringVector sv = result2["result"];
-      std::string changed = Rcpp::as< std::string >(sv(0));
-      *str = changed;
-      return lv[0];
-
-    } else if (dist(gen) == 2) {
-
-      Rcpp::StringVector result = R.parseEval("rptr <- re2_re2(tpat); re2_global_replace(tstr, rptr, trewr)");
-      std::string changed = Rcpp::as< std::string >(result(0));
-      *str = changed;
-      Rcpp::IntegerVector lv
-	= R.parseEval("rptr <- re2_re2(tpat); re2_global_replace(tstr, rptr, trewr, count=T)");
+      Rcpp::IntegerVector lv = R.parseEval("re2_replace_all(tstr, tpat, trewr, count=T)");
       return lv[0];
 
     } else {
-      Rcpp::List result2 = R.parseEval("rptr <- re2_re2(tpat); re2_global_replace(tstr, rptr, trewr, verbose=T)");
-      Rcpp::IntegerVector lv = result2["count"];
-      Rcpp::StringVector sv = result2["result"];
-      std::string changed = Rcpp::as< std::string >(sv(0));
+      Rcpp::StringVector result = R.parseEval("rptr <- re2_regexp(tpat); re2_replace_all(tstr, rptr, trewr)");
+      std::string changed = Rcpp::as< std::string >(result(0));
       *str = changed;
-      return lv[0];      
+      Rcpp::IntegerVector lv
+	= R.parseEval("rptr <- re2_regexp(tpat); re2_replace_all(tstr, rptr, trewr, count=T)");
+      return lv[0];
+
     }
     
   } catch(std::exception& ex) {
@@ -580,8 +543,8 @@ bool RE2::Extract(const StringPiece& text,
 
     R["text_"] = text.as_string();
     R["rewrite_"] = rewrite.as_string();
-    std::string evalstr = "re2_extract(text_, re2ptr, rewrite_";
-    Rcpp::LogicalVector lv = R.parseEval(evalstr + ", l=T)");     
+    std::string evalstr = "re2_extract_replace(text_, re2ptr, rewrite_";
+    Rcpp::LogicalVector lv = R.parseEval(evalstr + ", logical=T)");     
     Rcpp::StringVector result = R.parseEval(evalstr + ")");
     
     if (result(0) != NA_STRING) {
@@ -661,7 +624,7 @@ bool RE2::PossibleMatchRange(std::string* min, std::string* max,
 
     R["maxlen_"] = maxlen;
     std::string evalstr = ".re2_possible_match_range(re2ptr, maxlen_";
-    SEXP lv = R.parseEval(evalstr + ", l=T)");
+    SEXP lv = R.parseEval(evalstr + ", logical=T)");
     Rcpp::StringVector result = R.parseEval(evalstr + ")");
 
     if (result(0) != NA_STRING) {
@@ -686,7 +649,7 @@ static void embed_re2_inner(const std::string &pattern, const RE2::Options &opti
   R.parseEvalQ(txt);              // load library, no return value
 
   R["pattern"] = pattern;
-  std::string cmd = "re2ptr <- re2_re2(pattern";
+  std::string cmd = "re2ptr <- re2_regexp(pattern";
 
   if (options.encoding() == RE2::Options::EncodingUTF8) {
     R["encoding_"] = "UTF8";
@@ -753,7 +716,7 @@ bool RE2::Match(const StringPiece& text,
 
   // Note: QuoteMeta HasNull test re2_test.cc does not pass in R
   //  because of multiple embedded \0 in string.
-  
+
   try {
     embed_re2(*this);
 
@@ -768,13 +731,13 @@ bool RE2::Match(const StringPiece& text,
     } else {
       R["re_anchor_"] = "ANCHOR_BOTH";
     }
-    
-    std::string evalstr = "re2_match_cpp(text_, re2ptr, startpos=startpos_, "
+
+    std::string evalstr = ".re2_match_cpp(text_, re2ptr, startpos=startpos_, "
       "endpos=endpos_, re_anchor=re_anchor_, "
       "nsubmatch=nsubmatch_";
     Rcpp::LogicalVector lv = R.parseEval(evalstr + ", logical=T)");
     Rcpp::StringVector result = R.parseEval(evalstr + ")");
-    
+
     for (int i = 0; i < nsubmatch; i++) {
       if (result(i) != NA_STRING) {
     	submatch[i] = StringPiece(result(i));
@@ -864,10 +827,11 @@ bool RE2::CheckRewriteString(const StringPiece& rewrite,
     embed_re2(*this);
 
     R["rewrite_"] = rewrite.as_string();
-    std::string evalstr = ".re2_check_rewrite_string(re2ptr, rewrite_";
-    Rcpp::LogicalVector lv = R.parseEval(evalstr + ")");
-    Rcpp::List verbose = R.parseEval(evalstr + ", v=T)");
+    std::string evalstr = ".re2_check_rewrite_string(re2ptr, rewrite_)";
+    
+    Rcpp::List verbose = R.parseEval(evalstr);
     Rcpp::StringVector errors = verbose["error"];
+    Rcpp::LogicalVector lv = verbose["success"];
     
     if (errors.size() > 0 && errors(0) != NA_STRING) {
       *error = errors(0);

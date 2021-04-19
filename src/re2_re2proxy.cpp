@@ -8,183 +8,87 @@ using namespace Rcpp;
 
 namespace re2 {
 
-  RE2Proxy::RE2Proxy(const SEXP regex,
-		     Nullable<List> more_options) {
+  RE2Proxy::RE2Proxy(const SEXP &input) {
 
-    if (TYPEOF(regex) == EXTPTRSXP) {
-      XPtr<RE2> xptr(regex);
-      re2ptr = xptr.checked_get();
-    } else if (TYPEOF(regex) == STRSXP) {
-      StringVector sv = as<StringVector>(regex);
-      if (sv.size() != 1) {
+    std::function<void(SEXP)> dfs; // recursively traverse list
+    dfs = [this, &dfs](SEXP input) -> void {
+      switch (TYPEOF(input)) {
+      case EXTPTRSXP: {
+	XPtr<RE2> xptr(input);
+	append(new Adapter(xptr.checked_get()));
+	break;
+      }
+      case STRSXP: {
+	StringVector sv(input);
+	for (int i = 0; i < sv.size(); i++) {
+	  append(new Adapter(as<std::string>(sv(i))));
+	}
+	break;
+      }
+      case VECSXP: {
+	List alist(input);
+	for (int i = 0; i < alist.size(); i++) {
+	  dfs(alist(i).get());
+	}
+	break;
+      }
+      default: {
 	const char* fmt
-	  = "Expecting a single pattern string: [length=%d].";
-	throw ::Rcpp::not_compatible(fmt, sv.size());	
+	  = "Expecting external pointer or string: [type=%s].";
+	throw ::Rcpp::not_compatible(fmt, Rf_type2char(TYPEOF(input)));	
       }
-      if (more_options.isNotNull()){
-	RE2::Options opts;
-	modify_options(opts, more_options);
-	re2uptr = std::unique_ptr<RE2>(new RE2(as<std::string>(sv),
-					     opts));
-      } else {
-	re2uptr = std::unique_ptr<RE2>(new RE2(as<std::string>(sv)));
       }
-      uptr = true;
-    } else {
-      const char* fmt
-	= "Expecting an external pointer or string: [type=%s].";
-      throw ::Rcpp::not_compatible(fmt, Rf_type2char(TYPEOF(regex)));	
-    }
-  }
-
-  /************************************************************/
-  const RE2& RE2Proxy::get() const {
-    return uptr ? *re2uptr : *re2ptr;
-  }
-
-  /************************************************************/
-  bool RE2Proxy::get_output_choice(std::vector<std::string>& optstrs,
-				   Nullable<List> options) {
-    if (options.isNotNull()) {
-      List mopts(options);
-      for (auto str : optstrs) {
-	if (mopts.containsElementNamed(str.c_str())) {
-	  return as<bool>(mopts[str]);
-	}
-      }
-    }
-    return false;
-  }
-
-  /************************************************************/
-  bool RE2Proxy::is_logical_out(Nullable<List> options) {
-    std::vector<std::string> v{"logical", "l"};
-    return get_output_choice(v, options);
-  }
-
-  /************************************************************/
-  bool RE2Proxy::is_verbose_out(Nullable<List> options) {
-    std::vector<std::string> v{"verbose", "v"};
-    return get_output_choice(v, options);
-  }
-
-  /************************************************************/
-  bool RE2Proxy::is_count_out(Nullable<List> options) {
-    std::vector<std::string> v{"count", "c"};
-    return get_output_choice(v, options);
-  }
-  
-  /************************************************************/
-  bool RE2Proxy::set_option(bool& opt, const std::string& name,
-			    Nullable<List> options) {
-    if (options.isNotNull()) {
-      List mopts(options);
-      if (mopts.containsElementNamed(name.c_str())) {
-	opt = as<bool>(mopts[name]);
-	return true;
-      }
-    }
-    return false;
-  }
-
-  /************************************************************/
-  bool RE2Proxy::set_option_uint(size_t& opt,
-				 const std::string& name,
-				 Nullable<List> options) {
-    if (options.isNotNull()) {
-      List mopts(options); // casting to underlying type List
-      if (mopts.containsElementNamed(name.c_str())) {
-	opt = as<size_t>(mopts[name]);
-	return true;
-      }
-    }
-    return false;
-  }
-
-    /************************************************************/
-  bool RE2Proxy::set_option_int(int& opt,
-				const std::string& name,
-				Nullable<List> options) {
-    if (options.isNotNull()) {
-      List mopts(options); // casting to underlying type List
-      if (mopts.containsElementNamed(name.c_str())) {
-	opt = as<int>(mopts[name]);
-	return true;
-      }
-    }
-    return false;
-  }
-
-  /************************************************************/
-  bool RE2Proxy::set_option_anchor(RE2::Anchor& anchor,
-				   const std::string& name,
-				   Nullable<List> options) {
-    if (options.isNotNull()) {
-      List mopts(options);
-      if (mopts.containsElementNamed(name.c_str())) {
-	const std::string& opt = as<std::string>(mopts[name]);
-	if (opt == "UNANCHORED") {
-	  anchor = RE2::UNANCHORED;
-	} else if (opt == "ANCHOR_START") {
-	  anchor = RE2::ANCHOR_START;
-	} else if (opt == "ANCHOR_BOTH") {
-	  anchor = RE2::ANCHOR_BOTH;
-	} else {
-	  const char* fmt
-	    = "Expecting valid anchor type: [type=%s].";
-	  throw ::Rcpp::not_compatible(fmt, opt);
-	}
-	return true;
-      }
-    }
-    return false;
-  }
-
-  /************************************************************/
-  void RE2Proxy::modify_options(RE2::Options& opt,
-				Nullable<List> more_options) {
-  
-    opt.set_log_errors(false); // make 'quiet' option the default
-
-    static auto encoding_enum = [] (std::string const& val) {
-      return (val == "EncodingLatin1" || val == "Latin1")
-	? RE2::Options::EncodingLatin1 : RE2::Options::EncodingUTF8;
     };
-  
-#define SETTER(name) else if (strcmp(R_CHAR(names(i)), #name) == 0) {	\
-      opt.set_##name(as<bool>(mopts(i))); }
-    
-    if (more_options.isNotNull()) {
-      List mopts(more_options);
-      if (mopts.size() > 0) {
-	StringVector names = mopts.names();
 
-        for (int i = 0; i < names.size(); i++) {
-	  if (strcmp(R_CHAR(names(i)), "encoding") == 0) {
-	    opt.set_encoding(encoding_enum(as<std::string>(mopts(i))));
-	  }
-  	
-	  SETTER(posix_syntax)
-          SETTER(longest_match)
-          SETTER(log_errors)
-          SETTER(literal)
-          SETTER(never_nl)
-          SETTER(dot_nl)
-          SETTER(never_capture)
-          SETTER(case_sensitive)
-          SETTER(perl_classes)
-          SETTER(word_boundary)
-          SETTER(one_line)
-  
-	  else if (strcmp(R_CHAR(names(i)), "max_mem") == 0) {
-            opt.set_max_mem(as<int>(mopts(i)));
-	  } else {
-	    const char* fmt
-	      = "Expecting valid option: [type=%s].";
-	    throw ::Rcpp::not_compatible(fmt, R_CHAR(names(i)));
-	  }
-        }
+    if (TYPEOF(input) == STRSXP || TYPEOF(input) == VECSXP) {
+      container.reserve(XLENGTH(input));
+    }
+    dfs(input);
+    if (container.empty()) {
+      throw ::Rcpp::not_compatible("Invalid pattern");
+    }
+  }
+
+  std::vector<std::string> &RE2Proxy::Adapter::group_names() {
+    if (_group_names.empty()) {
+      _group_names.reserve(nsubmatch());
+      _group_names.push_back(".0");
+      const std::map<int, std::string>& cgroups
+	= re2p->CapturingGroupNames();
+      for (int i = 1; i < nsubmatch(); i++) {
+	auto search = cgroups.find(i);
+	_group_names.push_back(search != cgroups.end()
+			       ? search->second
+			       : "." + std::to_string(i));
       }
     }
+    return _group_names;
+  }
+
+  std::vector<std::string> &RE2Proxy::all_group_names() {
+    if (_all_group_names.empty()) {
+      if (container.size() == 1) {
+	_all_group_names = container.at(0)->group_names();
+      } else {
+	std::set<std::string> set;
+	for (auto &re2p : container) {
+	  for (auto &gr : re2p->group_names()) {
+	    set.insert(gr);
+	  }
+	}
+	_all_group_names.reserve(set.size());
+	std::copy(set.begin(), set.end(),
+		  std::back_inserter(_all_group_names));
+	std::sort(_all_group_names.begin(), _all_group_names.end());
+      }
+    }
+    return _all_group_names;
+  }
+
+  int RE2Proxy::all_groups_count() {
+    if (_all_group_names.empty()) {
+      all_group_names();
+    }
+    return _all_group_names.size();
   }
 }
