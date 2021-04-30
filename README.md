@@ -6,10 +6,12 @@
 
 ## Overview
 
-re2 provides regular-expression functions based on Google’s RE2 (C++)
-regular-expression library. re2’s functionality mirrors *grep*, *regex*,
-and *sub* family of functions in base R, as well as functions in
-[stringr](https://github.com/tidyverse/stringr) package.
+re2 package provides functions that operate on strings using regular
+expressions. re2 is based on Google’s
+[RE2](https://github.com/google/re2) (C++) regular-expression library.
+re2’s functionality mirrors functions in
+[stringr](https://github.com/tidyverse/stringr) package, as well as
+*grep*, *regex*, and *sub* family of functions in base R.
 
 Why re2?
 
@@ -34,13 +36,16 @@ devtools::install_github("girishji/re2")
 
 ## Usage
 
-re2 provides three types of regular-expression functions: - Find the
-presence of a pattern in string - Extract matched substrings - Replace
-(substitute) matched substrings
+re2 provides three types of regular-expression functions:
 
-Regular expression patterns can be pre-compiled and reused. All
-functions take a vector of strings as argument. Regular-expression
-pattern is also vectorized.
+-   Find the presence of a pattern in string
+-   Extract substrings that match a pattern
+-   Replace matched groups
+
+All functions take a vector of strings as argument. Regular-expression
+patterns can be compiled, and reused for performance.
+
+Here are the primary verbs of re2:
 
 1.  `re2_detect(x, pattern)` finds if a pattern is present in string
 
@@ -72,18 +77,18 @@ re2_match("ruby:1234 68 red:92 blue:", "(\\w+):(\\d+)")
 #> [1,] "ruby:1234" "ruby" "1234"
 ```
 
-Groups can be named:
-
 ``` r
+# Groups can be named:
+
 re2_match(c("barbazbla", "foobar"), "(foo)|(?P<TestGroup>bar)baz")
 #>      .0       .1    TestGroup
 #> [1,] "barbaz" NA    "bar"    
 #> [2,] "foo"    "foo" NA
 ```
 
-Using pre-compiled regular-expression:
-
 ``` r
+# Use pre-compiled regular expression:
+
 re <- re2_regexp("(foo)|(bar)baz", case_sensitive = FALSE)
 re2_match(c("BaRbazbla", "Foobar"), re)
 #>      .0       .1    .2   
@@ -109,9 +114,9 @@ re2_replace("yabba dabba doo", "b+", "d")
 #> [1] "yada dabba doo"
 ```
 
-Rewritten using matched groups:
-
 ``` r
+# Use groups in rewrite:
+
 re2_replace("bunny@wunnies.pl", "(.*)@([^.]*)", "\\2!\\1")
 #> [1] "wunnies!bunny.pl"
 ```
@@ -125,7 +130,7 @@ re2_replace_all("yabba dabba doo", "b+", "d")
 ```
 
 1.  `re2_extract_replace(x, pattern, rewrite)` extracts and substitutes
-    (ignores non-matching portions of x, unlike `re2_replace()`)
+    (ignores non-matching portions of x)
 
 ``` r
 re2_extract_replace("bunny@wunnies.pl", "(.*)@([^.]*)", "\\2!\\1")
@@ -141,18 +146,18 @@ re2_split("How vexingly quick daft zebras jump!", " quick | zebras")
 #> [1] "How vexingly" "daft"         " jump!"
 ```
 
-1.  `re2_locate(x, pattern)` seeks the start and end of pattern in a
+1.  `re2_locate(x, pattern)` seeks the start and end of pattern in
     string
 
 ``` r
-re2_locate(c("yellowgreen", "steelblue"), "l")
+re2_locate(c("yellowgreen", "steelblue"), "l(b)?l")
 #>      begin end
-#> [1,]     3   3
-#> [2,]     5   5
+#> [1,]     3   4
+#> [2,]     5   7
 ```
 
 1.  `re2_locate_all(x, pattern)` locates start and end of all
-    occurrences of pattern in a string
+    occurrences of pattern in string
 
 ``` r
 re2_locate_all(c("yellowgreen", "steelblue"), "l")
@@ -167,9 +172,10 @@ re2_locate_all(c("yellowgreen", "steelblue"), "l")
 #> [2,]     7   7
 ```
 
-In all the above functions, regular-expression pattern can be
-pre-compiled with `re2_regexp(pattern, ...)`. Here are some of the
-options:
+In all the above functions, regular-expression pattern is vectorized.
+
+Regular-expression pattern can be compiled using
+`re2_regexp(pattern, ...)`. Here are some of the options:
 
 -   `case_sensitive`: Match is case-sensitive
 -   `encoding`: UTF8 or Latin1
@@ -177,8 +183,10 @@ options:
 -   `longest_match`: Search for longest match, not first match
 -   `posix_syntax`: Restrict regexps to POSIX egrep syntax
 
+`help(re2_regexp)` lists available options.
+
 `re2_get_options(regexp_ptr)` returns a list of options stored in the
-pre-compiled regular-expression object.
+compiled regular-expression object.
 
 ## Regexp Syntax
 
@@ -186,8 +194,10 @@ re2 supports pearl style regular expressions (with extensions like \\d,
 \\w, \\s, …) and provides most of the functionality of PCRE – eschewing
 only backreferences and look-around assertions.
 
-See [RE2 Syntax](https://github.com/google/re2/wiki/Syntax) for the
-syntax supported by RE2, and a comparison with PCRE and PERL regexps.
+See [RE2
+Syntax](https://github.com/girishji/re2/wiki/RE2-Regular-Expression-Syntax)
+for the syntax supported by RE2, and a comparison with PCRE and PERL
+regexps.
 
 For those not familiar with Perl’s regular expressions, here are some
 examples of the most commonly used extensions:

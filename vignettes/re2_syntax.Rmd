@@ -21,6 +21,10 @@ Escape all the backslashes, and escape a few (not all) $ and ` from the original
 Add a line about grayed out expressions.
 -->
 
+## RE2 Regular Expression Syntax
+
+Original at [github](https://github.com/google/re2/wiki/Syntax)
+
 <p>
 The simplest regular expression is a single literal character.
 Except for the metacharacters like

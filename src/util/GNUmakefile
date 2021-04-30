@@ -46,7 +46,7 @@ fix_R_exports:
 	fi
 
 .PHONY: buildR
-buildR: README.md
+buildR: 
 	$(MAKE) restore
 	$(MAKE) clean cleanDoc
 	cd ../re2google && $(MAKE) clean
@@ -101,7 +101,7 @@ rox:
 	cd ../.. && Rscript --vanilla -e 'library(Rcpp);compileAttributes()'
 	cd ../.. && Rscript --vanilla -e 'library(roxygen2);roxygen2::roxygenize(roclets="rd")'
 	$(MAKE) fix_R_exports
-	python3 ../../tools/convert.py > ../../man/re2_syntax.Rd
+	cd ../../tools/ && python3 convert.py > ../man/re2_syntax.Rd
 	cd ../../.. && R CMD INSTALL re2
 
 .PHONY: examples

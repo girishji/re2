@@ -45,7 +45,7 @@ SEXP re2_replace_cpp(StringVector string, SEXP pattern, std::string &rewrite,
 //'
 //' @seealso
 //'   \code{\link{re2_regexp}} for options to regular expression,
-//'   \link{re2_syntax} for RE2 syntax.
+//'   \link{re2_syntax} for regular expression syntax.
 // [[Rcpp::export]]
 SEXP re2_replace(StringVector string, SEXP pattern, std::string &rewrite) {
   return re2_replace_cpp(string, pattern, rewrite, false);
@@ -87,7 +87,7 @@ SEXP re2_replace_cpp(StringVector string, SEXP pattern, std::string &rewrite,
 SEXP re2_replace_all_cpp(StringVector string, SEXP pattern,
                          std::string &rewrite, bool count);
 
-//' @inherit re2_replace
+//' @rdname re2_replace
 // [[Rcpp::export]]
 SEXP re2_replace_all(StringVector string, SEXP pattern, std::string &rewrite) {
   return re2_replace_all_cpp(string, pattern, rewrite, false);

@@ -14,7 +14,7 @@ static void modify_options(RE2::Options& opt,
 //' Compile regular expression pattern
 //'
 //' \code{re2_regexp} compiles a character string containing a regular
-//'   expression and returns a pointer to the internal representation.
+//'   expression and returns a pointer to the object.
 //'
 //' @section Regexp Syntax:
 //'
@@ -52,11 +52,10 @@ static void modify_options(RE2::Options& opt,
 //' @param pattern Character string containing a
 //' regular expression.
 //'
-//' @param \dots The options are (defaults in parentheses):
+//' @param \dots Options, which are (defaults in parentheses):
 //'
 //' \tabular{lll}{
-//'   \verb{encoding} \tab (\verb{"UTF8"}) String and pattern are UTF-8;
-//'                                 Otherwise \verb{"Latin1"}.\cr
+//'   \verb{encoding} \tab (\verb{"UTF8"}) String and pattern are UTF-8; Otherwise \verb{"Latin1"}.\cr
 //'   \verb{posix_syntax} \tab (\verb{FALSE}) Restrict regexps to POSIX egrep syntax.\cr 
 //'   \verb{longest_match} \tab (\verb{FALSE}) Search for longest match, not first match.\cr
 //'   \verb{max_mem} \tab (see below) Approx. max memory footprint of RE2 C++ object.\cr
@@ -88,7 +87,7 @@ static void modify_options(RE2::Options& opt,
 //'
 //' @usage re2_regexp(pattern, \dots)
 //'
-//' @seealso \link{re2_syntax} has RE2 syntax.
+//' @seealso \link{re2_syntax} has regular expression syntax.
 //' 
 // [[Rcpp::export]]
 XPtr<RE2> re2_regexp(std::string& pattern,

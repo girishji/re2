@@ -26,7 +26,7 @@ using namespace Rcpp;
 // @param pattern Character string containing a regular expression,
 //    or a pre-compiled regular expression. \cr
 //   See \code{\link{re2_regexp}} for available options. \cr
-//   See \link{re2_syntax} for RE2 syntax.
+//   See \link{re2_syntax} for regular expression syntax.
 //
 // @param \dots The options are (defaults in parentheses):
 //
@@ -101,7 +101,7 @@ using namespace Rcpp;
 //
 // @seealso
 //   \code{\link{re2_regexp}} for options to regular expression,
-//   and \link{re2_syntax} for RE2 syntax.
+//   and \link{re2_syntax} for regular expression syntax.
 //
 // [[Rcpp::export(.re2_match_cpp)]]
 SEXP re2_match_cpp(StringVector text, SEXP pattern,

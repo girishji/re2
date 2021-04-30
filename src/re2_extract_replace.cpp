@@ -37,7 +37,7 @@ SEXP re2_extract_replace_cpp(StringVector string, SEXP pattern,
 //'
 //' @seealso
 //'   \code{\link{re2_regexp}} for options to regular expression,
-//'   \link{re2_syntax} for RE2 syntax. See
+//'   \link{re2_syntax} for regular expression syntax. See
 //'   \code{\link{re2_replace}} and \code{\link{re2_replace_all}} to replace
 //'   pattern in place.
 // [[Rcpp::export]]

@@ -42,7 +42,7 @@ struct DoLocate : re2::DoMatchIntf {
 //'
 //' @description
 //' Vectorized over string and pattern. For matches of 0 length (ex.
-//'   special patterns like "$") end will be one character greater than
+//'   spatial patterns like "$") end will be one character greater than
 //'   beginning.
 //'
 //' @inheritParams re2_match
@@ -54,8 +54,7 @@ struct DoLocate : re2::DoMatchIntf {
 //'
 //' @seealso
 //'   \code{\link{re2_regexp}} for options to regular expression,
-//'   \link{re2_syntax} for RE2 syntax.
-//'
+//'   \link{re2_syntax} for regular expression syntax.
 // [[Rcpp::export]]
 IntegerMatrix re2_locate(StringVector string, SEXP pattern) {
   IntegerMatrix result(string.size(), 2);
@@ -94,7 +93,7 @@ struct DoLocateAll : re2::DoMatchIntf {
 };
 } // namespace
 
-//' @inherit re2_locate
+//' @rdname re2_locate
 // [[Rcpp::export]]
 List re2_locate_all(StringVector string, SEXP pattern) {
   List result(string.size());

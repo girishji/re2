@@ -1,14 +1,39 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Fri, 30 Apr 2021 11:34:45 +0200
+Date:   Fri, 30 Apr 2021 16:31:01 +0200
 
-Generate README.md file
+Fix documentation
 
-Rstudio can knit a Rmd file, but automate it through makefile.
+Various small corrections to documentation.
 
-M  ChangeLog
+M  R/re2-package.R
 M  README.Rmd
 M  README.md
+M  src/re2_detect.cpp
+M  src/re2_extract_replace.cpp
+M  src/re2_locate.cpp
+M  src/re2_match.cpp
+M  src/re2_match_cpp.cpp
+M  src/re2_regexp.cpp
+M  src/re2_replace.cpp
+M  src/re2_split.cpp
 M  src/util/GNUmakefile
+M  tools/convert.py
+M  vignettes/re2_intro.Rmd
+M  vignettes/re2_syntax.Rmd
+D  vignettes/re2_tests.Rmd
+
+commit 0514b1da87a844534042ab5a22cfee1d323801db
+Author: Girish Palya <girishji@gmail.com>
+Date:   Fri Apr 30 11:34:46 2021 +0200
+
+    Generate README.md file
+    
+    Rstudio can knit a Rmd file, but automate it through makefile.
+    
+    M  ChangeLog
+    M  README.Rmd
+    M  README.md
+    M  src/util/GNUmakefile
 
 commit 663de3ea7160cff6bbde66ca6d50b5521f0cada2
 Author: Girish Palya <girishji@gmail.com>

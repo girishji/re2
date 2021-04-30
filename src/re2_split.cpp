@@ -63,10 +63,11 @@ struct DoSplit : re2::DoMatchIntf {
 //' @return A list of string vectors or a string matrix. See option.
 //'
 //' @example inst/examples/split.R
+//' @usage re2_split(string, pattern, simplify = FALSE, n = Inf)
 //'
 //' @seealso
 //'   \code{\link{re2_regexp}} for options to regular expression,
-//'   \link{re2_syntax} for RE2 syntax, and
+//'   \link{re2_syntax} for regular expression syntax, and
 //'   \code{\link{re2_match}} to extract matched groups.
 //'
 // [[Rcpp::export]]

@@ -77,7 +77,6 @@ with open("RE2Syntax.md") as fp:
 print("""% Generated file <Girish Palya>
 \\name{re2_syntax}
 \\alias{re2_syntax}
-\\alias{re2_regular_expressions_syntax}
 \\title{RE2 Regular Expression Syntax}
 \\description{""")
 parser.feed(data)

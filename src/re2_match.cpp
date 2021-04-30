@@ -100,24 +100,23 @@ struct DoMatchL : re2::DoMatchIntf {
 //'
 //' @param string A character vector, or an object which can be coerced to one.
 //' @param pattern Character string containing a regular expression,
-//'    or a pre-compiled regular expression, or a (mixed) vector of character
-//'    strings and pre-compiled regular expressions. \cr
+//'    or a pre-compiled regular expression (or a vector of character
+//'    strings and pre-compiled regular expressions). \cr
 //'   See \code{\link{re2_regexp}} for available options. \cr
-//'   See \link{re2_syntax} for RE2 syntax. \cr
+//'   See \link{re2_syntax} for regular expression syntax. \cr
 //' @param simplify If TRUE, the default, returns a character matrix. If FALSE,
 //'   returns a list. Not applicable to \code{re2_match_all}.
 //'
 //' @return In case of \code{re2_match} a character matrix. First column is the
 //'    entire matching text, followed by one column for each capture group. If
 //'    simplify is FALSE, returns a list of named character vectors. \cr
-//'    In case of \code{re2_match_all} a list of character matrices.
+//'    In case of \code{re2_match_all}, returns a list of character matrices.
 //'
 //' @example inst/examples/match.R
 //'
 //' @seealso
 //'   \code{\link{re2_regexp}} for options to regular expression,
-//'   \link{re2_syntax} for RE2 syntax.
-//'
+//'   \link{re2_syntax} for regular expression syntax.
 // [[Rcpp::export]]
 SEXP re2_match(StringVector string, SEXP pattern, bool simplify = true) {
   if (simplify) {
@@ -160,7 +159,7 @@ struct DoMatchAll : re2::DoMatchIntf {
 };
 } // namespace
 
-//' @inherit re2_match
+//' @rdname re2_match
 // [[Rcpp::export]]
 List re2_match_all(StringVector string, SEXP pattern) {
   List result(string.size());
@@ -197,7 +196,7 @@ struct DoCount : re2::DoMatchIntf {
 //'
 //' @seealso
 //'   \code{\link{re2_regexp}} for options to regular expression,
-//'   \link{re2_syntax} for RE2 syntax.
+//'   \link{re2_syntax} for regular expression syntax.
 //'
 // [[Rcpp::export]]
 IntegerVector re2_count(StringVector string, SEXP pattern) {

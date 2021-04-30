@@ -22,7 +22,7 @@ using namespace Rcpp;
 //'
 //' @seealso
 //'   \code{\link{re2_regexp}} for options to regular expression,
-//'   \link{re2_syntax} for RE2 syntax, and
+//'   \link{re2_syntax} for regular expression syntax, and
 //'   \code{\link{re2_match}} to extract matched groups.
 //'
 // [[Rcpp::export]]
@@ -73,7 +73,7 @@ LogicalVector re2_detect(StringVector string, SEXP pattern) {
 //'
 //' @seealso
 //'   \code{\link{re2_regexp}} for options to regular expression,
-//'   \link{re2_syntax} for RE2 syntax, and
+//'   \link{re2_syntax} for regular expression syntax, and
 //'   \code{\link{re2_detect}} to find presence of a pattern (grep).
 //'
 // [[Rcpp::export]]
@@ -88,7 +88,7 @@ IntegerVector re2_which(StringVector string, SEXP pattern) {
   return wrap(res);
 }
 
-//' @inherit re2_which
+//' @rdname re2_which
 // [[Rcpp::export]]
 StringVector re2_subset(StringVector string, SEXP pattern) {
   LogicalVector vec = re2_detect(string, pattern);
