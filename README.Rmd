@@ -18,9 +18,7 @@ library(re2)
 
 ## Overview 
 
-re2 package provides R functions that operate on strings using regular expressions. re2 is based on Google's [RE2](https://github.com/google/re2) (C++) regular-expression library. re2's functionality mirrors functions in
-[stringr](https://github.com/tidyverse/stringr) package, as well as *grep*, *regex*, and
-*sub* family of functions in base R.
+This package provides R functions that operate on strings using regular expressions. The interface is similar to [stringr](https://github.com/tidyverse/stringr) package, and the functionality covers *grep*, *regex*, and *sub* family of base R. The implementation is based on Google's [RE2](https://github.com/google/re2) (C++) regular-expression library.
 
 Why re2?
 

@@ -7,8 +7,13 @@ Author: Girish Palya [aut, cre],
 	RE2 developers [ctb] (RE2 library),
 	Google Inc. [ctb, cph] (RE2 library)
 Maintainer: Girish Palya <girishji@gmail.com>
-Description: R interface to Google RE2 (C++) regular expression engine.
-	     RE2 is a fast, safe, thread-friendly alternative to
+Description: This package provides functions that operate on strings using
+	     regular expressions. The interface is similar to
+	     stringr package, and the functionality covers grep, regex, 
+	     and sub family of base R. The implementation is based on Google’s 
+	     RE2 (C++) regular-expression library. Google's RE2
+	     uses finite-automata based techniques, and 
+	     offers a fast, safe, thread-friendly alternative to
 	     backtracking regular expression engines like those used
 	     in PCRE, Perl, and Python.
 License: MIT + file LICENSE
