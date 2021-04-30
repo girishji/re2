@@ -6,6 +6,7 @@
 
 #include <Rcpp.h>
 #include <re2/re2.h>
+#include "re2_re2proxy.h"
 
 using namespace Rcpp;
 

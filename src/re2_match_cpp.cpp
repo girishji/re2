@@ -1,16 +1,12 @@
 // Copyright (c) 2021 Girish Palya
 // License: https://github.com/girishji/re2/blob/main/LICENSE.md
 
+#include "re2_re2proxy.h"
 #include <Rcpp.h>
 #include <re2/re2.h>
 #include <stdint.h>
-#include "re2_re2proxy.h"
 
 using namespace Rcpp;
-
-SEXP re2_match(StringVector string, SEXP pattern,
-	       bool simplify = true);
-LogicalVector re2_detect(StringVector string, SEXP pattern);
 
 // Extract matched groups from a string
 //
@@ -28,7 +24,7 @@ LogicalVector re2_detect(StringVector string, SEXP pattern);
 //
 // @param string A character vector, or an object which can be coerced to one.
 // @param pattern Character string containing a regular expression,
-//    or a precompiled regular expression. \cr
+//    or a pre-compiled regular expression. \cr
 //   See \code{\link{re2_regexp}} for available options. \cr
 //   See \link{re2_syntax} for RE2 syntax.
 //
@@ -36,15 +32,16 @@ LogicalVector re2_detect(StringVector string, SEXP pattern);
 //
 // \tabular{lll}{
 //   \verb{startpos} \tab (\verb{0}) String offset to start matching.\cr
-//   \verb{endpos} \tab (length of \verb{string}) String offset to stop matching.\cr
-//   \verb{nsubmatch} \tab ('number of capturing groups' plus 1)
+//   \verb{endpos} \tab (length of \verb{string}) String offset to stop
+//   matching.\cr \verb{nsubmatch} \tab ('number of capturing groups' plus 1)
 //                           Number of submatch entries returned.
 //                           Don't ask for more match information than you
 //                           will use: runs much faster with nsubmatch == 1
 //                           than nsubmatch > 1, and runs even faster if
 //                           nsubmatch == 0. Doesn't make sense to use
-//                           nsubmatch > 1 + \code{re2_number_of_capturing_groups},
-//                           but will be handled correctly.\cr
+//                           nsubmatch > 1 +
+//                           \code{re2_number_of_capturing_groups}, but will be
+//                           handled correctly.\cr
 //   \verb{re_anchor} \tab (\verb{"UNANCHORED"})
 //                          "UNANCHORED" - No anchoring
 //                          "ANCHOR_START" - Anchor at start only
@@ -108,7 +105,7 @@ LogicalVector re2_detect(StringVector string, SEXP pattern);
 //
 // [[Rcpp::export(.re2_match_cpp)]]
 SEXP re2_match_cpp(StringVector text, SEXP pattern,
-		   Nullable<List> more_options = R_NilValue) {
+                   Nullable<List> more_options = R_NilValue) {
   bool logical = false;
   bool verbose = false;
   size_t startpos = 0;
@@ -116,11 +113,11 @@ SEXP re2_match_cpp(StringVector text, SEXP pattern,
   int nsubmatch = -1;
   RE2::Anchor anchor = RE2::UNANCHORED;
 
-  static auto anchor_enum = [] (const std::string &val) {
+  static auto anchor_enum = [](const std::string &val) {
     std::map<std::string, RE2::Anchor> map = {
-      {"UNANCHORED", RE2::UNANCHORED},
-      {"ANCHOR_START", RE2::ANCHOR_START},
-      {"ANCHOR_BOTH", RE2::ANCHOR_BOTH}};
+        {"UNANCHORED", RE2::UNANCHORED},
+        {"ANCHOR_START", RE2::ANCHOR_START},
+        {"ANCHOR_BOTH", RE2::ANCHOR_BOTH}};
     return map[val];
   };
 
@@ -131,45 +128,31 @@ SEXP re2_match_cpp(StringVector text, SEXP pattern,
     if (mopts.size() > 0) {
       StringVector names = mopts.names();
       for (int i = 0; i < names.size(); i++) {
-	if (NAME_IS_EQUAL(logical) || NAME_IS_EQUAL(l)) {
-	  logical = as<bool>(mopts(i));
-	} else if (NAME_IS_EQUAL(verbose) || NAME_IS_EQUAL(v)) {
-	  verbose = as<bool>(mopts(i));
-	} else if (NAME_IS_EQUAL(startpos)) {
-	  startpos = as<size_t>(mopts(i));
-	} else if (NAME_IS_EQUAL(endpos)) {
-	  endpos = as<size_t>(mopts(i));
-	} else if (NAME_IS_EQUAL(nsubmatch)) {
-	  nsubmatch = as<int>(mopts(i));
-	} else if (NAME_IS_EQUAL(re_anchor)) {
-	  StringVector sv(mopts(i));
-	  anchor = anchor_enum(as<std::string>(sv(0)));
-	} else {
-	  const char* fmt
-	    = "Expecting valid option type: [type=%s].";
-	  throw ::Rcpp::not_compatible(fmt, R_CHAR(names(i)));
-	}
+        if (NAME_IS_EQUAL(logical) || NAME_IS_EQUAL(l)) {
+          logical = as<bool>(mopts(i));
+        } else if (NAME_IS_EQUAL(verbose) || NAME_IS_EQUAL(v)) {
+          verbose = as<bool>(mopts(i));
+        } else if (NAME_IS_EQUAL(startpos)) {
+          startpos = as<size_t>(mopts(i));
+        } else if (NAME_IS_EQUAL(endpos)) {
+          endpos = as<size_t>(mopts(i));
+        } else if (NAME_IS_EQUAL(nsubmatch)) {
+          nsubmatch = as<int>(mopts(i));
+        } else if (NAME_IS_EQUAL(re_anchor)) {
+          StringVector sv(mopts(i));
+          anchor = anchor_enum(as<std::string>(sv(0)));
+        } else {
+          const char *fmt = "Expecting valid option type: [type=%s].";
+          throw ::Rcpp::not_compatible(fmt, R_CHAR(names(i)));
+        }
       }
     }
   }
 
-
   re2::RE2Proxy re2proxy(pattern);
 
-  // // route through the other interface (just to test)
-  // if (startpos == 0 && anchor == RE2::UNANCHORED
-  //     && (endpos == SIZE_MAX)
-  //     && (nsubmatch == re2proxy[0].nsubmatch())) {
-  //   if (logical) {
-  //     return re2_detect(text, pattern);
-  //   }
-  //   if (!verbose) {
-  //     return re2_match(text, pattern);
-  //   }
-  // }
-
   nsubmatch = (nsubmatch < 0) ? re2proxy[0].nsubmatch()
-    : std::min(re2proxy[0].nsubmatch(), nsubmatch);
+                              : std::min(re2proxy[0].nsubmatch(), nsubmatch);
 
   LogicalVector lv(text.size());
   StringMatrix res(text.size(), nsubmatch);
@@ -184,8 +167,8 @@ SEXP re2_match_cpp(StringVector text, SEXP pattern,
 
   // Maybe stack allocation is ok here. Just in case we have
   //  a lot of groups -- use heap allocation.
-  std::unique_ptr<re2::StringPiece[]> submatch
-    = std::unique_ptr<re2::StringPiece[]>(new re2::StringPiece[nsubmatch]);
+  std::unique_ptr<re2::StringPiece[]> submatch =
+      std::unique_ptr<re2::StringPiece[]>(new re2::StringPiece[nsubmatch]);
   // re2::StringPiece submatch[nsubmatch];
 
   for (int i = 0; i < text.size(); i++) {
@@ -202,15 +185,16 @@ SEXP re2_match_cpp(StringVector text, SEXP pattern,
     endpos = std::min(endpos, strp.size());
 
     if (nsubmatch == 0) {
-      lv[i] = re2proxy[0].get().Match(strp, startpos, endpos, anchor,
-			      nullptr, 0);
+      lv[i] =
+          re2proxy[0].get().Match(strp, startpos, endpos, anchor, nullptr, 0);
     } else {
       lv[i] = re2proxy[0].get().Match(strp, startpos, endpos, anchor,
-			      submatch.get(), nsubmatch);
+                                      submatch.get(), nsubmatch);
 
       for (int j = 0; j < nsubmatch; j++) {
         res(i, j) = submatch[j].data() == NULL
-          ? NA_STRING : String(submatch[j].as_string());
+                        ? NA_STRING
+                        : String(submatch[j].as_string());
       }
     }
     // clear
@@ -223,8 +207,7 @@ SEXP re2_match_cpp(StringVector text, SEXP pattern,
     return lv;
   }
   if (verbose) {
-      return List::create(Named("success") = lv,
-                          Named("result") = res);
+    return List::create(Named("success") = lv, Named("result") = res);
   }
   return logical ? lv : res;
 }

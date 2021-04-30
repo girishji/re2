@@ -76,12 +76,9 @@ with open("RE2Syntax.md") as fp:
 
 print("""% Generated file <Girish Palya>
 \\name{re2_syntax}
-\\alias{re2_regexp}
 \\alias{re2_syntax}
-\\alias{re2regexp}
-\\alias{re2_regular_expressions}
+\\alias{re2_regular_expressions_syntax}
 \\title{RE2 Regular Expression Syntax}
 \\description{""")
 parser.feed(data)
 print("}\n")
-print("<https://github.com/girishji/re2/wiki/Syntax>")

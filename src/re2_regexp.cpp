@@ -84,36 +84,7 @@ static void modify_options(RE2::Options& opt,
 //'
 //' @return Compiled regular expression.
 //'
-//' @examples
-//' re2p <- re2_regexp("hello world")
-//' stopifnot(mode(re2p) == "externalptr")
-//'
-//' ## UTF-8 and matching interface
-//' # By default, pattern and input text are interpreted as UTF-8.
-//' # The Latin1 option causes them to be interpreted as Latin-1.
-//' x <- "fa\xE7ile"
-//' Encoding(x) <- "latin1"
-//' re2_detect(x, "fa\xE7")
-//' stopifnot(!re2_detect(x, "fa\xE7"))
-//' re <- re2_regexp("fa\xE7", encoding="Latin1")
-//' re2_detect(x, re)
-//' stopifnot(re2_detect(x, re))
-//'
-//' ## Case insensitive
-//' re2_detect("fOobar ", re2_regexp("Foo", case_sensitive=FALSE))
-//' res <- re2_detect("fOobar ", re2_regexp("Foo", case_sensitive=FALSE))
-//' stopifnot(res == TRUE)
-//' 
-//' ## Use of never_nl
-//' re <- re2_regexp("(abc(.|\n)*def)", never_nl=FALSE)
-//' re2_match("abc\ndef\n", re)
-//' res <- re2_match("abc\ndef\n", re)
-//' stopifnot(res[1, 2] == "abc\ndef")
-//' #
-//' re <- re2_regexp("(abc(.|\n)*def)", never_nl=TRUE)
-//' re2_match("abc\ndef\n", re)
-//' res <- re2_match("abc\ndef\n", re)
-//' stopifnot(is.na(res[1, 2]))
+//' @example inst/examples/regexp.R
 //'
 //' @usage re2_regexp(pattern, \dots)
 //'

@@ -46,30 +46,33 @@ fix_R_exports:
 	fi
 
 .PHONY: buildR
-buildR: restore
+buildR: 
+	$(MAKE) restore
 	$(MAKE) clean cleanDoc
 	cd ../re2google && $(MAKE) clean
-	cd ../.. && Rscript -e 'library(Rcpp);compileAttributes()'
-	cd ../.. && Rscript -e 'library(roxygen2);roxygen2::roxygenize(roclets="rd")'
+	cd ../.. && Rscript --vanilla -e 'library(Rcpp);compileAttributes()'
+	cd ../.. && Rscript --vanilla -e 'library(roxygen2);roxygen2::roxygenize(roclets="rd")'
 	$(MAKE) fix_R_exports
-	python3 convert.py > ../../man/re2_syntax.Rd
+	cd ../../tools/ && python3 convert.py > ../man/re2_syntax.Rd
 	$(MAKE) clean # clean up roxygen created binaries
-	cd ../../tests && $(MAKE) cleanall # .Rbuildignore doesn't ignore
-	cd ../../.. && R CMD build re2
+	cd ../re2google && $(MAKE) clean
+	cd ../../tests && $(MAKE) cleanall
+	cd ../../.. && R CMD build --clean re2
 
 .PHONY: installR
-installR: restore
+installR: 
 	$(MAKE) buildR
 	cd ../../.. && R CMD INSTALL $(tarball)
 
 .PHONY: prepare
 prepare:
 	cd ../re2google && $(MAKE) clean
-	cd ../.. && Rscript -e 'library(Rcpp);compileAttributes()'
+	cd ../.. && Rscript --vanilla -e 'library(Rcpp);compileAttributes()'
 	$(MAKE) fix_R_exports
 
 .PHONY: quick
-quick: restore
+quick: 
+	$(MAKE) restore
 	$(MAKE) clean cleanDoc
 	$(MAKE) prepare
 	cd ../../tests && $(MAKE) cleanall # .Rbuildignore does not always work
@@ -85,19 +88,29 @@ test:
 	cd ../../.. && R CMD INSTALL re2
 
 .PHONY: check
-check: restore
+check: 
 	$(MAKE) buildR
 	cd ../../.. && R CMD check --as-cran $(tarball)
 
 .PHONY: rox
-rox: restore
-	cd ../.. && Rscript -e 'library(Rcpp);compileAttributes()'
-	cd ../.. && Rscript -e 'library(roxygen2);roxygen2::roxygenize(roclets="rd")'
+rox: 
+	$(MAKE) restore
+	cd ../.. && Rscript --vanilla -e 'library(Rcpp);compileAttributes()'
+	cd ../.. && Rscript --vanilla -e 'library(roxygen2);roxygen2::roxygenize(roclets="rd")'
 	$(MAKE) fix_R_exports
-	python3 convert.py > ../../man/re2_syntax.Rd
+	python3 ../../tools/convert.py > ../../man/re2_syntax.Rd
 	cd ../../.. && R CMD INSTALL re2
 
 .PHONY: examples
-examples: restore
+examples: 
+	$(MAKE) restore
 	$(MAKE) rox
-	cd ../.. && Rscript -e 'library(devtools);run_examples()'
+	cd ../.. && Rscript --vanilla -e 'library(devtools);run_examples()'
+
+# R CMD check passes even when Rout files have differences. Not using this.
+.PHONY: Rout.save
+Rout.save:
+	if [[ -f ../../../re2.Rcheck/re2-Ex.Rout ]]; then \
+	    cp ../../../re2.Rcheck/re2-Ex.Rout ../../tests/Examples/re2-Ex.Rout.save; \
+	fi
+

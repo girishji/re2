@@ -1,5 +1,6 @@
 .git/
 .gitignore
+README.Rmd
 vignettes/.gitignore
 ChangeLog
 LICENSE.md

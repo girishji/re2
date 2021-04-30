@@ -1,29 +1,18 @@
 ---
-title: "Introduction to re2"
-output: rmarkdown::html_vignette
-description: >
-  Start here if this is your first time using re2. You'll find a brief
-  introduction to Google's RE2 regular expression matching library,
-  and you'll learn about important functions to match, extract, and
-  replace patterns in strings.
-vignette: >
-  %\VignetteIndexEntry{Introduction to re2}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: github_document
 ---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- Keep this file sync'ed with vignette -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.path = "README-"
 )
-```
-
-```{r setup, include = FALSE}
 library(re2)
 ```
-
-<!-- Keep this file sync'ed with README.Rmd -->
 
 # re2
 

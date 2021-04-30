@@ -2,9 +2,10 @@
 // License: https://github.com/girishji/re2/blob/main/LICENSE.md
 
 #include <Rcpp.h>
-#include <re2/re2.h>
-#include <ctime>
+#include <Rmath.h>
 #include <cstdlib>
+#include <ctime>
+#include <re2/re2.h>
 
 using namespace Rcpp;
 
@@ -15,24 +16,26 @@ using namespace Rcpp;
 //
 //// [[Rcpp::export(.re2_random_text)]]
 std::string re2_random_text(int64_t nbytes) {
-  static const std::string* const text = []() {
-    std::string* text = new std::string;
-    srand(1);
-    text->resize(16<<20);
-    for (int64_t i = 0; i < 16<<20; i++) {
+  static const std::string *const text = []() {
+    std::string *text = new std::string;
+    // srand(1);
+    GetRNGstate();
+    text->resize(16 << 20);
+    for (int64_t i = 0; i < 16 << 20; i++) {
       // Generate a one-byte rune that isn't a control character (e.g. '\n').
       // Clipping to 0x20 introduces some bias, but we don't need uniformity.
-      int byte = rand() & 0x7F;
+      // int byte = rand() & 0x7F;
+      int byte = ((int)(INT_MAX * unif_rand())) & 0x7F;
       if (byte < 0x20)
         byte = 0x20;
       (*text)[i] = byte;
     }
+    PutRNGstate();
     return text;
   }();
-  if (nbytes > 16<<20) {
-    const char* fmt
-      = "Expecting nbytes <= 16<<20: [type=%d].";
+  if (nbytes > 16 << 20) {
+    const char *fmt = "Expecting nbytes <= 16<<20: [type=%d].";
     throw ::Rcpp::not_compatible(fmt, nbytes);
-  }    
+  }
   return text->substr(0, nbytes);
 }

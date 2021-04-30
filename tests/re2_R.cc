@@ -472,19 +472,19 @@ bool RE2::Replace(std::string* str,
     R["trewr"] = rewrite.as_string();
     
     if (dist(gen) == 0) {
-      Rcpp::StringVector result = R.parseEval("re2_replace(tstr, tpat, trewr)");
+      Rcpp::StringVector result = R.parseEval(".re2_replace_cpp(tstr, tpat, trewr)");
       std::string changed = Rcpp::as< std::string >(result(0));      
       *str = changed;
       Rcpp::LogicalVector lv
-	= R.parseEval("re2_replace(tstr, tpat, trewr, logical=T)");
+	= R.parseEval(".re2_replace_cpp(tstr, tpat, trewr, logical=T)");
       return lv(0);
     } else {
       Rcpp::StringVector result
-	= R.parseEval("rptr <- re2_regexp(tpat); re2_replace(tstr, rptr, trewr)");
+	= R.parseEval("rptr <- re2_regexp(tpat); .re2_replace_cpp(tstr, rptr, trewr)");
       std::string changed = Rcpp::as< std::string >(result(0));
       *str = changed;
       Rcpp::LogicalVector lv
-	= R.parseEval("rptr <- re2_regexp(tpat); re2_replace(tstr, rptr, trewr, logical=T)");
+	= R.parseEval("rptr <- re2_regexp(tpat); .re2_replace_cpp(tstr, rptr, trewr, logical=T)");
       return lv(0);
     }    
   } catch(std::exception& ex) {
@@ -510,18 +510,18 @@ int RE2::GlobalReplace(std::string* str,
     R["trewr"] = rewrite.as_string();
     
     if (dist(gen) == 0) {
-      Rcpp::StringVector result = R.parseEval("re2_replace_all(tstr, tpat, trewr)");
+      Rcpp::StringVector result = R.parseEval(".re2_replace_all_cpp(tstr, tpat, trewr)");
       std::string changed = Rcpp::as< std::string >(result(0));      
       *str = changed;
-      Rcpp::IntegerVector lv = R.parseEval("re2_replace_all(tstr, tpat, trewr, count=T)");
+      Rcpp::IntegerVector lv = R.parseEval(".re2_replace_all_cpp(tstr, tpat, trewr, count=T)");
       return lv[0];
 
     } else {
-      Rcpp::StringVector result = R.parseEval("rptr <- re2_regexp(tpat); re2_replace_all(tstr, rptr, trewr)");
+      Rcpp::StringVector result = R.parseEval("rptr <- re2_regexp(tpat); .re2_replace_all_cpp(tstr, rptr, trewr)");
       std::string changed = Rcpp::as< std::string >(result(0));
       *str = changed;
       Rcpp::IntegerVector lv
-	= R.parseEval("rptr <- re2_regexp(tpat); re2_replace_all(tstr, rptr, trewr, count=T)");
+	= R.parseEval("rptr <- re2_regexp(tpat); .re2_replace_all_cpp(tstr, rptr, trewr, count=T)");
       return lv[0];
 
     }
@@ -543,7 +543,7 @@ bool RE2::Extract(const StringPiece& text,
 
     R["text_"] = text.as_string();
     R["rewrite_"] = rewrite.as_string();
-    std::string evalstr = "re2_extract_replace(text_, re2ptr, rewrite_";
+    std::string evalstr = ".re2_extract_replace_cpp(text_, re2ptr, rewrite_";
     Rcpp::LogicalVector lv = R.parseEval(evalstr + ", logical=T)");     
     Rcpp::StringVector result = R.parseEval(evalstr + ")");
     

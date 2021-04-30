@@ -1,0 +1,3 @@
+#!/bin/sh
+
+rm -f src/re2google/re2/*.o src/re2google/util/*.o

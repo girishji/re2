@@ -18,11 +18,11 @@ using namespace Rcpp;
 // @param unquoted Character string or vector with regexp.
 //
 // @return Character string or vector with escape characters added.
-//   
+//
 // [[Rcpp::export(.re2_quote_meta)]]
 CharacterVector re2_quote_meta(CharacterVector unquoted) {
   CharacterVector outv(unquoted.size());
-  for (int i=0; i < unquoted.size(); i++) {
+  for (int i = 0; i < unquoted.size(); i++) {
     if (unquoted(i) == NA_STRING) {
       outv[i] = NA_STRING;
       continue;
