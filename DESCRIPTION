@@ -8,11 +8,11 @@ Author: Girish Palya [aut, cre],
 	Google Inc. [ctb, cph] (RE2 library)
 Maintainer: Girish Palya <girishji@gmail.com>
 Description: String processing using Google's RE2 regular-expression
-	engine. Pattern matching, substring extraction, substring replacement 
-	and other tools, with consistent interface a la stringr package.
-	Google's RE2 uses finite-automata based techniques -- offers a 
-	fast and safe alternative to backtracking regular expression engines 
-	like those used in PCRE, Perl, and Python.
+  engine. Pattern matching, substring extraction, substring replacement
+  and other tools, with consistent interface a la stringr package.
+  Google's RE2 uses finite-automata based techniques -- offers a
+  fast and safe alternative to backtracking regular expression engines
+  like those used in PCRE, Perl, and Python.
 License: MIT + file LICENSE
 Imports: Rcpp (>= 1.0.6)
 LinkingTo: Rcpp

@@ -1,10 +1,18 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Fri, 30 Apr 2021 18:03:49 +0200
+Date:   Fri, 30 Apr 2021 18:20:27 +0200
 
-Update date
+Remove trailing white spaces
 
 
 M  DESCRIPTION
+
+commit 73e27414f8eb8b71bae28f77741898e105c7d4eb
+Author: Girish Palya <girishji@gmail.com>
+Date:   Fri Apr 30 18:03:49 2021 +0200
+
+    Update date
+    
+    M  DESCRIPTION
 
 commit 2ada080636f7e12c4c17d206fa7a5a70b1ab8476
 Author: Girish Palya <girishji@gmail.com>
