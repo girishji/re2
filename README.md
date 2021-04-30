@@ -6,12 +6,12 @@
 
 ## Overview
 
-This package provides R functions that operate on strings using regular
-expressions. The interface is similar to
-[stringr](https://github.com/tidyverse/stringr) package, and the
-functionality covers *grep*, *regex*, and *sub* family of base R. The
-implementation is based on Google’s [RE2](https://github.com/google/re2)
-(C++) regular-expression library.
+re2 is a R package that provides pattern matching, substring extraction,
+substring replacement and other string processing operations based on
+Google’s [RE2](https://github.com/google/re2) (C++) regular-expression
+library. The interface is consistent a la
+[stringr](https://github.com/tidyverse/stringr) package, and
+functionality covers *grep*, *regex*, and *sub* family of base R.
 
 Why re2?
 

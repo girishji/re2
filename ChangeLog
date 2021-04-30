@@ -1,14 +1,27 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Fri, 30 Apr 2021 17:15:19 +0200
+Date:   Fri, 30 Apr 2021 17:57:29 +0200
 
-Add description to package
+Minor edits to package description
 
-Add package description and edit for clarity.
- 
+Minor edits to package description
+
 M  DESCRIPTION
 M  README.Rmd
 M  README.md
 M  vignettes/re2_intro.Rmd
+
+commit e83cefb4d3bd6502ba22c575b4a471e023da6815
+Author: Girish Palya <girishji@gmail.com>
+Date:   Fri Apr 30 17:15:20 2021 +0200
+
+    Add description to package
+    
+    Add package description and edit for clarity.
+    
+    M  DESCRIPTION
+    M  README.Rmd
+    M  README.md
+    M  vignettes/re2_intro.Rmd
 
 commit 6cd30bc3eba3eef2471343a854c63ac56ca09e45
 Author: Girish Palya <girishji@gmail.com>
