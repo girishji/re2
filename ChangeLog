@@ -1,83 +1,94 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Fri, 30 Apr 2021 09:04:10 +0200
+Date:   Fri, 30 Apr 2021 11:34:45 +0200
 
-Add documentation, examples and tests
+Generate README.md file
 
-Add documentation to functions, and examples. Put examples in
-  separate files, and have test to verify the output (R CMD check
-  can compare Rout.save but it missed some differences which happened
-  to be bugs).
-Have clang-format format files.
-Add vignette and README.Rmd (to generate README.md) to help users.
-Add package level documentation.
-Refactor code and consolidate test related functions into fewer
-  files.
-Add cleanup file to remove objects generated during vignette
-  generation.
+Rstudio can knit a Rmd file, but automate it through makefile.
 
-A  README.Rmd
+M  ChangeLog
+M  README.Rmd
 M  README.md
-M  R/re2-package.R
-Add user guide.
-
-A  cleanup
-Cleanup after vignettes.
-
-A  inst/examples/count.R
-A  inst/examples/detect.R
-A  inst/examples/extract_replace.R
-A  inst/examples/locate.R
-A  inst/examples/match.R
-A  inst/examples/regexp.R
-A  inst/examples/replace.R
-A  inst/examples/split.R
-A  inst/examples/which.R
-Examples in their own files so they can reused.
-
-A  src/re2_capturing_group.cpp
-D  src/re2_capturing_group_names.cpp
-D  src/re2_check_rewrite_string.cpp
-M  src/re2_detect.cpp
-M  src/re2_do_match.h
-M  src/re2_extract_replace.cpp
-M  src/re2_get_options.cpp
-M  src/re2_locate.cpp
-M  src/re2_match.cpp
-M  src/re2_match_cpp.cpp
-M  src/re2_max_submatch.cpp
-D  src/re2_named_capturing_groups.cpp
-D  src/re2_number_of_capturing_groups.cpp
-D  src/re2_possible_match_range.cpp
-M  src/re2_quote_meta.cpp
-M  src/re2_random_text.cpp
-M  src/re2_re2proxy.cpp
-M  src/re2_re2proxy.h
-M  src/re2_regexp.cpp
-M  src/re2_replace.cpp
-D  src/re2_replace_all.cpp
-M  src/re2_split.cpp
-Add documentation to functions and clang-format.
-
 M  src/util/GNUmakefile
-Fix bugs.
 
-A  tests/examples_test.R
-A test to make sure examples have correct output. This
-  is not quite unit test. (A full suite of Google's RE2
-  C++ unit tests are run using RInside.)
+commit 663de3ea7160cff6bbde66ca6d50b5521f0cada2
+Author: Girish Palya <girishji@gmail.com>
+Date:   Fri Apr 30 09:04:11 2021 +0200
 
-M  tests/re2_R.cc
-R  src/util/RE2Syntax.md -> tools/RE2Syntax.md
-R  tests/benchmark.R -> tools/benchmark.R
-R  src/util/convert.py -> tools/convert.py
-D  vignettes/re2_benchmark.Rmd
-M  vignettes/re2_intro.Rmd
-M  .Rbuildignore
-M  src/Makevars
-M  src/Makevars.win
-Reflect changes.
-
-
+    Add documentation, examples and tests
+    
+    Add documentation to functions, and examples. Put examples in
+      separate files, and have test to verify the output (R CMD check
+      can compare Rout.save but it is not reliable -- missed some
+       differences which happened to be bugs).
+    Have clang-format format files.
+    Add vignette and README.Rmd (to generate README.md) to help users.
+    Add package level documentation.
+    Refactor code and consolidate test related functions into fewer
+      files.
+    Add cleanup file to remove objects generated during vignette
+      generation.
+    
+    A  README.Rmd
+    M  README.md
+    M  R/re2-package.R
+    Add user guide.
+    
+    A  cleanup
+    Cleanup after vignettes.
+    
+    A  inst/examples/count.R
+    A  inst/examples/detect.R
+    A  inst/examples/extract_replace.R
+    A  inst/examples/locate.R
+    A  inst/examples/match.R
+    A  inst/examples/regexp.R
+    A  inst/examples/replace.R
+    A  inst/examples/split.R
+    A  inst/examples/which.R
+    Examples in their own files so they can reused.
+    
+    A  src/re2_capturing_group.cpp
+    D  src/re2_capturing_group_names.cpp
+    D  src/re2_check_rewrite_string.cpp
+    M  src/re2_detect.cpp
+    M  src/re2_do_match.h
+    M  src/re2_extract_replace.cpp
+    M  src/re2_get_options.cpp
+    M  src/re2_locate.cpp
+    M  src/re2_match.cpp
+    M  src/re2_match_cpp.cpp
+    M  src/re2_max_submatch.cpp
+    D  src/re2_named_capturing_groups.cpp
+    D  src/re2_number_of_capturing_groups.cpp
+    D  src/re2_possible_match_range.cpp
+    M  src/re2_quote_meta.cpp
+    M  src/re2_random_text.cpp
+    M  src/re2_re2proxy.cpp
+    M  src/re2_re2proxy.h
+    M  src/re2_regexp.cpp
+    M  src/re2_replace.cpp
+    D  src/re2_replace_all.cpp
+    M  src/re2_split.cpp
+    Add documentation to functions and clang-format.
+    
+    M  src/util/GNUmakefile
+    Fix bugs.
+    
+    A  tests/examples_test.R
+    A test to make sure examples have correct output. This
+      is not quite unit test. (A full suite of Google's RE2
+      C++ unit tests are run using RInside.)
+    
+    M  tests/re2_R.cc
+    R  src/util/RE2Syntax.md -> tools/RE2Syntax.md
+    R  tests/benchmark.R -> tools/benchmark.R
+    R  src/util/convert.py -> tools/convert.py
+    D  vignettes/re2_benchmark.Rmd
+    M  vignettes/re2_intro.Rmd
+    M  .Rbuildignore
+    M  src/Makevars
+    M  src/Makevars.win
+    Reflect changes.
 
 commit b86d898fe3fcc3e51bebd05fdc49cc472c8f19fe
 Author: Girish Palya <girishji@gmail.com>

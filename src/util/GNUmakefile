@@ -46,7 +46,7 @@ fix_R_exports:
 	fi
 
 .PHONY: buildR
-buildR: 
+buildR: README.md
 	$(MAKE) restore
 	$(MAKE) clean cleanDoc
 	cd ../re2google && $(MAKE) clean
@@ -58,6 +58,9 @@ buildR:
 	cd ../re2google && $(MAKE) clean
 	cd ../../tests && $(MAKE) cleanall
 	cd ../../.. && R CMD build --clean re2
+
+README.md: README.Rmd
+	cd ../.. && Rscript -e 'library(rmarkdown); rmarkdown::render("README.Rmd", NULL)'
 
 .PHONY: installR
 installR: 

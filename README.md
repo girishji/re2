@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- Keep this file sync'ed with vignette -->
 
 # re2
 
@@ -8,7 +9,7 @@
 re2 provides regular-expression functions based on Google’s RE2 (C++)
 regular-expression library. re2’s functionality mirrors *grep*, *regex*,
 and *sub* family of functions in base R, as well as functions in
-*stringr* package.
+[stringr](https://github.com/tidyverse/stringr) package.
 
 Why re2?
 
