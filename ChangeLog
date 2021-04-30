@@ -1,10 +1,22 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Fri, 30 Apr 2021 18:20:27 +0200
+Date:   Fri, 30 Apr 2021 20:17:12 +0200
 
-Remove trailing white spaces
+Fix broken url in README and vignette
 
+Fix broken url and minor edits
 
 M  DESCRIPTION
+M  README.Rmd
+M  README.md
+M  vignettes/re2_intro.Rmd
+
+commit 7c66ff0b7e88ce91bdce05a6e149ac90169c2913
+Author: Girish Palya <girishji@gmail.com>
+Date:   Fri Apr 30 18:20:27 2021 +0200
+
+    Remove trailing white spaces
+    
+    M  DESCRIPTION
 
 commit 73e27414f8eb8b71bae28f77741898e105c7d4eb
 Author: Girish Palya <girishji@gmail.com>

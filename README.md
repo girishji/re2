@@ -194,10 +194,8 @@ re2 supports pearl style regular expressions (with extensions like \\d,
 \\w, \\s, …) and provides most of the functionality of PCRE – eschewing
 only backreferences and look-around assertions.
 
-See [RE2
-Syntax](https://github.com/girishji/re2/wiki/RE2-Regular-Expression-Syntax)
-for the syntax supported by RE2, and a comparison with PCRE and PERL
-regexps.
+See [RE2 Syntax](https://github.com/girishji/re2/wiki/Syntax) for the
+syntax supported by RE2, and a comparison with PCRE and PERL regexps.
 
 For those not familiar with Perl’s regular expressions, here are some
 examples of the most commonly used extensions:
