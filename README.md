@@ -6,7 +6,7 @@
 
 ## Overview
 
-re2 package provides functions that operate on strings using regular
+re2 package provides R functions that operate on strings using regular
 expressions. re2 is based on Google’s
 [RE2](https://github.com/google/re2) (C++) regular-expression library.
 re2’s functionality mirrors functions in

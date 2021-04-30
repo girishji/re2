@@ -1,26 +1,36 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Fri, 30 Apr 2021 16:31:01 +0200
+Date:   Fri, 30 Apr 2021 16:35:29 +0200
 
-Fix documentation
+Small edits to README
 
-Various small corrections to documentation.
 
-M  R/re2-package.R
 M  README.Rmd
 M  README.md
-M  src/re2_detect.cpp
-M  src/re2_extract_replace.cpp
-M  src/re2_locate.cpp
-M  src/re2_match.cpp
-M  src/re2_match_cpp.cpp
-M  src/re2_regexp.cpp
-M  src/re2_replace.cpp
-M  src/re2_split.cpp
-M  src/util/GNUmakefile
-M  tools/convert.py
-M  vignettes/re2_intro.Rmd
-M  vignettes/re2_syntax.Rmd
-D  vignettes/re2_tests.Rmd
+
+commit 1532ee795d280fac84c20c81fa59695b916a8f96
+Author: Girish Palya <girishji@gmail.com>
+Date:   Fri Apr 30 16:31:01 2021 +0200
+
+    Fix documentation
+    
+    Various small corrections to documentation.
+    
+    M  R/re2-package.R
+    M  README.Rmd
+    M  README.md
+    M  src/re2_detect.cpp
+    M  src/re2_extract_replace.cpp
+    M  src/re2_locate.cpp
+    M  src/re2_match.cpp
+    M  src/re2_match_cpp.cpp
+    M  src/re2_regexp.cpp
+    M  src/re2_replace.cpp
+    M  src/re2_split.cpp
+    M  src/util/GNUmakefile
+    M  tools/convert.py
+    M  vignettes/re2_intro.Rmd
+    M  vignettes/re2_syntax.Rmd
+    D  vignettes/re2_tests.Rmd
 
 commit 0514b1da87a844534042ab5a22cfee1d323801db
 Author: Girish Palya <girishji@gmail.com>
