@@ -2,16 +2,15 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- Keep this file sync'ed with vignette -->
 
-# re2
+# re2: R interface to Google RE2
 
 ## Overview
 
-re2 is a R package that provides pattern matching, substring extraction,
-substring replacement and other string processing operations based on
-Google’s [RE2](https://github.com/google/re2) (C++) regular-expression
-library. The interface is consistent a la
-[stringr](https://github.com/tidyverse/stringr) package, and
-functionality covers *grep*, *regex*, and *sub* family of base R.
+Pattern matching, extraction, replacement and other string processing
+operations are implemented using Google’s
+[RE2](https://github.com/google/re2) (C++) regular-expression library.
+The interface is consistent, and similar to
+[stringr](https://github.com/tidyverse/stringr).
 
 Why re2?
 
@@ -230,4 +229,3 @@ However, they should not be used when writing raw string literals:
 -   [Regular Expression Matching in the
     Wild](https://swtch.com/~rsc/regexp/regexp3.html)
 -   [RE2 Syntax](https://github.com/google/re2/wiki/Syntax)
--   [RE2 C++ source](https://github.com/google/re2)
