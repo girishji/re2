@@ -67,23 +67,23 @@ All functions take a vector of strings as argument. Regular-expression patterns 
 
 Here are the primary verbs of re2:
 
-1. `re2_detect(x, pattern)` finds if a pattern is present in string
+* `re2_detect(x, pattern)` finds if a pattern is present in string
 ```{r}
 re2_detect(c("barbazbla", "foobar", "foxy brown"), "(foo)|(bar)baz")
 ```
 
-1. `re2_count(x, pattern)` counts the number of matches in string
+* `re2_count(x, pattern)` counts the number of matches in string
 
 ```{r}
 re2_count(c("yellowgreen", "steelblue", "maroon"), "e")
 ```
 
-1. `re2_subset(x, pattern)` selects strings that match
+* `re2_subset(x, pattern)` selects strings that match
 ```{r}
 re2_subset(c("yellowgreen", "steelblue", "goldenrod"), "ee")
 ```
 
-1. `re2_match(x, pattern, simplify = FALSE)` extracts first matched substring
+* `re2_match(x, pattern, simplify = FALSE)` extracts first matched substring
 
 ```{r}
 re2_match("ruby:1234 68 red:92 blue:", "(\\w+):(\\d+)")
@@ -100,12 +100,12 @@ re <- re2_regexp("(foo)|(bar)baz", case_sensitive = FALSE)
 re2_match(c("BaRbazbla", "Foobar"), re)
 ```
 
-1. `re2_match_all(x, pattern)` extracts all matched substrings
+* `re2_match_all(x, pattern)` extracts all matched substrings
 ```{r}
 re2_match_all("ruby:1234 68 red:92 blue:", "(\\w+):(\\d+)")
 ```
 
-1. `re2_replace(x, pattern, rewrite)` replaces first matched pattern in string
+* `re2_replace(x, pattern, rewrite)` replaces first matched pattern in string
 ```{r}
 re2_replace("yabba dabba doo", "b+", "d")
 ```
@@ -115,27 +115,27 @@ re2_replace("yabba dabba doo", "b+", "d")
 re2_replace("bunny@wunnies.pl", "(.*)@([^.]*)", "\\2!\\1")
 ```
 
-1. `re2_replace_all(x, pattern, rewrite)` replaces all matched patterns in string
+* `re2_replace_all(x, pattern, rewrite)` replaces all matched patterns in string
 ```{r}
 re2_replace_all("yabba dabba doo", "b+", "d")
 ```
 
-1. `re2_extract_replace(x, pattern, rewrite)` extracts and substitutes (ignores non-matching portions of x)
+* `re2_extract_replace(x, pattern, rewrite)` extracts and substitutes (ignores non-matching portions of x)
 ```{r}
 re2_extract_replace("bunny@wunnies.pl", "(.*)@([^.]*)", "\\2!\\1")
 ```
 
-1. `re2_split(x, pattern, simplify = FALSE, n = Inf)` splits string based on pattern
+* `re2_split(x, pattern, simplify = FALSE, n = Inf)` splits string based on pattern
 ```{r}
 re2_split("How vexingly quick daft zebras jump!", " quick | zebras")
 ```
 
-1. `re2_locate(x, pattern)` seeks the start and end of pattern in string
+* `re2_locate(x, pattern)` seeks the start and end of pattern in string
 ```{r}
 re2_locate(c("yellowgreen", "steelblue"), "l(b)?l")
 ```
 
-1. `re2_locate_all(x, pattern)` locates start and end of all occurrences of pattern in string
+* `re2_locate_all(x, pattern)` locates start and end of all occurrences of pattern in string
 ```{r}
 re2_locate_all(c("yellowgreen", "steelblue"), "l")
 ```

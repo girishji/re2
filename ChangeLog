@@ -1,14 +1,26 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Fri, 30 Apr 2021 20:17:12 +0200
+Date:   Sat, 01 May 2021 08:22:18 +0200
 
-Fix broken url in README and vignette
+Fix markdown list
 
-Fix broken url and minor edits
-
-M  DESCRIPTION
+Numbered list does not render properly in R markdown when code
+  chunks are present. Change to unnumbered list.
 M  README.Rmd
 M  README.md
 M  vignettes/re2_intro.Rmd
+
+commit 51915d1a204de0d29acb0f69470923009e76c6c5
+Author: Girish Palya <girishji@gmail.com>
+Date:   Fri Apr 30 20:17:12 2021 +0200
+
+    Fix broken url in README and vignette
+    
+    Fix broken url and minor edits
+    
+    M  DESCRIPTION
+    M  README.Rmd
+    M  README.md
+    M  vignettes/re2_intro.Rmd
 
 commit 7c66ff0b7e88ce91bdce05a6e149ac90169c2913
 Author: Girish Palya <girishji@gmail.com>
