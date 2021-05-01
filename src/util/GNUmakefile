@@ -57,7 +57,7 @@ buildR:
 	$(MAKE) clean # clean up roxygen created binaries
 	cd ../re2google && $(MAKE) clean
 	cd ../../tests && $(MAKE) cleanall
-	cd ../../.. && R CMD build --clean re2
+	cd ../../.. && R CMD build re2
 
 README.md: README.Rmd
 	cd ../.. && Rscript -e 'library(rmarkdown); rmarkdown::render("README.Rmd", NULL)'

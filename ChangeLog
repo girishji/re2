@@ -1,13 +1,22 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Sat, 01 May 2021 08:22:18 +0200
+Date:   Sat, 01 May 2021 08:27:27 +0200
 
-Fix markdown list
+Fix makefile warning
 
-Numbered list does not render properly in R markdown when code
-  chunks are present. Change to unnumbered list.
-M  README.Rmd
-M  README.md
-M  vignettes/re2_intro.Rmd
+Remove unneeded option to R CMD build
+M  src/util/GNUmakefile
+
+commit ddd097ed6e90eb9ab7609842ac54d730e369a975
+Author: Girish Palya <girishji@gmail.com>
+Date:   Sat May 1 08:22:18 2021 +0200
+
+    Fix markdown list
+    
+    Numbered list does not render properly in R markdown when code
+      chunks are present. Change to unnumbered list.
+    M  README.Rmd
+    M  README.md
+    M  vignettes/re2_intro.Rmd
 
 commit 51915d1a204de0d29acb0f69470923009e76c6c5
 Author: Girish Palya <girishji@gmail.com>
