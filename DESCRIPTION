@@ -16,8 +16,8 @@ Description: Pattern matching, extraction, replacement and other string
 License: MIT + file LICENSE
 Imports: Rcpp (>= 1.0.6)
 LinkingTo: Rcpp
-URL: <https://github.com/girishji/re2>
-BugReports: <https://github.com/girishji/re2/issues>
+URL: https://github.com/girishji/re2
+BugReports: https://github.com/girishji/re2/issues
 Encoding: UTF-8
 RoxygenNote: 7.1.1
 Suggests: 
