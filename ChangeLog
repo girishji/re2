@@ -1,10 +1,18 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Sat, 01 May 2021 11:20:18 +0200
+Date:   Sat, 01 May 2021 11:40:55 +0200
 
-Edit for clarity
+Fix issues requested by CRAN
 
 
 M  DESCRIPTION
+
+commit 96d63a38945747d3c5ca853decc4f16e3e7a87c0
+Author: Girish Palya <girishji@gmail.com>
+Date:   Sat May 1 11:20:18 2021 +0200
+
+    Edit for clarity
+    
+    M  DESCRIPTION
 
 commit 6bd27b36e829c4d0234311aa57f4e33e8b6b25fb
 Author: Girish Palya <girishji@gmail.com>
