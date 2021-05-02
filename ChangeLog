@@ -1,10 +1,18 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Sat, 01 May 2021 12:00:48 +0200
+Date:   Sun, 02 May 2021 15:48:07 +0200
 
-Fix url formatting
+Edit description of package
 
 
 M  DESCRIPTION
+
+commit c4a1b617b6ff17ba1eca53bf7eae89ccea52ff10
+Author: Girish Palya <girishji@gmail.com>
+Date:   Sat May 1 12:00:48 2021 +0200
+
+    Fix url formatting
+    
+    M  DESCRIPTION
 
 commit ae5814a17109f603bdf941c5dcb76bca297aab4f
 Author: Girish Palya <girishji@gmail.com>
