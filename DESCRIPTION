@@ -1,7 +1,7 @@
 Package: re2
 Type: Package
 Title: R Interface to Google RE2 (C++) Regular Expression Library
-Version: 0.1.0
+Version: 0.1.1
 Date: 2021-04-30
 Author: Girish Palya [aut, cre],
 	RE2 developers [ctb] (RE2 library),

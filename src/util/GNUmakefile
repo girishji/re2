@@ -13,7 +13,7 @@ include ../Makevars
 #    to user installation. It will catch if some file
 #    is accidentally ignored by .Rbuildignore
 
-tarball=re2_0.1.0.tar.gz
+tarball=re2_0.1.1.tar.gz
 namespacefile=../../NAMESPACE
 
 all: test

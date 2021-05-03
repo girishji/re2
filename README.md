@@ -6,8 +6,8 @@
 
 ## Overview
 
-Pattern matching, extraction, replacement and other string processing
-operations are implemented using Google’s
+re2 package provides pattern matching, extraction, replacement and other
+string processing operations using Google’s
 [RE2](https://github.com/google/re2) (C++) regular-expression library.
 The interface is consistent, and similar to
 [stringr](https://github.com/tidyverse/stringr).
@@ -28,6 +28,9 @@ Cox’s excellent articles below.
 ## Installation
 
 ``` r
+# Install the released version from CRAN:
+install.packages("re2")
+
 # Install the development version from GitHub:
 # install.packages("devtools")
 devtools::install_github("girishji/re2")
