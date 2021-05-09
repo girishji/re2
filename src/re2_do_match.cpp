@@ -16,7 +16,6 @@ SEXP re2_do_match(StringVector string, SEXP pattern,
 
 SEXP re2_do_match(StringVector string, re2::RE2Proxy &re2proxy,
 		  re2::DoMatchIntf &doer) {
-  
   StringVector& vstring = string;
   if ((vstring.size() % re2proxy.size()) != 0) {
     Rcerr << "Warning: string vector length is not a "

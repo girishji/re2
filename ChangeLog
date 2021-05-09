@@ -1,23 +1,41 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Mon, 03 May 2021 23:37:58 +0200
+Date:   Sun, 09 May 2021 07:39:59 +0200
 
-Fix compiler warning
+Enhance gitignore
 
-Fix compiler warning as requested by CRAN and minor edits to readme.
 
-M  src/re2google/re2/walker-inl.h
-Fix clang warning: ISO C++ requires the name after '::~' to be 
-  found in the same scope as the name before '::~' [-Wdtor-name]
+M  .gitignore
+M  src/re2_do_match.cpp
 
-M  DESCRIPTION
-M  src/util/GNUmakefile
-Up the release
+commit dc3e1789d347d51d4c5892e9ddad84a6e6532295
+Author: Girish Palya <girishji@gmail.com>
+Date:   Sun May 9 07:35:22 2021 +0200
 
-M  README.Rmd
-M  README.md
-M  vignettes/re2_intro.Rmd
-Edits.
+    Edit readme file for clarity
+    
+    M  tests/GNUmakefile
+    M  tests/README
 
+commit d8e41740a19a1e2896f00df89d1007796763c98b
+Author: Girish Palya <girishji@gmail.com>
+Date:   Mon May 3 23:37:58 2021 +0200
+
+    Fix compiler warning
+    
+    Fix compiler warning as requested by CRAN and minor edits to readme.
+    
+    M  src/re2google/re2/walker-inl.h
+    Fix clang warning: ISO C++ requires the name after '::~' to be
+      found in the same scope as the name before '::~' [-Wdtor-name]
+    
+    M  DESCRIPTION
+    M  src/util/GNUmakefile
+    Up the release
+    
+    M  README.Rmd
+    M  README.md
+    M  vignettes/re2_intro.Rmd
+    Edits.
 
 commit 53bcd4840d6198191ff4b1d93691d63e08e84e75
 Author: Girish Palya <girishji@gmail.com>

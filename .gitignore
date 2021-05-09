@@ -15,5 +15,6 @@ src/re2google/util/*.o
 src/symbols.rds
 src/RcppExports.cpp
 R/RcppExports.R
+.Rhistory
 man/*.Rd
 inst/doc
