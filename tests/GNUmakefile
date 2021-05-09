@@ -1,5 +1,5 @@
 ##
-## A simple makefile for testing
+## A simple makefile for unit testing
 ##
 
 include GNUmakefile.RInside
