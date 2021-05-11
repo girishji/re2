@@ -1,11 +1,37 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Sun, 09 May 2021 07:39:59 +0200
+Date:   Tue, 11 May 2021 21:46:21 +0200
 
-Enhance gitignore
+Fix UBSAN and Valgrid issues requested by CRAN
 
+Flexible arrays do not play nice with CRAN compiler options. Earlier
+change to convert array[] into array[1] caused UBSAN to fail with
+'index 1 out of bounds' message.
 
-M  .gitignore
-M  src/re2_do_match.cpp
+M  src/Makevars
+Enabled valgrind flag that initializes arrays and stops valgrind from
+complaining.
+
+M  src/re2google/re2/dfa.cc
+Changed flexible array into a pointer (to an array). This fixes UBSAN 
+problem.
+
+M  src/re2google/re2/onepass.cc
+Changed flexible array into a size 256 array. This is the maximum size
+this array can have. In reality the size of array is much smaller, but
+this does not create any memory penality since array pointer is cast
+to a preexisting data.
+
+M  tests/GNUmakefile
+Removed repeat test.
+
+commit 6c9e9f2a4e8348e36c6db7d85f6d4a5c36c7f82f
+Author: Girish Palya <girishji@gmail.com>
+Date:   Sun May 9 07:39:59 2021 +0200
+
+    Enhance gitignore
+    
+    M  .gitignore
+    M  src/re2_do_match.cpp
 
 commit dc3e1789d347d51d4c5892e9ddad84a6e6532295
 Author: Girish Palya <girishji@gmail.com>

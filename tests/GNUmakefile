@@ -43,7 +43,7 @@ cleanall:
 .PHONY: test
 test: $(re2testdir)
 	@$(MAKE) CPPFLAGS='$(CPPFLAGS)' CXXFLAGS='$(CXXFLAGS)' \
-		LDFLAGS='$(LDLIBS)' -C $(re2testdir) debug-test static-test
+		LDFLAGS='$(LDLIBS)' -C $(re2testdir) static-test
 
 .PHONY: bigtest
 bigtest: $(re2testdir)
