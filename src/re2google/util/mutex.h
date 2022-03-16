@@ -73,7 +73,11 @@ class Mutex {
 #if defined(MUTEX_IS_WIN32_SRWLOCK)
 
 Mutex::Mutex()             { InitializeSRWLock(&mutex_); }
+#ifdef RE2_R_BUILD
+Mutex::~Mutex() noexcept(false)            { }
+#else
 Mutex::~Mutex()            { }
+#endif
 void Mutex::Lock()         { AcquireSRWLockExclusive(&mutex_); }
 void Mutex::Unlock()       { ReleaseSRWLockExclusive(&mutex_); }
 void Mutex::ReaderLock()   { AcquireSRWLockShared(&mutex_); }
