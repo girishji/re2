@@ -5,6 +5,7 @@
 #include <Rcpp.h>
 #include <re2/re2.h>
 #include <stdint.h>
+#include <memory>
 
 using namespace Rcpp;
 

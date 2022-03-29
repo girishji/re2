@@ -1,14 +1,37 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Wed, 16 Mar 2022 10:38:24 +0100
+Date:   Tue, 29 Mar 2022 10:32:38 +0200
 
-Updated for R-devel/R 4.2 to work on Windows
+Fix linux compile issue & Rcpp fn signature
 
-Patched file so that R-devel/R 4.2 to work on Windows, following the 
-recent switch to UCRT and Rtools42.
-Bumped minor version number.
+Fix linux compile issue where unique_ptr was not picked up from
+GNU STL with g++. 
+Fix Rcpp::compileAttributes() complaint with R_PosInf.
 
 M  DESCRIPTION
-M  src/re2google/util/mutex.h
+Update date and use newer Rcpp
+
+M  src/re2_match_cpp.cpp
+M  src/re2_re2proxy.h
+Fix compile issue on linux
+
+M  src/re2_split.cpp
+Use new export signature
+
+M  src/util/GNUmakefile
+Bumped version of tarball
+
+commit b871778bffc7237f64877cbd45ae554d6bff2362
+Author: Girish Palya <girishji@gmail.com>
+Date:   Wed Mar 16 10:38:24 2022 +0100
+
+    Updated for R-devel/R 4.2 to work on Windows
+    
+    Patched file so that R-devel/R 4.2 to work on Windows, following the
+    recent switch to UCRT and Rtools42.
+    Bumped minor version number.
+    
+    M  DESCRIPTION
+    M  src/re2google/util/mutex.h
 
 commit 80b212f289c4ef75408b1510b9fc85e6cb9a447c
 Author: Girish Palya <girishji@gmail.com>

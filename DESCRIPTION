@@ -2,7 +2,7 @@ Package: re2
 Type: Package
 Title: R Interface to Google RE2 (C++) Regular Expression Library
 Version: 0.1.2
-Date: 2021-04-30
+Date: 2022-03-29
 Author: Girish Palya [aut, cre],
 	RE2 developers [ctb] (RE2 library),
 	Google Inc. [ctb, cph] (RE2 library)
@@ -14,12 +14,12 @@ Description: Pattern matching, extraction, replacement and other string
   fast and safe alternative to backtracking regular-expression engines
   like those used in 'stringr', 'stringi' and other PCRE implementations.
 License: MIT + file LICENSE
-Imports: Rcpp (>= 1.0.6)
+Imports: Rcpp (>= 1.0.8.3)
 LinkingTo: Rcpp
 URL: https://github.com/girishji/re2
 BugReports: https://github.com/girishji/re2/issues
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     knitr,
     rmarkdown

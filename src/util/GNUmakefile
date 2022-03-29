@@ -13,7 +13,7 @@ include ../Makevars
 #    to user installation. It will catch if some file
 #    is accidentally ignored by .Rbuildignore
 
-tarball=re2_0.1.1.tar.gz
+tarball=re2_0.1.2.tar.gz
 namespacefile=../../NAMESPACE
 
 all: test
@@ -39,7 +39,6 @@ cleanDoc:
 .PHONY: fix_R_exports
 fix_R_exports:
 	sed -r -e 's/(.*)more_options = NULL(.*)/\1...\2\n    more_options <- list(...)/g' \
-		-e 's/(re2_split(.+)function(.+))n)/\1n = Inf)/' \
 		../../R/RcppExports.R > /tmp/RcppExports.R.tmp
 	if ! cmp  ../../R/RcppExports.R  /tmp/RcppExports.R.tmp > /dev/null; then \
 		mv /tmp/RcppExports.R.tmp ../../R/RcppExports.R ; \

@@ -70,9 +70,8 @@ struct DoSplit : re2::DoMatchIntf {
 //'   \link{re2_syntax} for regular expression syntax, and
 //'   \code{\link{re2_match}} to extract matched groups.
 //'
-// [[Rcpp::export]]
-SEXP re2_split(StringVector string, SEXP pattern, bool simplify = false,
-               double n = R_PosInf) {
+// [[Rcpp::export(signature={string, pattern, simplify=FALSE, n=Inf})]]
+SEXP re2_split(StringVector string, SEXP pattern, bool simplify, double n) {
   if (simplify) {
     List lst = re2_split(string, pattern, false, n);
     int maxcols = 0;
