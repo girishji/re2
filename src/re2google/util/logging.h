@@ -69,7 +69,7 @@ class LogMessage {
     stream() << "\n";
     std::string s = str_.str();
 #ifdef RE2_R_BUILD
-    Rprintf(s.data());
+    Rprintf("%s", s.data());
 #else
     size_t n = s.size();
     if (fwrite(s.data(), 1, n, stderr) < n) {}  // shut up gcc

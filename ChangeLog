@@ -1,24 +1,38 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Tue, 29 Mar 2022 10:32:38 +0200
+Date:   Tue, 28 Nov 2023 18:23:21 +0100
 
-Fix linux compile issue & Rcpp fn signature
+Remove compile error from Rprintf
+-Wformat-security was removed
 
-Fix linux compile issue where unique_ptr was not picked up from
-GNU STL with g++. 
-Fix Rcpp::compileAttributes() complaint with R_PosInf.
 
 M  DESCRIPTION
-Update date and use newer Rcpp
+Update version
 
-M  src/re2_match_cpp.cpp
-M  src/re2_re2proxy.h
-Fix compile issue on linux
+M  src/re2google/util/logging.h
+Add format string parameter
 
-M  src/re2_split.cpp
-Use new export signature
+commit a7244f2ec726df048d656218f943a41e1722b8ba
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Mar 29 10:32:39 2022 +0200
 
-M  src/util/GNUmakefile
-Bumped version of tarball
+    Fix linux compile issue & Rcpp fn signature
+    
+    Fix linux compile issue where unique_ptr was not picked up from
+    GNU STL with g++.
+    Fix Rcpp::compileAttributes() complaint with R_PosInf.
+    
+    M  DESCRIPTION
+    Update date and use newer Rcpp
+    
+    M  src/re2_match_cpp.cpp
+    M  src/re2_re2proxy.h
+    Fix compile issue on linux
+    
+    M  src/re2_split.cpp
+    Use new export signature
+    
+    M  src/util/GNUmakefile
+    Bumped version of tarball
 
 commit b871778bffc7237f64877cbd45ae554d6bff2362
 Author: Girish Palya <girishji@gmail.com>
