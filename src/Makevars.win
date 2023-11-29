@@ -1,4 +1,4 @@
-CXX_STD = CXX11
+# CXX_STD = CXX11
 
 # see src/re2google/CMakeLists.txt
 PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h -DRE2_R_BUILD -DUNICODE -D_UNICODE -DSTRICT -DNOMINMAX

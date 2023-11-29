@@ -521,7 +521,7 @@ not more powerful.
 <tr><td><font color='#808080'><code>\L</code></font></td><td>not lowercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 <tr><td><font color='#808080'><code>\u</code></font></td><td>uppercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 <tr><td><font color='#808080'><code>\U</code></font></td><td>not uppercase <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
-<tr><td><font color='#808080'><code>\_x</code></font></td><td><code>\x</code> plus newline, for any <code>x</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
+<tr><td><font color='#808080'><code>_x</code></font></td><td><code>\x</code> plus newline, for any <code>x</code> <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 <tr><td><font color='#808080'><code>\c</code></font></td><td>ignore case <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 <tr><td><font color='#808080'><code>\C</code></font></td><td>match case <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>
 <tr><td><font color='#808080'><code>\m</code></font></td><td>magic <small>(NOT SUPPORTED)</small> <small>VIM</small></td></tr>

@@ -1,5 +1,5 @@
 ## 
-CXX_STD = CXX11
+# CXX_STD = CXX11
 
 # Preprocessor flags
 PKG_CPPFLAGS = -Ire2google -DNDEBUG -include re2/re2.h -DRE2_R_BUILD -pthread -DRE2_ON_VALGRIND

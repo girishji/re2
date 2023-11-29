@@ -1,15 +1,25 @@
 Author: Girish Palya <girishji@gmail.com>
-Date:   Tue, 28 Nov 2023 18:23:21 +0100
+Date:   Wed, 29 Nov 2023 01:31:02 +0100
 
-Remove compile error from Rprintf
--Wformat-security was removed
+Remove cran errors
 
 
-M  DESCRIPTION
-Update version
+M  src/Makevars
+M  src/Makevars.win
+M  tools/RE2Syntax.md
 
-M  src/re2google/util/logging.h
-Add format string parameter
+commit a9e9565c42593e4b6cba6bd2f051d5737b55d5c3
+Author: Girish Palya <girishji@gmail.com>
+Date:   Tue Nov 28 18:23:21 2023 +0100
+
+    Remove compile error from Rprintf
+    -Wformat-security was removed
+    
+    M  DESCRIPTION
+    Update version
+    
+    M  src/re2google/util/logging.h
+    Add format string parameter
 
 commit a7244f2ec726df048d656218f943a41e1722b8ba
 Author: Girish Palya <girishji@gmail.com>
