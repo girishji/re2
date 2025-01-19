@@ -124,11 +124,13 @@ re2_replace("bunny@wunnies.pl", "(.*)@([^.]*)", "\\2!\\1")
 ```
 
 -   `re2_replace_all(x, pattern, rewrite)` replaces all matched patterns
-    in string
+    in string, or performs multiple replacements on each element of string.
 
 ``` r
 re2_replace_all("yabba dabba doo", "b+", "d")
 #> [1] "yada dada doo"
+re2_replace_all(c("one", "two"), c("one" = "1", "1" = "2", "two" = "2"))
+#> [1] "2" "2"
 ```
 
 -   `re2_extract_replace(x, pattern, rewrite)` extracts and substitutes

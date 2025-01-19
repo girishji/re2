@@ -1,7 +1,7 @@
 Package: re2
 Type: Package
 Title: R Interface to Google RE2 (C++) Regular Expression Library
-Version: 0.1.3
+Version: 0.1.4
 Date: 2023-11-28
 Author: Girish Palya [aut, cre],
 	RE2 developers [ctb] (RE2 library),
@@ -19,8 +19,8 @@ LinkingTo: Rcpp
 URL: https://github.com/girishji/re2
 BugReports: https://github.com/girishji/re2/issues
 Encoding: UTF-8
-RoxygenNote: 7.2.3
-Suggests: 
+RoxygenNote: 7.3.2
+Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr

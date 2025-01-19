@@ -17,7 +17,7 @@ struct RE2Proxy {
   struct Adapter {
     Adapter(const RE2 *re2p) : re2p(re2p) {}
     Adapter(const std::string &pattern) {
-      re2p = new RE2(pattern);
+      re2p = new RE2(pattern);  // Compile the pattern
       freeable = true;
       if (!(re2p->ok())) {
         throw std::invalid_argument(re2p->error());

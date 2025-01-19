@@ -13,12 +13,12 @@ RE2Proxy::RE2Proxy(const SEXP &input) {
   std::function<void(SEXP)> dfs; // recursively traverse list
   dfs = [this, &dfs](SEXP input) -> void {
     switch (TYPEOF(input)) {
-    case EXTPTRSXP: {
+    case EXTPTRSXP: {  // precompiled regex pattern
       XPtr<RE2> xptr(input);
       append(new Adapter(xptr.checked_get()));
       break;
     }
-    case STRSXP: {
+    case STRSXP: {  // regex pattern
       StringVector sv(input);
       for (int i = 0; i < sv.size(); i++) {
         append(new Adapter(as<std::string>(sv(i))));
